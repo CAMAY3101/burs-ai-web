@@ -1,0 +1,44 @@
+Here is the same HTML code written as a React + Tailwind CSS component:
+
+```jsx
+import React from "react";
+
+const Section = ({ background, children }) => {
+return (
+<section className="bg-cover bg-center h-screen flex justify-center items-center" style={{ backgroundImage:
+    `url('${background}')` }}>
+    {children}
+</section>
+);
+};
+
+const IconBox = ({ icon, title, text }) => {
+return (
+<div className="m-16">
+    <i className="material-icons text-6xl mb-4">{icon}</i>
+    <h3 className="text-2xl mb-2">{title}</h3>
+    <p className="text-base">{text}</p>
+</div>
+);
+};
+
+const Component = () => {
+return (
+<Section background="imagen.jpg">
+    <div className="text-center text-white">
+        <h1 className="text-6xl mb-4">Título de la Portada</h1>
+        <div className="flex justify-center">
+            <IconBox icon="icono1" title="Título 1" text="Texto 1" />
+            <IconBox icon="icono2" title="Título 2" text="Texto 2" />
+            <IconBox icon="icono3" title="Título 3" text="Texto 3" />
+        </div>
+    </div>
+</Section>
+);
+};
+
+export default Component;
+```
+
+Note: Make sure to replace `'imagen.jpg'` with the actual path to your desired background image. Also, replace
+`'icono1'`, `'icono2'`, and `'icono3'` with the actual icons you want to use from the Material Icons library.
