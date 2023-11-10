@@ -1,0 +1,38 @@
+@import './Common.scss';
+
+
+.icon{
+    width: 30px;
+    height: 30px;
+   // margin-right: 10px;
+
+}
+.navbar{
+    background: $dark-blue-800;
+    justify-content: space-between;
+    height: 70px;
+}
+.logo{
+    width: 60px;
+    height: 60px;
+    top: 9px;
+    left: 22px;
+}
+
+.navButtons{
+    //justify-content: space-around;    
+}
+
+.navButton{
+    a{
+        color: $purple-heart-50;
+        &:hover{
+            color: $persian-rose-400;
+        }
+    }
+}
+
+.servicesButtons{
+    color: $purple-heart-50;
+    
+}
