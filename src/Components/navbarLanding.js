@@ -5,7 +5,7 @@ import prestamo_icon from '../Assets/prestamo.png'
 import '../Styles/NavbarLanding.scss'
 
 import { IconChevronDown } from '@douyinfe/semi-icons';
-import {Spacer,Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
 import { Space } from '@douyinfe/semi-ui';
 
 // make a string of the class names you want to apply to put in the className attribute
