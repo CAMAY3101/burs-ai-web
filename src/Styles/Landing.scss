@@ -1,0 +1,74 @@
+@import './Common.scss';
+
+
+.icon {
+    width: 30px;
+    height: 30px;
+    // margin-right: 10px;
+
+}
+
+.navbar {
+    background: $dark-blue-800;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    top: 9px;
+    left: 22px;
+}
+
+.navButtons {
+    //justify-content: space-around;    
+}
+
+.navButton {
+    a {
+        color: $purple-heart-50;
+
+        &:hover {
+            color: $persian-rose-400;
+        }
+    }
+}
+
+.servicesButtons {
+    color: $purple-heart-50;
+
+}
+
+//------------------HERO------------------//
+
+.Portada {
+    background-image: url("../Assets/PortadaHero.png");
+    width: 100%;
+    height: 600px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.titleHero {
+    //Rubik-Bold-36
+    color: $dark-blue-50;
+    word-wrap: break-word;
+}
+
+.titleHeroCenter {
+    //Rubik-Bold-48
+    color: $persian-rose-300;
+    //word-wrap: break-word;
+}
+
+.backgroundIcon {
+    background-color: rgb(255 240 251 / 50%);//$persian-rose-50;   
+}
+
+.textIconHero{
+    //Rubik-Medium-23
+    //Rubik-Medium-18
+    color: $persian-rose-100;
+    //word-wrap: break-word;
+}

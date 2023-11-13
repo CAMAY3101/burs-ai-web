@@ -1,12 +1,19 @@
 import React from 'react'
 import NavbarLanding from '../Components/navbarLanding'
+import HeroLanding from '../Components/heroLanding'
+
+import { Layout} from '@douyinfe/semi-ui';
 
 const Landing = () => {
+  const { Header, Footer, Content } = Layout;
   return (
-    <div>
+    <Layout>
         <NavbarLanding />
-        Landing
-    </div>
+      <Content>
+        <HeroLanding />
+      </Content>
+      <Footer>Footer</Footer>
+    </Layout>
   )
 }
 
