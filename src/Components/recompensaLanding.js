@@ -9,7 +9,7 @@ import TimeIcon from '../Assets/time.png'
 const recompensaContainer = "flex flex-col items-center h-screen bg-cover bg-center Recompensa"
 const titleRecompensaClass = "text-4xl font-bold mb-24  text-center titleRecompensa rubik-Bold-70"
 const CardsContainer = "flex flex-row justify-center"
-const cardContainer = "flex flex-col items-center mx-16"
+const cardContainer = "flex flex-col items-center mx-20"
 
 const backgroundIconClass = "w-28 h-28 bg-blue-500 mb-10 rounded-full flex items-center justify-center backgroundIconRecompensa"
 const sizeIcon = "w20- h-20"
