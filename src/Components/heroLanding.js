@@ -7,7 +7,7 @@ import '../Styles/Landing.scss'
 // import { Layout } from '@douyinfe/semi-ui'
 
 const sizeIcon = "w-14 h-14 iconHero"
-const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 backgroundIcon"
+const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 backgroundIconHero"
 const subtitleIconClass = "text-center textIconHero rubik-Medium-23"
 const textIconClass = "text-center textIconHero rubik-Medium-18"
 const TitleHeroClassContainer = "mb-10 text-center" // "mb-4 text-center" || "mb-8 text-center" mb-number choose the margin bottom

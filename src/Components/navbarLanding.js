@@ -72,14 +72,14 @@ const navbarLanding = () => {
                     >
                         <DropdownItem
                             key="Prestamo"
-                            //description="Obtenga un préstamo en minutos, sin papeleo y sin salir de casa."
+                            description="Obtenga un préstamo en minutos, sin papeleo y sin salir de casa."
                             startContent={<img src={prestamo_icon} alt="Prestamo" className="icon" />}
                         >
                             Solicita Prestamo
                         </DropdownItem>
                         <DropdownItem
                             key="Invertir"
-                            //description="Invierte tu dinero con nosotros y obtén rendimientos atractivos."
+                            description="Invierte tu dinero con nosotros y obtén rendimientos atractivos."
                             startContent={<img src={invesment_icon} alt="Invertir" className="icon" />}
                         >
                             Quiero Invertir
