@@ -45,9 +45,10 @@
 .Portada {
     background-image: url("../Assets/PortadaHero.png");
     width: 100%;
-    height: 600px;
+    height: 700px;
     padding-left: 80px;
     padding-right: 80px;
+    margin-bottom: 40px;
 }
 
 .titleHero {
@@ -62,7 +63,7 @@
     //word-wrap: break-word;
 }
 
-.backgroundIcon {
+.backgroundIconHero {
     background-color: rgb(255 240 251 / 50%);//$persian-rose-50;   
 }
 
@@ -70,5 +71,39 @@
     //Rubik-Medium-23
     //Rubik-Medium-18
     color: $persian-rose-100;
+    //word-wrap: break-word;
+}
+
+//------------------RECOMPENSA------------------//
+.Recompensa{
+    width: 100%;
+    height: 600px;
+    padding-left: 150px;
+    padding-right: 150px;
+    margin-bottom: 40px;
+}
+
+.titleRecompensa{
+    /* Rubik Bold/Rubik Bold 70px */
+    background: linear-gradient(180deg, #4F00CD 0%, #A92FFF 66.92%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+
+}
+
+.backgroundIconRecompensa {
+    background-color: $dark-blue-100
+}
+
+.subtitleRecompensaCard{
+    //Rubik-Medium-45
+    color: $purple-heart-900;
+    //word-wrap: break-word;
+}
+.textRecompensaCard{
+    //Rubik-Medium-29
+    color: $purple-heart-500;
     //word-wrap: break-word;
 }
