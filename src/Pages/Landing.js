@@ -3,6 +3,7 @@ import NavbarLanding from '../Components/navbarLanding'
 import HeroLanding from '../Components/heroLanding'
 import RecompensaLanding from '../Components/recompensaLanding';
 import OpinionesLanding from '../Components/opinionsLanding';
+import CarouselOpinion from '../Components/carouselOpinion';
 
 import { Layout} from '@douyinfe/semi-ui';
 

@@ -1,65 +1,40 @@
-import React from 'react'
+import React from 'react';
+//import { Carousel, Typography, Space, Card, Rating } from '@douyinfe/semi-ui';
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 import { Rating } from '@douyinfe/semi-ui';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const recompensaContainer = "container mx-auto"
-const titleRecompensaClass = "text-4xl font-bold mb-24  text-center rubik-Bold-70"
-const CardsContainer = "w-10/12 m-auto"
 
-
-
-function opinionsLanding() {
+const CarouselOpinion = () => {
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToScroll: 3
     };
-
     return (
-        <div id='opiniones'>
-            <div className={recompensaContainer}>
-                <h1 className={titleRecompensaClass}>Lo que opinan de nosotros</h1>
-                <div className={CardsContainer}>
-                    <Slider {...settings}>
-                    {testimonios.map((testimonio, index) => (
-                        <div key={index} className="bg-white h-[200px] shadow-lg rounded-xl">
-                            <div className="flex items-center">
-                                <img
-                                    src="https://source.unsplash.com/random/40x40"
-                                    alt="Avatar"
-                                    className="w-10 h-10 rounded-full"
-                                />
-                                <div>
-                                    <p>{testimonio.nombre}</p>
-                                    <p>{testimonio.ocupacion}</p>
-                                </div>
-                            </div>
-                            <p className="text-gray-800 text-lg mb-2">"{testimonio.opinion}"</p>
+        <Slider {...settings} >
+            {testimonios.map((testimonio) => (
+                <div className="bg-white p-6 rounded-lg shadow-lg mb-4 space-y-5">
+                    <div className="flex items-center space-y-2">
+                        <div>
+                            <p className="text-gray-800 font-bold">{testimonio.nombre}</p>
+                            <p className="text-gray-600">{testimonio.ocupacion}</p>
                         </div>
-                    ))}
-                </Slider>
+                    </div>
+                    <p className="text-gray-800 text-lg mb-2">"{testimonio.opinion}"</p>
+                    <Rating size="small" defaultValue={5} />
                 </div>
-            </div>
-        </div>
+            ))}
+        </Slider>
     );
 }
 
-// <div className="bg-white p-6 rounded-lg shadow-lg mb-4 space-y-5">
-//     <div className="flex items-center space-y-2">
-//         <div>
-//             <p className="text-gray-800 font-bold">{testimonio.nombre}</p>
-//             <p className="text-gray-600">{testimonio.ocupacion}</p>
-//         </div>
-//     </div>
-//     <p className="text-gray-800 text-lg mb-2">"{testimonio.opinion}"</p>
-//     <Rating size="small" defaultValue={5} />
-// </div>
-export default opinionsLanding
+export default CarouselOpinion;
 
 const testimonios = [
     {
