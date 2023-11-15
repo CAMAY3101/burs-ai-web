@@ -1,19 +1,18 @@
 import React from 'react'
 import { Rating } from '@douyinfe/semi-ui';
+import { Card, CardHeader, CardBody, CardFooter, } from "@nextui-org/react";
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const recompensaContainer = "container mx-auto"
-const titleRecompensaClass = "text-4xl font-bold mb-24  text-center rubik-Bold-70"
-const CardsContainer = "w-10/12 m-auto"
-
-
+const opionesContainer = "container pb-10 Opiniones"
+const titleOpinionesClass = "pt-5 mb-10 text-center titleOpiniones rubik-Bold-56"
+const sliderContainer = "w-10/12 m-auto "
 
 function opinionsLanding() {
     const settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 3,
@@ -22,25 +21,25 @@ function opinionsLanding() {
 
     return (
         <div id='opiniones'>
-            <div className={recompensaContainer}>
-                <h1 className={titleRecompensaClass}>Lo que opinan de nosotros</h1>
-                <div className={CardsContainer}>
+            <div className={opionesContainer}>
+                <div className={titleOpinionesClass}>Lo que opinan de nosotros</div>
+                <div className={sliderContainer}>
                     <Slider {...settings}>
                     {testimonios.map((testimonio, index) => (
-                        <div key={index} className="bg-white h-[200px] shadow-lg rounded-xl">
-                            <div className="flex items-center">
-                                <img
-                                    src="https://source.unsplash.com/random/40x40"
-                                    alt="Avatar"
-                                    className="w-10 h-10 rounded-full"
-                                />
-                                <div>
-                                    <p>{testimonio.nombre}</p>
-                                    <p>{testimonio.ocupacion}</p>
+                        <Card className="p-3">
+                            <CardHeader className="flex">
+                                <div className="flex flex-col">
+                                    <p className="text-md">{testimonio.nombre}</p>
+                                    <p className="text-small text-default-500">{testimonio.ocupacion}</p>
                                 </div>
-                            </div>
-                            <p className="text-gray-800 text-lg mb-2">"{testimonio.opinion}"</p>
-                        </div>
+                            </CardHeader>
+                            <CardBody>
+                                <p>{testimonio.opinion}</p>
+                            </CardBody>
+                            <CardFooter>
+                                <Rating size="small" defaultValue={5} />
+                            </CardFooter>
+                        </Card>
                     ))}
                 </Slider>
                 </div>

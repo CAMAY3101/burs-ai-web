@@ -79,7 +79,7 @@
     width: 100%;
     padding-left: 150px;
     padding-right: 150px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .titleRecompensa{
@@ -108,11 +108,20 @@
 }
 
 //------------------OPINIONES------------------//
+.Opiniones{
+    /* Gradients/Gradient purple heart */
+    background: linear-gradient(90deg, #4A12CB 1.39%, #8218DB 42.25%, #BC1FEC 99.45%);
+}
 
-.cardOpinion{
+.titleOpiniones{
+    /* Rubik Bold/Rubik Bold 56px */
+    background: linear-gradient(180deg, #FFC6F5 0%, #F3F0FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+.slick-slide > div{
     margin: 0 50px;
 }
 
-.slick-slider>div{
-    margin: 0 50px;
-}
