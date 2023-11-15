@@ -6,7 +6,7 @@ import TimeIcon from '../Assets/time.png'
 
 // Class names
 
-const recompensaContainer = "flex flex-col items-center h-screen bg-cover bg-center Recompensa"
+const recompensaContainer = "flex flex-col items-center bg-cover bg-center Recompensa"
 const titleRecompensaClass = "text-4xl font-bold mb-24  text-center titleRecompensa rubik-Bold-70"
 const CardsContainer = "flex flex-row justify-center"
 const cardContainer = "flex flex-col items-center mx-20"
@@ -18,7 +18,7 @@ const textCardClass = "mt-2 text-sm text-center textRecompensaCard rubik-Regular
 
 function recompensaLanding() {
   return (
-    <div>
+    <div id='recompensa'>
         <div className={recompensaContainer}>
             <h1 className={titleRecompensaClass}>El credito que confia en ti</h1>
             <div className={CardsContainer}>

@@ -16,7 +16,7 @@ const CardsContainer = "grid grid-cols-3 gap-x-4 gap-y-8" //"grid grid-cols-3 ga
 const heroLanding = () => {
   return (
     // make a hero section with a background image with the text inside of it
-    <div>
+    <div id='proceso'>
         <div className="bg-cover bg-center h-screen flex items-center justify-end Portada">
             <div className="flex flex-col md:flex-row justify-end">
                 <div className="p-10">

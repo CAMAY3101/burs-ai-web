@@ -21,27 +21,27 @@ const navbarLanding = () => {
             <NavbarContent className="navButtons" justify='center' >
                 <Space spacing={[40]}>
                     <NavbarItem className='navButton'>
-                        <Link className={FontnavButtonClass} href="#">
+                        <Link className={FontnavButtonClass} href="#proceso">
                             Proceso
                         </Link>
                     </NavbarItem>
                     <NavbarItem className='navButton'>
-                        <Link className={FontnavButtonClass} href="#">
+                        <Link className={FontnavButtonClass} href="#recompensa">
                             Recompensa
                         </Link>
                     </NavbarItem>
                     <NavbarItem className='navButton'>
-                        <Link className={FontnavButtonClass} href="#">
+                        <Link className={FontnavButtonClass} href="#blog">
                             Blog
                         </Link>
                     </NavbarItem>
                     <NavbarItem className='navButton'>
-                        <Link className={FontnavButtonClass} href="#">
+                        <Link className={FontnavButtonClass} href="#faqs">
                             Preguntas Frecuentes
                         </Link>
                     </NavbarItem>
                     <NavbarItem className='navButton'>
-                        <Link className={FontnavButtonClass} href="#">
+                        <Link className={FontnavButtonClass} href="#contacto">
                             Contacto
                         </Link>
                     </NavbarItem>
