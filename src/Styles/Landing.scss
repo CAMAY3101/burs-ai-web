@@ -125,3 +125,24 @@
     margin: 0 50px;
 }
 
+.cardOpinion{
+    /* Testimonial */
+    
+    background: rgba(187, 165, 255, 0.67);
+    /* card shadow */
+    box-shadow: 0px 12px 25px rgba(6, 28, 61, 0.15);
+    border-radius: 16px;
+}
+
+.nombreCardOpinion{
+    /*rubik-Bold-23*/
+    color: $persian-rose-50;
+}
+.cargoCardOpinion{
+    /*rubik-Bold-18*/
+    color: $persian-rose-200;
+}
+.textCardOpinion{
+    /* Rubik Regular/Rubik Regular 23px */
+    color: $dark-blue-50;
+}

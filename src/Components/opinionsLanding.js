@@ -26,15 +26,15 @@ function opinionsLanding() {
                 <div className={sliderContainer}>
                     <Slider {...settings}>
                     {testimonios.map((testimonio, index) => (
-                        <Card className="p-3">
+                        <Card className="p-3 cardOpinion">
                             <CardHeader className="flex">
                                 <div className="flex flex-col">
-                                    <p className="text-md">{testimonio.nombre}</p>
-                                    <p className="text-small text-default-500">{testimonio.ocupacion}</p>
+                                    <p className="rubik-Medium-23 nombreCardOpinion">{testimonio.nombre}</p>
+                                    <p className="rubik-Medium-15 cargoCardOpinion">{testimonio.ocupacion}</p>
                                 </div>
                             </CardHeader>
                             <CardBody>
-                                <p>{testimonio.opinion}</p>
+                                <p className='rubik-Regular-18 textCardOpinion'>{testimonio.opinion}</p>
                             </CardBody>
                             <CardFooter>
                                 <Rating size="small" defaultValue={5} />
