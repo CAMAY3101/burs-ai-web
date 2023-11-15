@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const opionesContainer = "container pb-10 Opiniones"
+const opionesContainer = "pb-10 Opiniones"
 const titleOpinionesClass = "pt-5 mb-10 text-center titleOpiniones rubik-Bold-56"
 const sliderContainer = "w-10/12 m-auto "
 
@@ -47,17 +47,6 @@ function opinionsLanding() {
         </div>
     );
 }
-
-// <div className="bg-white p-6 rounded-lg shadow-lg mb-4 space-y-5">
-//     <div className="flex items-center space-y-2">
-//         <div>
-//             <p className="text-gray-800 font-bold">{testimonio.nombre}</p>
-//             <p className="text-gray-600">{testimonio.ocupacion}</p>
-//         </div>
-//     </div>
-//     <p className="text-gray-800 text-lg mb-2">"{testimonio.opinion}"</p>
-//     <Rating size="small" defaultValue={5} />
-// </div>
 export default opinionsLanding
 
 const testimonios = [
