@@ -8,13 +8,15 @@ function securityLandings() {
       <div className="w-full md:w-1/2 flex justify-center items-center">
         <img className="w-3/4" src={secuirtyimage} alt="Random Image" />
       </div>
-      <div className="w-full md:w-1/2 md:ml-4">
-        <div className="text-2xl font-bold mb-4">
-          <span>Burs ai tu espacio seguro</span>
-          <span> Confiamos en ti </span> <span>y </span><span>tú</span> <span>puedes </span>
-          <span>confiar en nosotros.</span>
+      <div className="w-full md:w-1/2 flex justify-center items-center">
+        <div className="w-3/4">
+          <h4 className="mb-4">
+            <span className='bursAi'>Burs ai tu espacio seguro <br /></span>
+            <span className='confiamosEnTi'> Confiamos en ti </span> <span className='yPuedes'>y </span><span className='tu'>tú</span> <span className='yPuedes'>puedes  <br /></span>
+            <span className='confianza'>confiar en nosotros.</span>
+          </h4>
+          <p className="paragraph"> Jamás tendremos practicas de cobranza abusivas ni buscaremos a tus contactos ni referidos</p>
         </div>
-        <p className="text-gray-700"> Jamás tendremos practicas de cobranza abusivas ni buscaremos a tus contactos ni referidos</p>
       </div>
     </div>
   )
