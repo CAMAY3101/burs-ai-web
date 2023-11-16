@@ -111,6 +111,7 @@
 .Opiniones{
     /* Gradients/Gradient purple heart */
     background: linear-gradient(90deg, #4A12CB 1.39%, #8218DB 42.25%, #BC1FEC 99.45%);
+    margin-bottom: 50px;
 }
 
 .titleOpiniones{
@@ -145,4 +146,58 @@
 .textCardOpinion{
     /* Rubik Regular/Rubik Regular 23px */
     color: $dark-blue-50;
+}
+
+//------------------Security------------------//
+
+.Seguridad{
+    margin-bottom: 50px;
+}
+
+// Burs ai tu espacio seguro
+.bursAi {
+    color: $dark-blue-800;
+    font-family: 'Rubik';
+    font-weight: 700;
+    font-size: 45px;
+}
+
+// Confiamos en ti
+.confiamosEnTi {
+    color: $purple-heart-400;
+    font-family: 'Rubik';
+    font-weight: 700;
+    font-size: 36px;
+}
+
+// y, puedes
+.yPuedes {
+    color: $purple-heart-950;
+    font-family: 'Rubik';
+    font-weight: 700;
+    font-size: 36px;
+}
+
+// tú
+.tu {
+    color: $purple-heart-600;
+    font-family: 'Rubik';
+    font-weight: 700;
+    font-size: 36px;
+}
+
+// confiar en nosotros
+.confianza {
+    color: $dark-blue-900;
+    font-family: 'Rubik';
+    font-weight: 700;
+    font-size: 36px;
+}
+
+// paragraph
+.paragraph {
+    color: $dark-blue-950;
+    font-family: 'Rubik';
+    font-weight: 400;
+    font-size: 29px;
 }
