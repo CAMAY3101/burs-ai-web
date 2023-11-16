@@ -4,7 +4,7 @@ import secuirtyimage from '../Assets/seguridad.png'
 
 function securityLandings() {
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row Seguridad">
       <div className="w-full md:w-1/2 flex justify-center items-center">
         <img className="w-3/4" src={secuirtyimage} alt="Random Image" />
       </div>
