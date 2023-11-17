@@ -207,3 +207,30 @@
 .Blog{
     margin-bottom: 50px;
 }
+
+/*------------------FAQS------------------*/
+.Faqs{
+    margin-bottom: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.accordionFaqs{
+    box-shadow: 0px 12px 25px rgba(6, 28, 61, 0.15);
+    border-radius: 16px;
+    //background-color: rgba(187, 165, 255, 0.09);
+}
+.titleFaqs{
+    /* Rubik Bold/Rubik Bold 56px */
+    color: $dark-blue-700;
+}
+.dividerFaqs{
+    background-color: $dark-blue-300;
+}
+.questionFaqs{
+    /* Rubik Bold/Rubik Bold 29px */
+    color: $purple-heart-950 //$dark-blue-950;
+}
+.answerFaqs{
+    /* Rubik Regular/Rubik Regular 23px */
+    color: $dark-blue-950;
+}
