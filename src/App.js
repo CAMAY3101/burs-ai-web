@@ -9,7 +9,6 @@ function App() {
     <NextUIProvider>
       <div className="App">
         <Landing />
-        hello
       </div>
     </NextUIProvider>
   );
