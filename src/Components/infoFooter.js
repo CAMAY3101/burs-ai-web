@@ -19,7 +19,7 @@ const InfoFooter = () => {
                 <img src={phoneIcon} alt="Subcontainer 1" className="w-20 h-20 mr-4" />
                 <div>
                     <h2 className="text-lg font-semibold">Numero de atención 24/7</h2>
-                    <p className="text-gray-600">Subcontainer 1 Subtitle</p>
+                    <p className="text-gray-600">00 000 000</p>
                 </div>
             </div>
             <div className="w-full md:w-1/3 p-4 bg-gray-400 flex items-center">
