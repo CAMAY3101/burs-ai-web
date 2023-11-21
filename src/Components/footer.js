@@ -56,9 +56,15 @@ function footer() {
             </div>
 
             <div className="w-full md:w-3/12 pt-10 flex gap-x-10">
-                <img className={socialIcons} alt='Facebook' src={facebookIcon}/>
-                <img className={socialIcons} alt='Twitter' src={twitterIcon}/>
-                <img className={socialIcons} alt='Instagram' src={instagramIcon}/>
+                <div className="rounded-full w-10 h-10 flex items-center justify-center backgroundIconSocialMedia">
+                    <img className={socialIcons} alt='Facebook' src={facebookIcon}/>
+                </div>
+                <div className="rounded-full w-10 h-10 flex items-center justify-center backgroundIconSocialMedia">
+                    <img className={socialIcons} alt='Twitter' src={twitterIcon}/>
+                </div>
+                <div className="rounded-full w-10 h-10 flex items-center justify-center backgroundIconSocialMedia">
+                    <img className={socialIcons} alt='Instagram' src={instagramIcon}/>
+                </div>
             </div>
         </div>
 
