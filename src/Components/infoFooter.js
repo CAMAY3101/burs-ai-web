@@ -3,30 +3,48 @@ import mapIcon from '../Assets/map.png'
 import phoneIcon from '../Assets/phone.png'
 import emailIcon from '../Assets/email.png'
 
-const InfoFooter = () => {
-    // <div className={`flex ${isColumn ? 'flex-col' : 'flex-row'}`}>
+const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center backgroundIconFooter"
 
+const InfoFooter = () => {
     return (
         <div className="flex flex-col md:flex-row justify-center ">
-            <div className="w-full md:w-1/3 p-4 bg-gray-200 flex items-center">
-                <img src={mapIcon} alt="Subcontainer 1" className="w-20 h-20 mr-4" />
-                <div>
-                    <h2 className="text-lg font-semibold">Dirección</h2>
-                    <p className="text-gray-600">Av. de las Américas 1545 piso 20, Providencia, 44630 Guadalajara, Jal.</p>
+
+            <div className="w-full md:w-1/3 p-4 gap-x-2 flex items-center bg-dark-blue-500">
+                <div className='w-1/4'>
+                    <div className="rounded-full w-20 h-20 flex items-center justify-center backgroundIconContact">
+                        <img src={mapIcon} alt="Subcontainer 1" className="w-15 h-15" />
+                    </div>
+                </div>
+
+                <div className=''>
+                    <p className="mb-1 rubik-Regular-15 titleContact">Dirección</p>
+                    <p className="rubik-Medium-15 text-white">Av. de las Américas 1545 piso 20, Providencia, 44630 Guadalajara, Jal.</p>
                 </div>
             </div>
-            <div className="w-full md:w-1/3 p-4 bg-gray-300 flex items-center">
-                <img src={phoneIcon} alt="Subcontainer 1" className="w-20 h-20 mr-4" />
+            
+            <div className="w-full md:w-1/3 p-4 gap-x-2 flex items-center bg-dark-blue-600">
+                <div className='w-1/4'>
+                    <div className="rounded-full w-20 h-20 flex items-center justify-center backgroundIconContact">
+                        <img src={phoneIcon} alt="Subcontainer 1" className="w-15 h-15" />
+                    </div>
+                </div>
+
                 <div>
-                    <h2 className="text-lg font-semibold">Numero de atención 24/7</h2>
-                    <p className="text-gray-600">00 000 000</p>
+                    <p className="mb-1 rubik-Regular-15 titleContact">Numero de atención 24/7</p>
+                    <p className="rubik-Medium-15 text-white">00 000 000</p>
                 </div>
             </div>
-            <div className="w-full md:w-1/3 p-4 bg-gray-400 flex items-center">
-                <img src={emailIcon} alt="Subcontainer 1" className="w-20 h-20 mr-4" />
+
+            <div className="w-full md:w-1/3 p-4 gap-x-2 flex items-center bg-dark-blue-800">
+                <div className='w-1/4'>
+                    <div className="rounded-full w-20 h-20 flex items-center justify-center backgroundIconContact">
+                        <img src={emailIcon} alt="Subcontainer 1" className="w-15 h-15" />
+                    </div>
+                </div>
+
                 <div>
-                    <h2 className="text-lg font-semibold">E-Mail de atención 24/7 </h2>
-                    <p className="text-gray-600">soporte@aiburs.com</p>
+                    <p className="mb-1 rubik-Regular-15 titleContact">E-Mail de atención 24/7 </p>
+                    <p className="rubik-Medium-15 text-white">soporte@aiburs.com</p>
                 </div>
             </div>
         </div>
