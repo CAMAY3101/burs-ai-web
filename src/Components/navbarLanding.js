@@ -15,7 +15,9 @@ const navbarLanding = () => {
     return (
         <Navbar className="navbar">
             <NavbarBrand justify = 'start'>
-                <img src={logo} alt="BURSAI" className="logo" />
+                <Link href="/">
+                    <img  src={logo} alt="BURSAI" className="logo" />
+                </Link>
             </NavbarBrand>
 
             <NavbarContent className="navButtons" justify='center' >
@@ -81,6 +83,7 @@ const navbarLanding = () => {
                             key="Invertir"
                             description="Invierte tu dinero con nosotros y obtén rendimientos atractivos."
                             startContent={<img src={invesment_icon} alt="Invertir" className="icon" />}
+                            href="/quiero-invertir"
                         >
                             Quiero Invertir
                         </DropdownItem>
