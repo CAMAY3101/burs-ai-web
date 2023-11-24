@@ -1,8 +1,12 @@
 import React from 'react'
 
+import HeroQI from '../Components/heroQI'
+
 function QuieroInvertir() {
   return (
-    <div>QuieroInvertir</div>
+    <div>
+      <HeroQI />
+    </div>
   )
 }
 
