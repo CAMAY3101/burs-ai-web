@@ -1,17 +1,61 @@
 import React from 'react'
-import InfoFooter from './infoFooter'
-import "../Styles/Landing.scss"
 
-import instagramIcon from '../Assets/instagram.png'
-import facebookIcon from '../Assets/facebook.png'
-import twitterIcon from '../Assets/twitter.png'
+import "../Styles/Common.scss"
+
+import instagramIcon from '../Assets/icons/instagram.png'
+import facebookIcon from '../Assets/icons/facebook.png'
+import twitterIcon from '../Assets/icons/twitter.png'
+
+import mapIcon from '../Assets/icons/map.png'
+import phoneIcon from '../Assets/icons/phone.png'
+import emailIcon from '../Assets/icons/email.png'
 
 const socialIcons = 'w-6 h-6'
 
-function footer() {
+function Footer() {
   return (
     <div>
-        <InfoFooter />
+        <div className="flex flex-col md:flex-row justify-center ">
+
+            <div className="w-full md:w-1/3 p-4 gap-x-2 flex items-center bg-dark-blue-500">
+                <div className='w-1/4'>
+                    <div className="rounded-full w-20 h-20 flex items-center justify-center bg-icon-contact">
+                        <img src={mapIcon} alt="Subcontainer 1" className="w-15 h-15" />
+                    </div>
+                </div>
+
+                <div className=''>
+                    <p className="mb-1 rubik-Regular-15 title-contact">Dirección</p>
+                    <p className="rubik-Medium-15 text-white">Av. de las Américas 1545 piso 20, Providencia, 44630 Guadalajara, Jal.</p>
+                </div>
+            </div>
+
+            <div className="w-full md:w-1/3 p-4 gap-x-2 flex items-center bg-dark-blue-600">
+                <div className='w-1/4'>
+                    <div className="rounded-full w-20 h-20 flex items-center justify-center bg-icon-contact">
+                        <img src={phoneIcon} alt="Subcontainer 1" className="w-15 h-15" />
+                    </div>
+                </div>
+
+                <div>
+                    <p className="mb-1 rubik-Regular-15 title-contact">Numero de atención 24/7</p>
+                    <p className="rubik-Medium-15 text-white">00 000 000</p>
+                </div>
+            </div>
+
+            <div className="w-full md:w-1/3 p-4 gap-x-2 flex items-center bg-dark-blue-800">
+                <div className='w-1/4'>
+                    <div className="rounded-full w-20 h-20 flex items-center justify-center bg-icon-contact">
+                        <img src={emailIcon} alt="Subcontainer 1" className="w-15 h-15" />
+                    </div>
+                </div>
+
+                <div>
+                    <p className="mb-1 rubik-Regular-15 title-contact">E-Mail de atención 24/7 </p>
+                    <p className="rubik-Medium-15 text-white">soporte@aiburs.com</p>
+                </div>
+            </div>
+        </div>
 
 
         <div className="flex flex-col md:flex-row pt-10 Footer bg-dark-blue-900">
@@ -56,13 +100,13 @@ function footer() {
             </div>
 
             <div className="w-full md:w-3/12 pt-10 flex gap-x-10">
-                <div className="rounded-full w-10 h-10 flex items-center justify-center backgroundIconSocialMedia">
+                <div className="rounded-full w-10 h-10 flex items-center justify-center bg-icon-social-media">
                     <img className={socialIcons} alt='Facebook' src={facebookIcon}/>
                 </div>
-                <div className="rounded-full w-10 h-10 flex items-center justify-center backgroundIconSocialMedia">
+                <div className="rounded-full w-10 h-10 flex items-center justify-center bg-icon-social-media">
                     <img className={socialIcons} alt='Twitter' src={twitterIcon}/>
                 </div>
-                <div className="rounded-full w-10 h-10 flex items-center justify-center backgroundIconSocialMedia">
+                <div className="rounded-full w-10 h-10 flex items-center justify-center bg-icon-social-media">
                     <img className={socialIcons} alt='Instagram' src={instagramIcon}/>
                 </div>
             </div>
@@ -104,4 +148,4 @@ function footer() {
   )
 }
 
-export default footer
+export default Footer

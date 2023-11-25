@@ -1,39 +1,37 @@
 import React from 'react'
-import cash from '../Assets/cash.png'
-import inspection from '../Assets/inspection.png'
-import smilingFace from '../Assets/smiling-face.png'
-// import {Link} from "@nextui-org/react"
-import '../Styles/Landing.scss'
-// import { Layout } from '@douyinfe/semi-ui'
+import cash from '../../Assets/Landing/cash.png'
+import inspection from '../../Assets/Landing/inspection.png'
+import smilingFace from '../../Assets/Landing/smiling-face.png'
+
+import '../../Styles/Landing.scss'
 
 const sizeIcon = "w-14 h-14 iconHero"
-const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 backgroundIconHero"
-const subtitleIconClass = "text-center textIconHero rubik-Medium-23"
-const textIconClass = "text-center textIconHero rubik-Medium-18"
-const TitleHeroClassContainer = "mb-10 text-center" // "mb-4 text-center" || "mb-8 text-center" mb-number choose the margin bottom
-const CardsContainer = "grid grid-cols-3 gap-x-4 gap-y-8" //"grid grid-cols-3 gap-6 justify-end sm:flex flex-col sm:items-center"  || "grid grid-cols-3 gap-x-4 gap-y-8"
+const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 bg-icon-hero"
+const subtitleIconClass = "text-center text-icon-hero rubik-Medium-23"
+const textIconClass = "text-center text-icon-hero rubik-Medium-18"
+const TitleHeroClassContainer = "mb-10 text-center" 
+const CardsContainer = "grid grid-cols-3 gap-x-4 gap-y-8" 
 
 const heroLanding = () => {
   return (
-    // make a hero section with a background image with the text inside of it
     <div id='proceso'>
-        <div className="bg-cover bg-center h-screen flex items-center justify-end Portada">
+        <div className="bg-cover bg-center h-screen flex items-center justify-end cover-hero">
             <div className="flex flex-col md:flex-row justify-end">
                 <div className="p-10">
                     <div className= {TitleHeroClassContainer}>
-                        <span className="titleHero rubik-Bold-36">
+                        <span className="title-hero rubik-Bold-36">
                             Recibe tu préstamo
                         </span>
-                        <span className="titleHero rubik-Bold-36">
+                        <span className="title-hero rubik-Bold-36">
                             <br />
                         </span>
-                        <span className="titleHeroCenter rubik-Bold-45">
+                        <span className="title-hero-center rubik-Bold-45">
                             seguro y en minutos
                         </span>
-                        <span className="titleHeroCenter rubik-Bold-45">
+                        <span className="title-hero-center rubik-Bold-45">
                             <br />
                         </span>
-                        <span className="titleHero rubik-Bold-36">
+                        <span className="title-hero rubik-Bold-36">
                             en solo 3 pasos
                         </span>
                     </div>
@@ -56,8 +54,8 @@ const heroLanding = () => {
                             <div className={backgroundIconClass}>
                                 <img src={smilingFace} alt="Icon" className={sizeIcon} />
                             </div>
-                            <p className="text-center textIconHero rubik-Medium-23">Disfruta</p>
-                            <p className="text-center textIconHero rubik-Medium-18">una vez aprobado el prestamo</p>
+                              <p className={subtitleIconClass}>Disfruta</p>
+                            <p className={textIconClass}>una vez aprobado el prestamo</p>
                         </div>
                     </div>
                 </div>

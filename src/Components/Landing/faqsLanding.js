@@ -1,25 +1,25 @@
 import React from 'react'
-import FQAS from '../Assets/faqs.png'
+import FQAS from '../../Assets/Landing/faqs.png'
 
 import { Accordion, AccordionItem, Divider } from "@nextui-org/react";
-import "../Styles/Landing.scss"
+import "../../Styles/Landing.scss"
 
 function faqsLanding() {
     return (
-        <div className="flex flex-col md:flex-row  justify-center Faqs">
+        <div className="flex flex-col md:flex-row  justify-center mb-12 px-7">
             <div className="md:w-1/2 p-4">
-                <div className="p-4 titleFaqs rubik-Bold-45">Preguntas frecuentes</div>
-                <Divider className="my-4 dividerFaqs" />
+                <div className="p-4 title-faqs rubik-Bold-45">Preguntas frecuentes</div>
+                <Divider className="my-4 divider-faqs" />
                 <div className="p-4">
-                    <Accordion className='accordionFaqs p-2'>
+                    <Accordion className='accordion-faqs p-2'>
                         {faqs.map((item, index) => (
                             <AccordionItem key={index} 
                             title={
-                                <div className='my-1 px-4 rubik-Medium-18 questionFaqs'>
+                                <div className='my-1 px-4 rubik-Medium-18 question-faqs'>
                                     {item.pregunta}
                                 </div>
                             }>
-                                <div className='rubik-Regular-15 px-4 answerFaqs' >
+                                <div className='rubik-Regular-15 px-4 answer-faqs' >
                                     {item.respuesta}
                                 </div>
                             </AccordionItem>

@@ -6,8 +6,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const opionesContainer = "pb-10 Opiniones"
-const titleOpinionesClass = "pt-5 mb-10 text-center titleOpiniones rubik-Bold-56"
+const opionesContainer = "pb-10 bg-opiniones"
+const titleOpinionesClass = "pt-5 mb-10 text-center title-opiniones rubik-Bold-56"
 const sliderContainer = "w-10/12 m-auto "
 
 function opinionsLanding() {
@@ -26,15 +26,15 @@ function opinionsLanding() {
                 <div className={sliderContainer}>
                     <Slider {...settings}>
                     {testimonios.map((testimonio, index) => (
-                        <Card className="p-3 cardOpinion">
+                        <Card className="p-3 card-opinion">
                             <CardHeader className="flex">
                                 <div className="flex flex-col">
-                                    <p className="rubik-Medium-23 nombreCardOpinion">{testimonio.nombre}</p>
-                                    <p className="rubik-Medium-15 cargoCardOpinion">{testimonio.ocupacion}</p>
+                                    <p className="rubik-Medium-23 name-card-opinion">{testimonio.nombre}</p>
+                                    <p className="rubik-Medium-15 position-card-opinion">{testimonio.ocupacion}</p>
                                 </div>
                             </CardHeader>
                             <CardBody>
-                                <p className='rubik-Regular-18 textCardOpinion'>{testimonio.opinion}</p>
+                                <p className='rubik-Regular-18 text-card-opinion'>{testimonio.opinion}</p>
                             </CardBody>
                             <CardFooter>
                                 <Rating size="small" defaultValue={5} />
