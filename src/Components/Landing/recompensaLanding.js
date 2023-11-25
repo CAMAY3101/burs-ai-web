@@ -1,8 +1,8 @@
 import React from 'react'
-import '../Styles/Landing.scss'
+import '../../Styles/Landing.scss'
 
-import WinIcon from '../Assets/Landing/win.png'
-import TimeIcon from '../Assets/Landing/time.png'
+import WinIcon from '../../Assets/Landing/win.png'
+import TimeIcon from '../../Assets/Landing/time.png'
 
 // Class names
 

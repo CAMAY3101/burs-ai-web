@@ -1,6 +1,6 @@
 import React from 'react'
 
-import secuirtyimage from '../Assets/Landing/seguridad.png'
+import secuirtyimage from '../../Assets/Landing/seguridad.png'
 
 function securityLandings() {
   return (

@@ -1,9 +1,9 @@
 import React from 'react'
-import cash from '../Assets/Landing/cash.png'
-import inspection from '../Assets/Landing/inspection.png'
-import smilingFace from '../Assets/Landing/smiling-face.png'
+import cash from '../../Assets/Landing/cash.png'
+import inspection from '../../Assets/Landing/inspection.png'
+import smilingFace from '../../Assets/Landing/smiling-face.png'
 // import {Link} from "@nextui-org/react"
-import '../Styles/Landing.scss'
+import '../../Styles/Landing.scss'
 // import { Layout } from '@douyinfe/semi-ui'
 
 const sizeIcon = "w-14 h-14 iconHero"

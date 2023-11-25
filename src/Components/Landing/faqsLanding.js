@@ -1,8 +1,8 @@
 import React from 'react'
-import FQAS from '../Assets/Landing/faqs.png'
+import FQAS from '../../Assets/Landing/faqs.png'
 
 import { Accordion, AccordionItem, Divider } from "@nextui-org/react";
-import "../Styles/Landing.scss"
+import "../../Styles/Landing.scss"
 
 function faqsLanding() {
     return (
