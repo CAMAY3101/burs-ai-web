@@ -1,11 +1,10 @@
 import React from 'react'
 import NavbarLanding from '../Components/navbarLanding'
-import HeroLanding from '../Components/heroLanding'
-import RecompensaLanding from '../Components/recompensaLanding';
-import OpinionesLanding from '../Components/opinionsLanding';
-import SecurityLanding from '../Components/securityLanding';
-import FaqsLanding from '../Components/faqsLanding';
-import FooterLan from '../Components/footer';
+import HeroLanding from '../Components/Landing/heroLanding'
+import RecompensaLanding from '../Components/Landing/recompensaLanding';
+import OpinionesLanding from '../Components/Landing/opinionsLanding';
+import SecurityLanding from '../Components/Landing/securityLanding';
+import FaqsLanding from '../Components/Landing/faqsLanding';
 
 import { Layout} from '@douyinfe/semi-ui';
 
@@ -20,9 +19,6 @@ const Landing = () => {
         <SecurityLanding/>
         <FaqsLanding/>
       </Content>
-      <Footer>
-        <FooterLan/>
-      </Footer>
     </Layout>
   )
 }
