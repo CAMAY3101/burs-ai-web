@@ -1,6 +1,6 @@
 import React from 'react'
 
-import HeroQI from '../Components/heroQI'
+import HeroQI from '../Components/QuieroInvertir/heroQI'
 
 function QuieroInvertir() {
   return (
