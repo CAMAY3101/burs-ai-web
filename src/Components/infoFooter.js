@@ -1,9 +1,7 @@
 import React from 'react'
-import mapIcon from '../Assets/map.png'
-import phoneIcon from '../Assets/phone.png'
-import emailIcon from '../Assets/email.png'
-
-const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center backgroundIconFooter"
+import mapIcon from '../Assets/icons/map.png'
+import phoneIcon from '../Assets/icons/phone.png'
+import emailIcon from '../Assets/icons/email.png'
 
 const InfoFooter = () => {
     return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import FQAS from '../Assets/faqs.png'
+import FQAS from '../Assets/Landing/faqs.png'
 
 import { Accordion, AccordionItem, Divider } from "@nextui-org/react";
 import "../Styles/Landing.scss"

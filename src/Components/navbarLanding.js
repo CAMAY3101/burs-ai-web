@@ -1,7 +1,7 @@
 import React from 'react'
-import logo from '../Assets/burs-icon.png'
-import invesment_icon from '../Assets/invesment.png'
-import prestamo_icon from '../Assets/prestamo.png'
+import logo from '../Assets/icons/burs-icon.png'
+import invesment_icon from '../Assets/icons/invesment.png'
+import prestamo_icon from '../Assets/icons/prestamo.png'
 import '../Styles/Landing.scss'
 
 import { IconChevronDown } from '@douyinfe/semi-icons';

@@ -1,7 +1,7 @@
 import React from 'react'
-import cash from '../Assets/cash.png'
-import inspection from '../Assets/inspection.png'
-import smilingFace from '../Assets/smiling-face.png'
+import cash from '../Assets/Landing/cash.png'
+import inspection from '../Assets/Landing/inspection.png'
+import smilingFace from '../Assets/Landing/smiling-face.png'
 // import {Link} from "@nextui-org/react"
 import '../Styles/Landing.scss'
 // import { Layout } from '@douyinfe/semi-ui'

@@ -2,9 +2,9 @@ import React from 'react'
 import InfoFooter from './infoFooter'
 import "../Styles/Landing.scss"
 
-import instagramIcon from '../Assets/instagram.png'
-import facebookIcon from '../Assets/facebook.png'
-import twitterIcon from '../Assets/twitter.png'
+import instagramIcon from '../Assets/icons/instagram.png'
+import facebookIcon from '../Assets/icons/facebook.png'
+import twitterIcon from '../Assets/icons/twitter.png'
 
 const socialIcons = 'w-6 h-6'
 
