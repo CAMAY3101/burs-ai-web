@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../Assets/icons/burs-icon.png'
 import invesment_icon from '../Assets/icons/invesment.png'
 import prestamo_icon from '../Assets/icons/prestamo.png'
-import '../Styles/Landing.scss'
+import '../Styles/Common.scss'
 
 import { IconChevronDown } from '@douyinfe/semi-icons';
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
@@ -16,33 +16,33 @@ const navbarLanding = () => {
         <Navbar className="navbar">
             <NavbarBrand justify = 'start'>
                 <Link href="/">
-                    <img  src={logo} alt="BURSAI" className="logo" />
+                    <img  src={logo} alt="BURSAI" className="brand-logo" />
                 </Link>
             </NavbarBrand>
 
-            <NavbarContent className="navButtons" justify='center' >
+            <NavbarContent className="nav-button" justify='center' >
                 <Space spacing={[40]}>
-                    <NavbarItem className='navButton'>
+                    <NavbarItem className='nav-button'>
                         <Link className={FontnavButtonClass} href="#proceso">
                             Proceso
                         </Link>
                     </NavbarItem>
-                    <NavbarItem className='navButton'>
+                    <NavbarItem className='nav-button'>
                         <Link className={FontnavButtonClass} href="#recompensa">
                             Recompensa
                         </Link>
                     </NavbarItem>
-                    <NavbarItem className='navButton'>
+                    <NavbarItem className='nav-button'>
                         <Link className={FontnavButtonClass} href="#blog">
                             Blog
                         </Link>
                     </NavbarItem>
-                    <NavbarItem className='navButton'>
+                    <NavbarItem className='nav-button'>
                         <Link className={FontnavButtonClass} href="#faqs">
                             Preguntas Frecuentes
                         </Link>
                     </NavbarItem>
-                    <NavbarItem className='navButton'>
+                    <NavbarItem className='nav-button'>
                         <Link className={FontnavButtonClass} href="#contacto">
                             Contacto
                         </Link>
@@ -53,7 +53,7 @@ const navbarLanding = () => {
             <NavbarContent justify="end">
                 <Dropdown>
                     <NavbarItem>
-                        <DropdownTrigger className="servicesButtons">
+                        <DropdownTrigger className="services-buttons">
                             <Button
                                 disableRipple
                                 className="servicesButtons data-[hover=true]:bg-transparent rubik-Bold-18 "

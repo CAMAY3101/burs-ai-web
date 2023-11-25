@@ -1,48 +1,8 @@
 @import './Common.scss';
 
-
-.icon {
-    width: 30px;
-    height: 30px;
-    // margin-right: 10px;
-
-}
-
-.navbar {
-    background: $dark-blue-800;
-    justify-content: space-between;
-    height: 70px;
-}
-
-.logo {
-    width: 60px;
-    height: 60px;
-    top: 9px;
-    left: 22px;
-}
-
-.navButtons {
-    //justify-content: space-around;    
-}
-
-.navButton {
-    a {
-        color: $purple-heart-50;
-
-        &:hover {
-            color: $persian-rose-400;
-        }
-    }
-}
-
-.servicesButtons {
-    color: $purple-heart-50;
-
-}
-
 //------------------HERO------------------//
 
-.Portada {
+.cover-hero{
     background-image: url("../Assets/Landing/PortadaHero.png");
     width: 100%;
     height: 700px;
@@ -51,23 +11,23 @@
     margin-bottom: 40px;
 }
 
-.titleHero {
+.title-hero {
     //Rubik-Bold-36
     color: $dark-blue-50;
     word-wrap: break-word;
 }
 
-.titleHeroCenter {
+.title-hero-center {
     //Rubik-Bold-48
     color: $persian-rose-300;
     //word-wrap: break-word;
 }
 
-.backgroundIconHero {
+.bg-icon-hero {
     background-color: rgb(255 240 251 / 50%);//$persian-rose-50;   
 }
 
-.textIconHero{
+.text-icon-hero{
     //Rubik-Medium-23
     //Rubik-Medium-18
     color: $persian-rose-100;
@@ -75,14 +35,8 @@
 }
 
 //------------------RECOMPENSA------------------//
-.Recompensa{
-    width: 100%;
-    padding-left: 150px;
-    padding-right: 150px;
-    margin-bottom: 50px;
-}
 
-.titleRecompensa{
+.title-recompensa{
     /* Rubik Bold/Rubik Bold 70px */
     background: linear-gradient(180deg, #4F00CD 0%, #A92FFF 66.92%);
     -webkit-background-clip: text;
@@ -92,29 +46,29 @@
 
 }
 
-.backgroundIconRecompensa {
+.bg-icon-recompensa{
     background-color: $dark-blue-100
 }
 
-.subtitleRecompensaCard{
+.subtitle-card-recompensa{
     //Rubik-Medium-45
     color: $purple-heart-900;
     //word-wrap: break-word;
 }
-.textRecompensaCard{
+.text-card-recompensa{
     //Rubik-Medium-29
     color: $purple-heart-500;
     //word-wrap: break-word;
 }
 
 //------------------OPINIONES------------------//
-.Opiniones{
+.bg-opiniones{
     /* Gradients/Gradient purple heart */
     background: linear-gradient(90deg, #4A12CB 1.39%, #8218DB 42.25%, #BC1FEC 99.45%);
     margin-bottom: 50px;
 }
 
-.titleOpiniones{
+.title-opiniones{
     /* Rubik Bold/Rubik Bold 56px */
     background: linear-gradient(180deg, #FFC6F5 0%, #F3F0FF 100%);
     -webkit-background-clip: text;
@@ -126,7 +80,7 @@
     margin: 0 50px;
 }
 
-.cardOpinion{
+.card-opinion{
     /* Testimonial */
     
     background: rgba(187, 165, 255, 0.67);
@@ -135,24 +89,20 @@
     border-radius: 16px;
 }
 
-.nombreCardOpinion{
+.name-card-opinion{
     /*rubik-Bold-23*/
     color: $persian-rose-50;
 }
-.cargoCardOpinion{
+.position-card-opinion{
     /*rubik-Bold-18*/
     color: $persian-rose-200;
 }
-.textCardOpinion{
+.text-card-opinion{
     /* Rubik Regular/Rubik Regular 23px */
     color: $dark-blue-50;
 }
 
 //------------------Security------------------//
-
-.Seguridad{
-    margin-bottom: 50px;
-}
 
 // Burs ai tu espacio seguro
 .bursAi {
@@ -204,71 +154,27 @@
 
 /*------------------BLOG------------------*/
 
-.Blog{
-    margin-bottom: 50px;
-}
+
 
 /*------------------FAQS------------------*/
-.Faqs{
-    margin-bottom: 50px;
-    padding-left: 30px;
-    padding-right: 30px;
-}
-.accordionFaqs{
+.accordion-faqs{
     box-shadow: 0px 12px 25px rgba(6, 28, 61, 0.15);
     border-radius: 16px;
     //background-color: rgba(187, 165, 255, 0.09);
 }
-.titleFaqs{
+.title-faqs{
     /* Rubik Bold/Rubik Bold 56px */
     color: $dark-blue-700;
 }
-.dividerFaqs{
+.divider-faqs{
     background-color: $dark-blue-300;
 }
-.questionFaqs{
+.question-faqs{
     /* Rubik Bold/Rubik Bold 29px */
     color: $purple-heart-950 //$dark-blue-950;
 }
-.answerFaqs{
+.answer-faqs{
     /* Rubik Regular/Rubik Regular 23px */
     color: $dark-blue-950;
 }
 
-/*------------------FOOTER------------------*/
-
-.backgroundIconContact{
-    background-color: rgba(186, 163, 255, 0.200)
-}
-.bg-dark-blue-500 {
-    background-color: $dark-blue-500;
-}
-.bg-dark-blue-600 {
-    background-color: $dark-blue-600;
-}
-.bg-dark-blue-700 {
-    background-color: $dark-blue-700;
-}
-.bg-dark-blue-800 {
-    background-color: $dark-blue-800;
-}
-.bg-dark-blue-900 {
-    background-color: $dark-blue-900;
-}
-.bg-dark-blue-950{
-    background-color: $dark-blue-950;
-}
-
-.titleContact{
-    /* rubik-regular-29 */
-    color: rgba(255, 255, 255, 0.502972);
-}
-
-.title-footer {
-    /* rubik-Medium-18 */
-    color: $persian-rose-600;
-}
-
-.backgroundIconSocialMedia {
-    background-color: rgba(186, 163, 255, 0.800)
-}

@@ -5,7 +5,6 @@ import RecompensaLanding from '../Components/Landing/recompensaLanding';
 import OpinionesLanding from '../Components/Landing/opinionsLanding';
 import SecurityLanding from '../Components/Landing/securityLanding';
 import FaqsLanding from '../Components/Landing/faqsLanding';
-import FooterLan from '../Components/footer';
 
 import { Layout} from '@douyinfe/semi-ui';
 
@@ -20,9 +19,6 @@ const Landing = () => {
         <SecurityLanding/>
         <FaqsLanding/>
       </Content>
-      <Footer>
-        <FooterLan/>
-      </Footer>
     </Layout>
   )
 }
