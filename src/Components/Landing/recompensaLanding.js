@@ -20,22 +20,22 @@ function recompensaLanding() {
       <div className="w-full flex flex-col items-center bg-cover bg-center px-36 mb-12 ">
             <h1 className={titleRecompensaClass}>El credito que confia en ti</h1>
         <div className="flex flex-row justify-center">
-                <div className={cardContainer}>
-                    <div className={backgroundIconClass}>
-                        <img src={TimeIcon} alt="Icon" className={sizeIcon} />
-                    </div>
-                    <h2 className={subtitleCardClass}>¡Prestamos al instante!</h2>
-                      <p className={textCardClass}>Recibe tu crédito en línea aprobado en menos de 15 minutos. Sin intermediarios ¡todo desde tu celular o computadora!</p>
-                </div>
-                <div className={cardContainer}>
-                    <div className={backgroundIconClass}>
-                        <img src={WinIcon} alt="Icon" className={sizeIcon} />
-                    </div>
-                    <h2 className={subtitleCardClass}>Recompensa burs ai</h2>
-                      <p className={textCardClass}>Puedes ganar dinero por invertir a otros a usar Burs ai, hasta $100 MXN por cada invitado.</p>
-                </div>
-            </div>
+          <div className={cardContainer}>
+              <div className={backgroundIconClass}>
+                  <img src={TimeIcon} alt="Icon" className={sizeIcon} />
+              </div>
+              <h2 className={subtitleCardClass}>¡Prestamos al instante!</h2>
+                <p className={textCardClass}>Recibe tu crédito en línea aprobado en menos de 15 minutos. Sin intermediarios ¡todo desde tu celular o computadora!</p>
+          </div>
+          <div className={cardContainer}>
+              <div className={backgroundIconClass}>
+                  <img src={WinIcon} alt="Icon" className={sizeIcon} />
+              </div>
+              <h2 className={subtitleCardClass}>Recompensa burs ai</h2>
+                <p className={textCardClass}>Puedes ganar dinero por invertir a otros a usar Burs ai, hasta $100 MXN por cada invitado.</p>
+          </div>
         </div>
+      </div>
     </div>
   )
 }
