@@ -5,7 +5,7 @@ import '../../Styles/QuieroInvertir.scss'
 function heroQI() {
   return (
     <div id='proceso'>
-        <div className="bg-cover bg-center flex items-center justify-end cover-hero-QI">
+        <div className="bg-cover bg-center flex items-center justify-end mb-12 cover-hero-QI">
             <div className="wflex flex-col md:flex-row justify-end text-center">
                 <span className='invierte'>
                     INVIERTE<br />
