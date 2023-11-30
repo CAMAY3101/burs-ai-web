@@ -16,29 +16,35 @@ function Invertir() {
   return (
     <div>
         <div className="w-full flex flex-col items-center bg-cover bg-center px-36 mb-12 ">
-            <h1 className={titleRecompensaClass}>El credito que confia en ti</h1>
+            <h1 className={titleRecompensaClass}>¿Cómo empezar a invertir?</h1>
             <div className="flex flex-row justify-center">
                 <div className={cardContainer}>
                     <div className={backgroundIconClass}>
                         <img src={relacionIcon} alt="Icon" className={sizeIcon} />
                     </div>
-                    <h2 className={subtitleCardClass}>¡Prestamos al instante!</h2>
-                    <p className={textCardClass}>Recibe tu crédito en línea aprobado en menos de 15 minutos. Sin intermediarios ¡todo desde tu celular o computadora!</p>
+                    <h2 className={subtitleCardClass}>Relación</h2>
+                      <p className={textCardClass}>Proporciona financiamiento a otros, y a cambio, obtendrás ganancias a través de los intereses. Es una forma efectiva de hacer que tu dinero trabaje para ti, generando ingresos adicionales.</p>
                 </div>
                 <div className={cardContainer}>
                     <div className={backgroundIconClass}>
                         <img src={inversionesIcon} alt="Icon" className={sizeIcon} />
                     </div>
-                    <h2 className={subtitleCardClass}>Recompensa burs ai</h2>
-                    <p className={textCardClass}>Puedes ganar dinero por invertir a otros a usar Burs ai, hasta $100 MXN por cada invitado.</p>
+                    <h2 className={subtitleCardClass}>Inversiones burs ai</h2>
+                      <p className={textCardClass}>Entendemos tus necesidades y te acompañamos en el camino para alcanzar tus objetivos de inversión. <br/>
+                        <ul>
+                            <li>· Amplia variedad de fondos de inversión.</li>
+                            <li>· Productos que complementan tus objetivos.</li>
+                            <li>· Un equipo de asesores especializados.</li>
+                        </ul>
+                      </p>
                 </div>
                 <div className={cardContainer}>
                     <div className={backgroundIconClass}>
                         <img src={diversificacionIcon} alt="Icon" className={sizeIcon} />
                     </div>
-                    <h2 className={subtitleCardClass}>Recompensa burs ai</h2>
+                    <h2 className={subtitleCardClass}>Diversificación</h2>
                     <p className={textCardClass}>
-                        Puedes ganar dinero por invertir a otros a usar Burs ai, hasta $100 MXN por cada invitado.
+                          La diversificación en mercados financieros, financiamiento en línea y mercado inmobiliario implica invertir en diferentes activos dentro de estos sectores para reducir el riesgo y aprovechar oportunidades de crecimiento.
                     </p>
                 </div>
             </div>
