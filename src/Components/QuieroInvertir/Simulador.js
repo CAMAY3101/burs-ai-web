@@ -16,42 +16,45 @@ function Simulador() {
           <Slider
             color="foreground"
             size="sm"
-            step={10}
+            showTooltip={true}
             marks={[
               {
-                value: 20,
-                label: "20%",
+                value: 250000,
+                label: "$250,000",
               },
               {
-                value: 50,
-                label: "50%",
+                value: 500000,
+                label: "$500,000",
               },
               {
-                value: 80,
-                label: "80%",
+                value: 750000,
+                label: "$750,000",
               },
             ]}
+            minValue={100000}
+            maxValue={1000000}
+            step={100000}
             startContent="$100,000"
             endContent="$1,000,000"
-            defaultValue={20}
-            className="max-w-md"
+            formatOptions={{ style: "currency", currency: "MXN" }}
+            className="max-w-xl"
           />
           <hr/>
-          <div className="flex justify-center space-x-10">
-            <div id='Card 1' className="p-4 rounded-lg shadow-md">
+          <div className="flex justify-center space-x-40">
+            <div id='Card 1' className="">
               <div className="w-32 h-20 bg-blue-500 flex items-center justify-center rounded-md">
                 <span className="text-white text-3xl font-bold">1</span>
               </div>
               <div className="mt-4 text-center">
-                <p className="text-gray-500">Some description</p>
+                <p className="text-gray-500">de rendimiento</p>
               </div>
             </div>
-            <div id='Card 2' className="p-4 rounded-lg shadow-md">
+            <div id='Card 2' className="">
               <div className="w-32 h-20 bg-red-500 flex items-center justify-center rounded-md">
                 <span className="text-white text-3xl font-bold">2</span>
               </div>
               <div className="mt-4 text-center">
-                <p className="text-gray-500">Some description</p>
+                <p className="text-gray-500">retorno total</p>
               </div>
             </div>
           </div>
