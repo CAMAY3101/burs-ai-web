@@ -56,3 +56,26 @@
 .bg-icon-invertir{
     background-color: $dark-blue-50;
 }
+
+//-------Simulador-------
+.simulador-container{
+    background: linear-gradient(90deg, #FF58DB 0%, #A92FFF 60.52%, #8218DB 100%);
+}
+.title-simulador{
+    color: $dark-blue-50;
+}
+.subtitle-simulador{
+    color: $dark-blue-50;
+}
+.min-simulador{
+    color: $purple-heart-200;
+}
+.card-simulador{
+    background-color: $persian-rose-50;
+}
+.text-card-simulador{
+    color: $purple-heart-900;
+}
+.subtext-card-simulador{
+    color: $dark-blue-50;
+}
