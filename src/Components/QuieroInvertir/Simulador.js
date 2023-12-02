@@ -5,6 +5,17 @@ import simuladorpng from '../../Assets/QuieroInvertir/simulador.webp'
 import { Slider } from "@nextui-org/react";
 
 function Simulador() {
+  const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
+  const porcentajes = {
+    100000: 20,
+    500000: 25,
+    750000: 33,
+    1000000:33
+  };
+
+  const rendimiento = (value * (porcentajes[value] / 100)).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+  const retornoTotal = (value + (value * (porcentajes[value] / 100))).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+
   return (
     <div>
       <div className='flex flex-col md:flex-row justify-center items-center px-5 simulador-container'>
@@ -15,6 +26,7 @@ function Simulador() {
           </div>  
           <Slider
             size="md"
+            onChangeEnd={setValue}
             showTooltip={true}
             marks={[
               {
@@ -46,7 +58,7 @@ function Simulador() {
           <div className="flex justify-center space-x-52 mt-32">
             <div id='Card 1' className="">
               <div className="w-17 h-10 flex items-center justify-center py-5 rounded-2xl card-simulador">
-                <span className="rubik-Medium-23 text-card-simulador">25%</span>
+                <span className="rubik-Medium-23 text-card-simulador">{porcentajes[value]}%</span>
               </div>
               <div className="mt-4 text-center">
                 <p className="rubik-Medium-15 subtext-card-simulador">de rendimiento</p>
@@ -54,7 +66,7 @@ function Simulador() {
             </div>
             <div id='Card 2' className="">
               <div className="w-40 h-10 bg-red-500 flex items-center justify-center py-5 rounded-2xl card-simulador">
-                <span className="rubik-Medium-23 text-card-simulador">$125,000</span>
+                <span className="rubik-Medium-23 text-card-simulador">{retornoTotal}</span>
               </div>
               <div className="mt-4 text-center">
                 <p className="rubik-Medium-15 subtext-card-simulador">retorno total</p>
