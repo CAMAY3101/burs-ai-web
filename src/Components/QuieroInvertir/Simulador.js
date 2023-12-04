@@ -18,7 +18,7 @@ function Simulador() {
 
   return (
     <div>
-      <div className='flex flex-col md:flex-row justify-center items-center px-5 simulador-container'>
+      <div className='flex flex-col md:flex-row justify-center items-center px-5 mb-12 simulador-container'>
         <div id='simulador' className='w-full md:w-1/2 flex flex-col items-center py-14'>
           <div className='text-center mb-20'>
             <h1 className='rubik-Bold-36 title-simulador'>Simulador de inversión</h1>
