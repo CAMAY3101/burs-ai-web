@@ -8,17 +8,17 @@ function Simulador() {
   const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
   const porcentajes = {
     100000: 20,
-    500000: 25,
+    500000: 25, //Ejemplo (no es el valor real)
     750000: 33,
     1000000:33
   };
 
-  const rendimiento = (value * (porcentajes[value] / 100)).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+  //const rendimiento = (value * (porcentajes[value] / 100)).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
   const retornoTotal = (value + (value * (porcentajes[value] / 100))).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
 
   return (
     <div>
-      <div className='flex flex-col md:flex-row justify-center items-center px-5 simulador-container'>
+      <div className='flex flex-col md:flex-row justify-center items-center px-5 mb-12 simulador-container'>
         <div id='simulador' className='w-full md:w-1/2 flex flex-col items-center py-14'>
           <div className='text-center mb-20'>
             <h1 className='rubik-Bold-36 title-simulador'>Simulador de inversión</h1>
