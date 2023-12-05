@@ -14,6 +14,7 @@ const Landing = () => {
     <Layout>
       <Content>
         <HeroLanding />
+        <RecompensaLanding /> 
         
       </Content>
     </Layout>
