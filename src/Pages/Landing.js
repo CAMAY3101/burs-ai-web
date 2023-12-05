@@ -14,10 +14,7 @@ const Landing = () => {
     <Layout>
       <Content>
         <HeroLanding />
-        <RecompensaLanding />
-        <OpinionesLanding />
-        <SecurityLanding/>
-        <FaqsLanding/>
+        
       </Content>
     </Layout>
   )
