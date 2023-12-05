@@ -26,7 +26,7 @@ function opinionsLanding() {
                 <div className={sliderContainer}>
                     <Slider {...settings}>
                     {testimonios.map((testimonio, index) => (
-                        <Card className="p-3 card-opinion">
+                        <Card className="p-3 bg-[#a277eb]/[0.67] shadow-[0_12px_25px_0_(6, 28, 61, 0.15)] rounded-2xl">
                             <CardHeader className="flex">
                                 <div className="flex flex-col">
                                     <p className="rubik-Medium-23 name-card-opinion">{testimonio.nombre}</p>

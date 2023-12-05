@@ -8,12 +8,12 @@ function Simulador() {
   const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
   const porcentajes = {
     100000: 20,
-    500000: 25,
+    500000: 25, //Ejemplo (no es el valor real)
     750000: 33,
     1000000:33
   };
 
-  const rendimiento = (value * (porcentajes[value] / 100)).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+  //const rendimiento = (value * (porcentajes[value] / 100)).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
   const retornoTotal = (value + (value * (porcentajes[value] / 100))).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
 
   return (

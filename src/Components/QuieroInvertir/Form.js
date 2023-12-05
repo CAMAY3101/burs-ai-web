@@ -1,7 +1,23 @@
 import React from 'react'
-import { Input, Textarea } from "@nextui-org/react";
+import { Input, Textarea, Button } from "@nextui-org/react";
 
 import imgForm from "../../Assets/QuieroInvertir/form.jpg"
+import '../../Styles/QuieroInvertir.scss'
+
+const styles = {
+    input: [
+        "rubik-Regular-15",
+        "text-dark-blue-800",
+        "placeholder:text-dark-blue-200",
+    ],
+    inputWrapper: [
+        "rounded-3xl",
+        "border-dark-blue-400",
+        "data-[hover=true]:border-dark-blue-700",
+        "group-data-[focus=true]:border-dark-blue-900",
+        "!cursor-text",
+    ]
+}
 
 function Form() {
   return (
@@ -11,21 +27,52 @@ function Form() {
                 <img src={imgForm} alt='imgform' className=''/>
             </div>
               
-            <div id='form' className='w-8/12 flex flex-col items-center'>
-                <h2 className="text-2xl font-bold mb-6">Contactanos</h2>
-                <div className="w-10/12 space-y-8 justify-center">
-                    <Input type="name" label="Nombre Completo" placeholder='Ejemplo: Esteban Garcia Garcia' color='primary' />
+            <div id='form' className='w-full md:w-8/12 flex flex-col items-center'>
+                <h2 className="rubik-Bold-29 mb-10 text-dark-blue-900">Contactanos</h2>
+                <div className="w-10/12 space-y-8">
+                    <Input 
+                        type="name" 
+                        label= <div className='rubik-Medium-18 text-dark-blue-700'>Nombre Completo</div> 
+                        placeholder='Ejemplo: Esteban Garcia Garcia' 
+                        variant='bordered'
+                        labelPlacement='outside'
+                        size='lg'
+                        classNames={styles}
+                     />
                     <div className="flex md:flex-row space-x-8 ">
-                        <Input type="email" label="Correo Electronico" placeholder='ejemplo@outlook.com' color='primary' />
-                        <Input type="tel" label="Telefono" placeholder='Ejemplo: (33) 3333 3333' color='primary' />
+                        <Input 
+                            type="email" 
+                            label=<div className='rubik-Medium-18 text-dark-blue-700'>Correo Electronico</div>
+                            placeholder='ejemplo@outlook.com' 
+                            variant='bordered'
+                            labelPlacement='outside'
+                            size='lg'
+                            classNames={styles} 
+                        />
+                        <Input 
+                            type="tel" 
+                            label= <div className='rubik-Medium-18 text-dark-blue-700'>Telefono</div> 
+                            placeholder='Ejemplo: (33) 3333 3333' 
+                            variant='bordered' 
+                            labelPlacement='outside'
+                            size='lg'
+                            classNames={styles}
+                        />
                     </div>
-                    <Textarea label="Mensaje" color='primary'/>
-                    <button
+                    <Textarea 
+                        label=<div className='rubik-Medium-18 text-dark-blue-700'>Mensaje</div> 
+                        placeholder="Escribe aqui tu mensaje"
+                        variant='bordered'
+                        labelPlacement='outside'
+                        classNames={styles}
+                    />
+                    <Button
                         type="submit"
-                        className="w-full bg-black text-white py-2 px-4 rounded-lg font-bold uppercase hover:bg-gray-800"
+                        className="w-full bg-gradient-to-r from-dark-blue-500 to-dark-blue-700 text-dark-blue-100 rubik-Medium-18"
+                        radius='lg'
                     >
                         Enviar Mensaje
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
