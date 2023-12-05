@@ -94,24 +94,6 @@ $rubik-sizes: 110, 88, 70, 56, 45, 36, 29, 23, 18,16, 15,13, 12;
     background: $dark-blue-800;
 }
 //------------------Navbar------------------//
-.navbar {
-    background: $dark-blue-800;
-    justify-content: space-between;
-    height: 70px;
-}
-
-.brand-logo {
-    width: 60px;
-    height: 60px;
-    top: 9px;
-    left: 22px;
-}
-.icon {
-    width: 30px;
-    height: 30px;
-    // margin-right: 10px;
-
-}
 
 .nav-button{
     a {
@@ -121,11 +103,6 @@ $rubik-sizes: 110, 88, 70, 56, 45, 36, 29, 23, 18,16, 15,13, 12;
             color: $persian-rose-400;
         }
     }
-}
-
-.services-buttons{
-    color: $purple-heart-50;
-
 }
 /*------------------FOOTER------------------*/
 

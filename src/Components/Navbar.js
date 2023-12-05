@@ -1,40 +1,59 @@
-import React from 'react'
+import React from "react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
+import logo from '../Assets/icons/burs-icon.png';
+import '../Styles/Common.scss';
 
-import logo from '../Assets/icons/burs-icon.png'
-import invesment_icon from '../Assets/icons/invesment.png'
-import prestamo_icon from '../Assets/icons/prestamo.png'
-import '../Styles/Common.scss'
 
-import { IconChevronDown } from '@douyinfe/semi-icons';
-import { Navbar as Nav, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
-import { Space } from '@douyinfe/semi-ui';
+export default function App() {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-// make a string of the class names you want to apply to put in the className attribute
-const FontnavButtonClass = "rubik-Bold-18";
+    const menuItems = ["Solicita Prestamo", "Quiero Invertir",];
 
-const Navbar = () => {
     return (
-    <Nav className="navbar">
-        <NavbarBrand justify='start'>
-            <Link href="/">
-                <img src={logo} alt="BURSAI" className="brand-logo" />
-            </Link>
-        </NavbarBrand>
+        <Navbar className="bg-dark-blue-800 justify-between h-[70px]" onMenuOpenChange={setIsMenuOpen}>
+            <NavbarContent justify="start">
+                <NavbarBrand>
+                    <Link href="/">
+                        <img src={logo} alt="BURSAI" className="w-[60px] h-[60px]" />
+                    </Link>
+                </NavbarBrand>
+            </NavbarContent>
 
-        <NavbarContent className="gap-x-20" justify='start' >
-            <NavbarItem className='nav-button'>
-                <Link className={FontnavButtonClass} href="">
-                    Solicita Prestamo
-                </Link>
-            </NavbarItem>
-            <NavbarItem className='nav-button'>
-                <Link className={FontnavButtonClass} href="/quiero-invertir">
-                    Quiero Invertir
-                </Link>
-            </NavbarItem>
-        </NavbarContent>
-    </Nav>
-  )
+            <NavbarContent className="hidden sm:flex sm:space-x-20" justify="start">
+                <NavbarItem className="nav-button">
+                    <Link className="rubik-Bold-18"  href="#">
+                        Solicita Prestamo
+                    </Link>
+                </NavbarItem>
+                <NavbarItem className="nav-button">
+                    <Link className="rubik-Bold-18" href="/quiero-invertir">
+                        Quiero Invertir
+                    </Link>
+                </NavbarItem>
+            </NavbarContent>
+            
+            <NavbarContent justify="end">
+                <NavbarMenuToggle
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                    className="sm:hidden"
+                    style={{ color: "white" }}
+                />
+            </NavbarContent>
+            <NavbarMenu className="bg-dark-blue-800/50 pt-5 space-y-5">
+                <NavbarMenuItem className="nav-button">
+                    <Link className="w-full rubik-Bold-18" color='secondary' href="" size="lg">
+                        Solicita Prestamo
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem className="nav-button">
+                    <Link className="w-full rubik-Bold-18" color='secondary' size="lg" href="/quiero-invertir">
+                        Quiero Invertir
+                    </Link>
+                </NavbarMenuItem>
+            </NavbarMenu>
+
+            
+
+        </Navbar>
+    );
 }
-
-export default Navbar
