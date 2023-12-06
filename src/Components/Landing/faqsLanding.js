@@ -15,11 +15,11 @@ function faqsLanding() {
                         {faqs.map((item, index) => (
                             <AccordionItem key={index} 
                             title={
-                                <div className='my-1 px-4 rubik-Medium-18 question-faqs'>
+                                <div className='my-1 px-4 rubik-Medium-18 text-purple-heart-950'>
                                     {item.pregunta}
                                 </div>
                             }>
-                                <div className='rubik-Regular-15 px-4 answer-faqs' >
+                                <div className='rubik-Regular-15 px-4 text-dark-blue-950' >
                                     {item.respuesta}
                                 </div>
                             </AccordionItem>
