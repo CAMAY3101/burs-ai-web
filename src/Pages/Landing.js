@@ -15,6 +15,7 @@ const Landing = () => {
       <Content>
         <HeroLanding />
         <RecompensaLanding /> 
+        <OpinionesLanding />
         
       </Content>
     </Layout>

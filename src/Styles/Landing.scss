@@ -19,11 +19,6 @@
 }
 
 //------------------OPINIONES------------------//
-.bg-opiniones{
-    /* Gradients/Gradient purple heart */
-    background: linear-gradient(90deg, #4A12CB 1.39%, #8218DB 42.25%, #BC1FEC 99.45%);
-    margin-bottom: 50px;
-}
 
 .title-opiniones{
     /* Rubik Bold/Rubik Bold 56px */
@@ -34,31 +29,20 @@
     text-fill-color: transparent;
 }
 .slick-slide > div{
-    margin: 0 50px;
-}
-
-.card-opinion{
-    /* Testimonial */
+    margin: 0 10px; // Valor predeterminado para un width entre 500px y 1024px
     
-    background: #A277EB;
-    /* card shadow */
-    box-shadow: 0px 12px 25px rgba(6, 28, 61, 0.15);
-    border-radius: 16px;
-}
+    @media (max-width: 499px) {
+        margin: 0 10px; // Ajuste para width menor a 500px
+    }
 
-.name-card-opinion{
-    /*rubik-Bold-23*/
-    color: $persian-rose-50;
-}
-.position-card-opinion{
-    /*rubik-Bold-18*/
-    color: $persian-rose-200;
-}
-.text-card-opinion{
-    /* Rubik Regular/Rubik Regular 23px */
-    color: $dark-blue-50;
-}
+    @media (min-width: 500px) and (max-width: 699px) {
+        margin: 0 10px; // Ajuste para width entre 500px y 700px
+    }
 
+    @media (min-width: 1025px) {
+        margin: 0 20px; // Ajuste para width mayor a 1024px
+    }
+}
 //------------------Security------------------//
 
 // Burs ai tu espacio seguro
