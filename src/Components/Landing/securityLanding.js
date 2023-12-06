@@ -13,13 +13,13 @@ function securityLandings() {
         <div className="w-3/4 md:w-full lg:w-3/4 space-y-8">
           <h3>
             <span className='text-dark-blue-800 rubik-Bold-23 md:text-3xl lg:text-[45px] lg:mb-5'>Burs ai tu espacio seguro <br /></span>
-            <span className='text-purple-heart-400 rubik-Bold-13 md:text-2xl lg:text-4xl '> Confiamos en ti </span> 
-            <span className='text-purple-heart-900 rubik-Bold-13 md:text-2xl lg:text-4xl'>y </span>
-            <span className='text-purple-heart-600 rubik-Bold-13 md:text-2xl lg:text-4xl'>tú </span> 
-            <span className='text-purple-heart-900 rubik-Bold-13 md:text-2xl lg:text-4xl'>puedes  <br /></span>
-            <span className='text-dark-blue-900 rubik-Bold-12 md:text-2xl lg:text-4xl'>confiar en nosotros.</span>
+            <span className='text-purple-heart-400 rubik-Bold-18 md:text-2xl lg:text-4xl '> Confiamos en ti </span> 
+            <span className='text-purple-heart-900 rubik-Bold-18 md:text-2xl lg:text-4xl'>y </span>
+            <span className='text-purple-heart-600 rubik-Bold-18 md:text-2xl lg:text-4xl'>tú </span> 
+            <span className='text-purple-heart-900 rubik-Bold-18 md:text-2xl lg:text-4xl'>puedes  <br /></span>
+            <span className='text-dark-blue-900 rubik-Bold-15 md:text-2xl lg:text-4xl'>confiar en nosotros.</span>
           </h3>
-          <p className="text-dark-blue-900 rubik-Regular-13 md:text-xl lg:text-3xl"> Jamás tendremos practicas de cobranza abusivas ni buscaremos a tus contactos ni referidos</p>
+          <p className="text-dark-blue-900 rubik-Regular-15 md:text-xl lg:text-3xl"> Jamás tendremos practicas de cobranza abusivas ni buscaremos a tus contactos ni referidos</p>
         </div>
       </div>
     </div>
