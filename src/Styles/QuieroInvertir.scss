@@ -1,46 +1,14 @@
 @import './Common.scss';
 
 .cover-hero-QI{
-    background-image: url("../Assets/QuieroInvertir/portadaQI.png");
-    width: 100%;
-    height: 700px;
-}
+    background-image: url("../Assets/QuieroInvertir/portadaSM.png");
+    @media (max-width: 699px) {
+        background-image: url("../Assets/QuieroInvertir/portadaSM.png"); // Ajuste para width menor a 500px
+    }
 
-.invierte{
-    /* INVIERTE Y VE CRECER TU DINERO CON BURS */
-    
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 96px;
-
-    color: $persian-rose-600;
-}
-.y-ve-crecer-tu-dinero-con{
-    /* INVIERTE Y VE CRECER TU DINERO CON BURS */
-
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 50px;
-    //line-height: 139.4%;
-    /* or 70px */
-    text-align: center;
-
-    /* Dark Blue/50 */
-    color: $dark-blue-50;
-}
-
-.burs{
-
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 110px;
-    //line-height: 139.4%;
-    /* or 153px */
-
-    color: $persian-rose-50;
+    @media (min-width: 1025px) {
+        background-image: url("../Assets/QuieroInvertir/portadaMD.png"); // Ajuste para width mayor a 1024px
+    }
 }
 
 //-------Invertir-------
