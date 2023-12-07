@@ -23,11 +23,11 @@ function Form() {
   return (
     <div>
         <div className='flex flex-col md:flex-row mb-12'>
-            <div className='w-4/12 flex flex-col hidden md:block'>
+            <div className='w-4/12 flex flex-col hidden lg:block'>
                 <img src={imgForm} alt='imgform' className=''/>
             </div>
               
-            <div id='form' className='w-full md:w-8/12 flex flex-col items-center'>
+            <div id='form' className='w-full lg:w-8/12 flex flex-col items-center'>
                 <h2 className="rubik-Bold-29 mb-10 text-dark-blue-900">Contactanos</h2>
                 <div className="w-10/12 space-y-8">
                     <Input 
