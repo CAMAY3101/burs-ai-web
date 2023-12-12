@@ -6,57 +6,49 @@ import smilingFace from '../../Assets/Landing/smiling-face.png'
 import '../../Styles/Landing.scss'
 
 const sizeIcon = "w-14 h-14 iconHero"
-const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 bg-icon-hero"
-const subtitleIconClass = "text-center text-icon-hero rubik-Medium-23"
-const textIconClass = "text-center text-icon-hero rubik-Medium-18"
-const TitleHeroClassContainer = "mb-10 text-center" 
-const CardsContainer = "grid grid-cols-3 gap-x-4 gap-y-8" 
+const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 bg-persian-rose-50/50"
+const subtitleIconClass = "text-center text-persian-rose-100 rubik-Medium-23"
+const textIconClass = "text-center text-persian-rose-100 rubik-Medium-18"
 
 const heroLanding = () => {
   return (
     <div id='proceso'>
-        <div className="bg-cover bg-center h-screen flex items-center justify-end cover-hero">
-            <div className="flex flex-col md:flex-row justify-end">
-                <div className="p-10">
-                    <div className= {TitleHeroClassContainer}>
-                        <span className="title-hero rubik-Bold-36">
-                            Recibe tu préstamo
-                        </span>
-                        <span className="title-hero rubik-Bold-36">
-                            <br />
-                        </span>
-                        <span className="title-hero-center rubik-Bold-45">
-                            seguro y en minutos
-                        </span>
-                        <span className="title-hero-center rubik-Bold-45">
-                            <br />
-                        </span>
-                        <span className="title-hero rubik-Bold-36">
-                            en solo 3 pasos
-                        </span>
+          <div className="bg-cover bg-center h-screen flex items-center justify-center px-10 mb-10 sm:justify-end md:px-10 cover-hero">
+            <div className="flex flex-col justify-end space-y-2 sm:space-y-10">
+                <div className="mb-10 text-center">
+                    <span className="text-dark-blue-50 rubik-Bold-18 sm:text-4xl">
+                        Recibe tu préstamo
+                    </span>
+                    <br />
+                    <span className="text-persian-rose-300 rubik-Bold-23 sm:text-5xl">
+                        seguro y en minutos
+                    </span>
+                    <br />
+                    <span className="text-dark-blue-50 rubik-Bold-18 sm:text-4xl">
+                        en solo 3 pasos
+                    </span>
+                </div>
+                <div className="flex flex-col sm:flex-row space-y-10 sm:space-y-0 sm:space-x-16 md:space-x-24" >
+                    <div className="flex flex-col items-center">
+                        <div className={backgroundIconClass}>
+                            <img src={cash} alt="Icon" className={sizeIcon} />
+                        </div>
+                        <p className={subtitleIconClass}>Selecciona</p>
+                        <p className={textIconClass}>el dinero que necesitas</p>
                     </div>
-                    <div className={CardsContainer}>
-                        <div className="flex flex-col items-center">
-                            <div className={backgroundIconClass}>
-                                <img src={cash} alt="Icon" className={sizeIcon} />
-                            </div>
-                            <p className={subtitleIconClass}>Selecciona</p>
-                            <p className={textIconClass}>el dinero que necesitas</p>
+                    <div className="flex flex-col items-center">
+                        <div className={backgroundIconClass}>
+                            <img src={inspection} alt="Icon" className={sizeIcon} />
                         </div>
-                        <div className="flex flex-col items-center">
-                            <div className={backgroundIconClass}>
-                                <img src={inspection} alt="Icon" className={sizeIcon} />
-                            </div>
-                              <p className={subtitleIconClass}>Completa</p>
-                              <p className={textIconClass}>el formulario</p>
+                            <p className={subtitleIconClass}>Completa</p>
+                            <p className={textIconClass}>el formulario</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                        <div className={backgroundIconClass}>
+                            <img src={smilingFace} alt="Icon" className={sizeIcon} />
                         </div>
-                        <div className="flex flex-col items-center">
-                            <div className={backgroundIconClass}>
-                                <img src={smilingFace} alt="Icon" className={sizeIcon} />
-                            </div>
-                              <p className={subtitleIconClass}>Disfruta</p>
-                            <p className={textIconClass}>una vez aprobado el prestamo</p>
-                        </div>
+                            <p className={subtitleIconClass}>Disfruta</p>
+                        <p className={textIconClass}>una vez aprobado el prestamo</p>
                     </div>
                 </div>
             </div>

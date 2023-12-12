@@ -1,52 +1,23 @@
 @import './Common.scss';
 
 .cover-hero-QI{
-    background-image: url("../Assets/QuieroInvertir/portadaQI.png");
-    width: 100%;
-    height: 700px;
+    background-image: url("../Assets/QuieroInvertir/portadaSM.png");
+    @media (max-width: 699px) {
+        background-image: url("../Assets/QuieroInvertir/portadaSM.png"); // Ajuste para width menor a 500px
+    }
+
+    @media (min-width: 1025px) {
+        background-image: url("../Assets/QuieroInvertir/portadaMD.png"); // Ajuste para width mayor a 1024px
+    }
 }
-
-.invierte{
-    /* INVIERTE Y VE CRECER TU DINERO CON BURS */
-    
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 96px;
-
-    color: $persian-rose-600;
-}
-.y-ve-crecer-tu-dinero-con{
-    /* INVIERTE Y VE CRECER TU DINERO CON BURS */
-
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 50px;
-    //line-height: 139.4%;
-    /* or 70px */
-    text-align: center;
-
-    /* Dark Blue/50 */
-    color: $dark-blue-50;
-}
-
-.burs{
-
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 110px;
-    //line-height: 139.4%;
-    /* or 153px */
-
-    color: $persian-rose-50;
+.h-shadow{
+    letter-spacing: 5px;
+    word-spacing: 1px;
+    background-color: $persian-rose-700;
+    //text-shadow: 3px 2px 5px rgba(255, 0, 169, 1), -3px 2px 11px rgba(223, 0, 136, 1);
 }
 
 //-------Invertir-------
-.title-invertir{
-    color: $dark-blue-900;
-}
 .subtitle-card-invertir{
     color: $purple-heart-900;
 }
@@ -60,29 +31,4 @@
 //-------Simulador-------
 .simulador-container{
     background: linear-gradient(90deg, #FF58DB 0%, #A92FFF 60.52%, #8218DB 100%);
-}
-.title-simulador{
-    color: $dark-blue-50;
-}
-.subtitle-simulador{
-    color: $dark-blue-50;
-}
-.min-simulador{
-    color: $purple-heart-200;
-}
-.card-simulador{
-    background-color: $persian-rose-50;
-}
-.text-card-simulador{
-    color: $purple-heart-900;
-}
-.subtext-card-simulador{
-    color: $dark-blue-50;
-}
-//-------Formulario-------
-.title-formulario{
-    color: $dark-blue-800;
-}
-.input-label{
-    color: $dark-blue-700;
 }

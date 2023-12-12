@@ -2,7 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import url('https://fonts.googleapis.com/css?family=Rubik');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@100;200;300;400;500;600;700&display=swap');
 // ----------------COLORS----------------//
 
 $dark-blue-50:  #f3f0ff;
@@ -42,7 +42,7 @@ $persian-rose-900: #980360;
 $persian-rose-950: #5f0036;
 
 //----------------FONTS----------------//
-$font-family: 'Rubik';
+$font-family: 'Rubik', sans-serif;
 
 @mixin rubik-font($weight, $size) {
     font-family: $font-family;
@@ -52,23 +52,28 @@ $font-family: 'Rubik';
     line-height: $size * 1.2673 + px; // Calcula el line-height basado en el tamaño
 }
 
-$rubik-sizes: 110, 88, 70, 56, 45, 36, 29, 23, 18,16, 15,13, 12;
+$rubik-sizes: 110, 100, 95, 88, 85, 80, 70, 56, 45, 36,32, 29, 23, 18,16, 15,13, 12, 10, 9, 8;
 
 @each $size in $rubik-sizes {
 
+    /* Rubik ExtraBold/Rubik ExtraBold 110px */
+    .rubik-ExtraBold-#{$size} {
+        @include rubik-font(600, $size);
+    }
+
     /* Rubik Bold/Rubik Bold 110px */
     .rubik-Bold-#{$size} {
-        @include rubik-font(700, $size);
+        @include rubik-font(500, $size);
     }
 
     /* Rubik Medium/Rubik Medium 45px */
     .rubik-Medium-#{$size} {
-        @include rubik-font(500, $size);
+        @include rubik-font(400, $size);
     }
 
     /* Rubik Regular/Rubik Regular 45px */
     .rubik-Regular-#{$size} {
-        @include rubik-font(400, $size);
+        @include rubik-font(300, $size);
     }
 }
 
@@ -94,24 +99,6 @@ $rubik-sizes: 110, 88, 70, 56, 45, 36, 29, 23, 18,16, 15,13, 12;
     background: $dark-blue-800;
 }
 //------------------Navbar------------------//
-.navbar {
-    background: $dark-blue-800;
-    justify-content: space-between;
-    height: 70px;
-}
-
-.brand-logo {
-    width: 60px;
-    height: 60px;
-    top: 9px;
-    left: 22px;
-}
-.icon {
-    width: 30px;
-    height: 30px;
-    // margin-right: 10px;
-
-}
 
 .nav-button{
     a {
@@ -122,50 +109,7 @@ $rubik-sizes: 110, 88, 70, 56, 45, 36, 29, 23, 18,16, 15,13, 12;
         }
     }
 }
-
-.services-buttons{
-    color: $purple-heart-50;
-
-}
 /*------------------FOOTER------------------*/
-
-.bg-icon-contact {
-    background-color: rgba(186, 163, 255, 0.200)
-}
-
-.bg-dark-blue-500 {
-    background-color: $dark-blue-500;
-}
-
-.bg-dark-blue-600 {
-    background-color: $dark-blue-600;
-}
-
-.bg-dark-blue-700 {
-    background-color: $dark-blue-700;
-}
-
-.bg-dark-blue-800 {
-    background-color: $dark-blue-800;
-}
-
-.bg-dark-blue-900 {
-    background-color: $dark-blue-900;
-}
-
-.bg-dark-blue-950 {
-    background-color: $dark-blue-950;
-}
-
-.title-contact {
-    /* rubik-regular-29 */
-    color: rgba(255, 255, 255, 0.502972);
-}
-
-.title-footer {
-    /* rubik-Medium-18 */
-    color: $persian-rose-600;
-}
 
 .bg-icon-social-media{
     background-color: rgba(186, 163, 255, 0.800)

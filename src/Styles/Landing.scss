@@ -4,34 +4,6 @@
 
 .cover-hero{
     background-image: url("../Assets/Landing/PortadaHero.png");
-    width: 100%;
-    height: 700px;
-    padding-left: 80px;
-    padding-right: 80px;
-    margin-bottom: 40px;
-}
-
-.title-hero {
-    //Rubik-Bold-36
-    color: $dark-blue-50;
-    word-wrap: break-word;
-}
-
-.title-hero-center {
-    //Rubik-Bold-48
-    color: $persian-rose-300;
-    //word-wrap: break-word;
-}
-
-.bg-icon-hero {
-    background-color: rgb(255 240 251 / 50%);//$persian-rose-50;   
-}
-
-.text-icon-hero{
-    //Rubik-Medium-23
-    //Rubik-Medium-18
-    color: $persian-rose-100;
-    //word-wrap: break-word;
 }
 
 //------------------RECOMPENSA------------------//
@@ -46,27 +18,7 @@
 
 }
 
-.bg-icon-recompensa{
-    background-color: $dark-blue-100
-}
-
-.subtitle-card-recompensa{
-    //Rubik-Medium-45
-    color: $purple-heart-900;
-    //word-wrap: break-word;
-}
-.text-card-recompensa{
-    //Rubik-Medium-29
-    color: $purple-heart-500;
-    //word-wrap: break-word;
-}
-
 //------------------OPINIONES------------------//
-.bg-opiniones{
-    /* Gradients/Gradient purple heart */
-    background: linear-gradient(90deg, #4A12CB 1.39%, #8218DB 42.25%, #BC1FEC 99.45%);
-    margin-bottom: 50px;
-}
 
 .title-opiniones{
     /* Rubik Bold/Rubik Bold 56px */
@@ -77,79 +29,19 @@
     text-fill-color: transparent;
 }
 .slick-slide > div{
-    margin: 0 50px;
-}
-
-.card-opinion{
-    /* Testimonial */
+    margin: 0 10px; // Valor predeterminado para un width entre 500px y 1024px
     
-    background: #A277EB;
-    /* card shadow */
-    box-shadow: 0px 12px 25px rgba(6, 28, 61, 0.15);
-    border-radius: 16px;
-}
+    @media (max-width: 499px) {
+        margin: 0 10px; // Ajuste para width menor a 500px
+    }
 
-.name-card-opinion{
-    /*rubik-Bold-23*/
-    color: $persian-rose-50;
-}
-.position-card-opinion{
-    /*rubik-Bold-18*/
-    color: $persian-rose-200;
-}
-.text-card-opinion{
-    /* Rubik Regular/Rubik Regular 23px */
-    color: $dark-blue-50;
-}
+    @media (min-width: 500px) and (max-width: 699px) {
+        margin: 0 10px; // Ajuste para width entre 500px y 700px
+    }
 
-//------------------Security------------------//
-
-// Burs ai tu espacio seguro
-.bursAi {
-    color: $dark-blue-800;
-    font-family: 'Rubik';
-    font-weight: 700;
-    font-size: 45px;
-}
-
-// Confiamos en ti
-.confiamosEnTi {
-    color: $purple-heart-400;
-    font-family: 'Rubik';
-    font-weight: 700;
-    font-size: 36px;
-}
-
-// y, puedes
-.yPuedes {
-    color: $purple-heart-950;
-    font-family: 'Rubik';
-    font-weight: 700;
-    font-size: 36px;
-}
-
-// tú
-.tu {
-    color: $purple-heart-600;
-    font-family: 'Rubik';
-    font-weight: 700;
-    font-size: 36px;
-}
-
-// confiar en nosotros
-.confianza {
-    color: $dark-blue-900;
-    font-family: 'Rubik';
-    font-weight: 700;
-    font-size: 36px;
-}
-
-// paragraph
-.paragraph {
-    color: $dark-blue-950;
-    font-family: 'Rubik';
-    font-weight: 400;
-    font-size: 29px;
+    @media (min-width: 1025px) {
+        margin: 0 20px; // Ajuste para width mayor a 1024px
+    }
 }
 
 /*------------------BLOG------------------*/
@@ -160,21 +52,5 @@
 .accordion-faqs{
     box-shadow: 0px 12px 25px rgba(6, 28, 61, 0.15);
     border-radius: 16px;
-    //background-color: rgba(187, 165, 255, 0.09);
-}
-.title-faqs{
-    /* Rubik Bold/Rubik Bold 56px */
-    color: $dark-blue-700;
-}
-.divider-faqs{
-    background-color: $dark-blue-300;
-}
-.question-faqs{
-    /* Rubik Bold/Rubik Bold 29px */
-    color: $purple-heart-950 //$dark-blue-950;
-}
-.answer-faqs{
-    /* Rubik Regular/Rubik Regular 23px */
-    color: $dark-blue-950;
 }
 

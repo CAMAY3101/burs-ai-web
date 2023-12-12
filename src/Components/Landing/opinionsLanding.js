@@ -6,10 +6,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const opionesContainer = "pb-10 bg-opiniones"
-const titleOpinionesClass = "pt-5 mb-10 text-center title-opiniones rubik-Bold-56"
-const sliderContainer = "w-10/12 m-auto "
-
 function opinionsLanding() {
     const settings = {
         dots: false,
@@ -17,24 +13,41 @@ function opinionsLanding() {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 3,
+        responsive: [
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     };
 
     return (
         <div id='opiniones'>
-            <div className={opionesContainer}>
-                <div className={titleOpinionesClass}>Lo que opinan de nosotros</div>
-                <div className={sliderContainer}>
-                    <Slider {...settings}>
+            <div className="py-10 mb-12 space-y-10  bg-gradient-to-r from-[#4A12CB] via-[#8218DB] to-[#BC1FEC]">
+                <div className="rubik-Bold-36 md:text-[56px] text-center title-opiniones ">Lo que opinan de nosotros</div>
+                <div className="w-10/12 m-auto ">
+                    <Slider className='' {...settings}>
                     {testimonios.map((testimonio, index) => (
                         <Card className="p-3 bg-[#a277eb]/[0.67] shadow-[0_12px_25px_0_(6, 28, 61, 0.15)] rounded-2xl">
                             <CardHeader className="flex">
                                 <div className="flex flex-col">
-                                    <p className="rubik-Medium-23 name-card-opinion">{testimonio.nombre}</p>
-                                    <p className="rubik-Medium-15 position-card-opinion">{testimonio.ocupacion}</p>
+                                    <p className="rubik-Medium-23 text-persian-rose-50">{testimonio.nombre}</p>
+                                    <p className="rubik-Medium-15 text-persian-rose-200">{testimonio.ocupacion}</p>
                                 </div>
                             </CardHeader>
                             <CardBody>
-                                <p className='rubik-Regular-18 text-card-opinion'>{testimonio.opinion}</p>
+                                <p className='rubik-Regular-18 text-dark-blue-50'>{testimonio.opinion}</p>
                             </CardBody>
                             <CardFooter>
                                 <Rating size="small" defaultValue={5} />

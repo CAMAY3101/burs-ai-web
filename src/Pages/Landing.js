@@ -14,10 +14,11 @@ const Landing = () => {
     <Layout>
       <Content>
         <HeroLanding />
-        <RecompensaLanding />
+        <RecompensaLanding /> 
         <OpinionesLanding />
-        <SecurityLanding/>
-        <FaqsLanding/>
+        <SecurityLanding />
+        <FaqsLanding />
+        
       </Content>
     </Layout>
   )
