@@ -1,16 +1,13 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   useNavigate
 } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
 
 import { Layout} from '@douyinfe/semi-ui';
 import './Styles/App.scss';
-import NavbarLanding from './Components/NavbarLanding';
 import Navbar from './Components/Navbar'
 import FooterCustom from './Components/Footer';
 import Landing from './Pages/Landing';
@@ -22,7 +19,6 @@ function App() {
 
   return (
     <NextUIProvider navigate={navigate}>
-      <Router>
         <Layout>
           <Navbar/>
           <Content className='app-content'>
@@ -35,7 +31,6 @@ function App() {
             <FooterCustom />
           </Footer>
         </Layout>
-      </Router>
     </NextUIProvider>
   );
 }

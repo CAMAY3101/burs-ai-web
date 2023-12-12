@@ -26,7 +26,7 @@ export default function App() {
                     </Link>
                 </NavbarItem>
                 <NavbarItem className="nav-button">
-                    <Link className="rubik-Bold-18" to="/quiero-invertir">
+                    <Link className="rubik-Bold-18" href="/quiero-invertir">
                         Quiero Invertir
                     </Link>
                 </NavbarItem>
@@ -46,7 +46,7 @@ export default function App() {
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem className="nav-button">
-                    <Link className="w-full rubik-Bold-18" color='secondary' size="lg" to="/quiero-invertir">
+                    <Link className="w-full rubik-Bold-18" color='secondary' size="lg" href="/quiero-invertir">
                         Quiero Invertir
                     </Link>
                 </NavbarMenuItem>
