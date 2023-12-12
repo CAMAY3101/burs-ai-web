@@ -1,5 +1,5 @@
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
 import logo from '../Assets/icons/burs-icon.png';
 import '../Styles/Common.scss';
 
@@ -26,7 +26,7 @@ export default function App() {
                     </Link>
                 </NavbarItem>
                 <NavbarItem className="nav-button">
-                    <Link className="rubik-Bold-18" href="/quiero-invertir">
+                    <Link className="rubik-Bold-18" to="/quiero-invertir">
                         Quiero Invertir
                     </Link>
                 </NavbarItem>
@@ -46,7 +46,7 @@ export default function App() {
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem className="nav-button">
-                    <Link className="w-full rubik-Bold-18" color='secondary' size="lg" href="/quiero-invertir">
+                    <Link className="w-full rubik-Bold-18" color='secondary' size="lg" to="/quiero-invertir">
                         Quiero Invertir
                     </Link>
                 </NavbarMenuItem>
