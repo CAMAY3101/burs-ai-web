@@ -2,7 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import url('https://fonts.googleapis.com/css?family=Rubik');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@100;200;300;400;500;600;700&display=swap');
 // ----------------COLORS----------------//
 
 $dark-blue-50:  #f3f0ff;
@@ -42,7 +42,7 @@ $persian-rose-900: #980360;
 $persian-rose-950: #5f0036;
 
 //----------------FONTS----------------//
-$font-family: 'Rubik';
+$font-family: 'Rubik', sans-serif;
 
 @mixin rubik-font($weight, $size) {
     font-family: $font-family;
@@ -52,23 +52,28 @@ $font-family: 'Rubik';
     line-height: $size * 1.2673 + px; // Calcula el line-height basado en el tamaño
 }
 
-$rubik-sizes: 110, 88, 70, 56, 45, 36,32, 29, 23, 18,16, 15,13, 12, 10, 9, 8;
+$rubik-sizes: 110, 100, 95, 88, 85, 80, 70, 56, 45, 36,32, 29, 23, 18,16, 15,13, 12, 10, 9, 8;
 
 @each $size in $rubik-sizes {
 
+    /* Rubik ExtraBold/Rubik ExtraBold 110px */
+    .rubik-ExtraBold-#{$size} {
+        @include rubik-font(600, $size);
+    }
+
     /* Rubik Bold/Rubik Bold 110px */
     .rubik-Bold-#{$size} {
-        @include rubik-font(700, $size);
+        @include rubik-font(500, $size);
     }
 
     /* Rubik Medium/Rubik Medium 45px */
     .rubik-Medium-#{$size} {
-        @include rubik-font(500, $size);
+        @include rubik-font(400, $size);
     }
 
     /* Rubik Regular/Rubik Regular 45px */
     .rubik-Regular-#{$size} {
-        @include rubik-font(400, $size);
+        @include rubik-font(300, $size);
     }
 }
 
