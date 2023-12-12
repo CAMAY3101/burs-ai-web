@@ -1,15 +1,13 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  useNavigate
 } from "react-router-dom";
-import { Layout} from '@douyinfe/semi-ui';
+import { NextUIProvider } from "@nextui-org/react";
 
-import { NextUIProvider } from '@nextui-org/react';
+import { Layout} from '@douyinfe/semi-ui';
 import './Styles/App.scss';
-import NavbarLanding from './Components/NavbarLanding';
 import Navbar from './Components/Navbar'
 import FooterCustom from './Components/Footer';
 import Landing from './Pages/Landing';
@@ -17,9 +15,10 @@ import QuieroInvertir from './Pages/QuieroInvertir';
 
 function App() {
   const { Header, Sider, Footer, Content } = Layout;
+  const navigate = useNavigate();
+
   return (
-    <NextUIProvider>
-      <Router>
+    <NextUIProvider navigate={navigate}>
         <Layout>
           <Navbar/>
           <Content className='app-content'>
@@ -32,7 +31,6 @@ function App() {
             <FooterCustom />
           </Footer>
         </Layout>
-      </Router>
     </NextUIProvider>
   );
 }
