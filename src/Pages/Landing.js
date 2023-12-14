@@ -1,5 +1,4 @@
 import React from 'react'
-import NavbarLanding from '../Components/NavbarLanding'
 import HeroLanding from '../Components/Landing/heroLanding'
 import RecompensaLanding from '../Components/Landing/recompensaLanding';
 import OpinionesLanding from '../Components/Landing/opinionsLanding';

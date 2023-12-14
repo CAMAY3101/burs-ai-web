@@ -7,8 +7,6 @@ import '../Styles/Common.scss';
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const menuItems = ["Solicita Prestamo", "Quiero Invertir",];
-
     return (
         <Navbar className="bg-dark-blue-800 justify-between h-[70px]" onMenuOpenChange={setIsMenuOpen}>
             <NavbarContent justify="start">
@@ -20,7 +18,7 @@ export default function App() {
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex sm:space-x-20" justify="start">
-                <NavbarItem className="nav-button">
+                <NavbarItem className="nav-button hidden">
                     <Link className="rubik-Bold-18"  href="#">
                         Solicita Prestamo
                     </Link>
@@ -40,7 +38,7 @@ export default function App() {
                 />
             </NavbarContent>
             <NavbarMenu className="bg-dark-blue-800/50 pt-5 space-y-5">
-                <NavbarMenuItem className="nav-button">
+                <NavbarMenuItem className="nav-button hidden">
                     <Link className="w-full rubik-Bold-18" color='secondary' href="" size="lg">
                         Solicita Prestamo
                     </Link>
