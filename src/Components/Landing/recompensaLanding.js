@@ -33,7 +33,7 @@ function recompensaLanding() {
               </div>
               <div className='space-y-7'>
                 <h2 className={subtitleCardClass}>Recompensa burs ai</h2>
-                <p className={textCardClass}>Puedes ganar dinero por invertir a otros a usar Burs ai, hasta $100 MXN por cada invitado.</p>
+                <p className={textCardClass}>Puedes ganar dinero por invitar a otros a usar Burs ai, hasta $100 MXN por cada invitado.</p>
                </div>
           </div>
         </div>
