@@ -29,7 +29,7 @@ function Cards() {
 
               <div>
                   <p className="rubik-Regular-15 text-white/50 md:text-[12px] lg:text-[15px] mb-1">Numero de atención 24/7</p>
-                  <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">00 000 000</p>
+                  <a className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]" href='tel:+523334587498'>33 3458 7498</a>
               </div>
           </div>
 
@@ -42,7 +42,7 @@ function Cards() {
 
               <div>
                   <p className="rubik-Regular-15 text-white/50 md:text-[12px] lg:text-[15px] mb-1">E-Mail de atención 24/7 </p>
-                  <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">soporte@aiburs.com</p>
+                  <a className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]" href='mailto:soporte@burs.com.mx'>soporte@burs.com.mx</a>
               </div>
           </div>
       </div>
