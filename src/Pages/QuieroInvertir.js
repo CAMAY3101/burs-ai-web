@@ -3,6 +3,7 @@ import React from 'react'
 import HeroQI from '../Components/QuieroInvertir/heroQI'
 import Invertir from '../Components/QuieroInvertir/Invertir'
 import Simulador from '../Components/QuieroInvertir/Simulador'
+import Retorno from '../Components/QuieroInvertir/Retorno'
 import Form from '../Components/QuieroInvertir/Form'
 
 function QuieroInvertir() {
@@ -10,8 +11,9 @@ function QuieroInvertir() {
     <div>
       <HeroQI />
       <Invertir />
-      <Simulador />
-      <Form />
+      {/*<Simulador />*/}
+      <Retorno />
+      {/*<Form />*/}
     </div>
   )
 }
