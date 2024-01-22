@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Input, Textarea, Button } from "@nextui-org/react";
-import { Select, SelectSection, SelectItem } from "@nextui-org/react";
-import { CheckboxGroup, Checkbox } from "@nextui-org/react";
+import { Input,Select, SelectItem, Checkbox } from "@nextui-org/react";
 
 import "../../Styles/SolicitarPrestamo.scss"
 
@@ -20,11 +18,11 @@ const categorias = {
     "Tecnología y comunicación": ["Medios de comunicación", "Desarrollo de software", "Reparador y soporte", "Imprenta", "Call center", "Telefonía e internet", "Editorial", "Otros"]
 };
 
-const styles = {
+const styles_input = {
     input: [
-        //"rubik-Regular-15",
-        //"text-dark-blue-800",
-        //"placeholder:text-dark-blue-200",
+        "rubik-Regular-16",
+        "text-dark-blue-800",
+        "placeholder:text-dark-blue-800",
     ],
     inputWrapper: [
         "rounded-xl",
@@ -32,11 +30,32 @@ const styles = {
         "data-[hover=true]:border-dark-blue-700",
         "group-data-[focus=true]:border-dark-blue-900",
         "!cursor-text",
+        "space-y-8"
     ]
-}
+};
+
+const styles_select = {
+    trigger: [
+        "rounded-xl",
+        "border-dark-blue-400",
+        "data-[hover=true]:border-dark-blue-700",
+        "data-[open=true]:border-dark-blue-900",
+        "data-[focus=true]:border-dark-blue-900",
+        "!cursor-text",
+        "space-y-2",
+    ],
+    value:[
+        "rubik-Regular-16",
+        "text-dark-blue-800",
+        
+    ]
+};
+
+const style_label = 'rubik-Medium-15 text-dark-blue-950'
+
 
 function FormDatosUsuario() {
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = useState("");
     const [isCheckedSi, setIsCheckedSi] = useState(false);
     const [isCheckedNo, setIsCheckedNo] = useState(false);
 
@@ -54,7 +73,7 @@ function FormDatosUsuario() {
         if (isCheckedSi) {
             setIsCheckedSi(!isCheckedSi);
         }
-    }
+    };
 
     const handleSelectionChange = (e) => {
         setValue(e.target.value);
@@ -62,25 +81,27 @@ function FormDatosUsuario() {
 
     return (
         <div className='pt-5 px-4 space-y-5 lg:w-7/12'>
-            <h3>Tu historial</h3>
-            <div className='w-full flex-col space-y-5'>
+            <h3 className='rubik-Bold-23 text-purple-heart-900'>Tu historial</h3>
+            <div className='w-full flex-col space-y-7'>
                 <div className='w-1/2'>
                     <Input
                         type="Salario Mensual"
-                        label=<div className=''>Salario Mensual</div>
+                        label=<div className={style_label}>Salario Mensual</div>
                         placeholder='Ejemplo: $15000'
                         variant='bordered'
                         labelPlacement='inside'
-                        size='sm'
-                    //classNames={styles}
+                        size='md'
+                        classNames={styles_input}
                     />
                 </div>
                 <div>
                     <Select
-                        label="Ocupación"
+                        label=<div className={style_label}>Ocupación</div>
                         className="max-w"
-                        placeholder='Selecciona una opcion'
+                        placeholder="Selecciona una opcion"
                         variant='bordered'
+                        size='md'
+                        classNames={styles_select}
                     >
                         <SelectItem value="Soy dueño de un negocio">Soy dueño de un negocio</SelectItem>
                         <SelectItem value="Trabajo por mi cuenta">Trabajo por mi cuenta</SelectItem>
@@ -92,12 +113,13 @@ function FormDatosUsuario() {
                         <SelectItem value="Otro">Otro</SelectItem>
                     </Select>
                 </div>
-                <div>
+                <div className='space-y-2'>
                     <Select
-                        label="Industria"
+                        label=<div className={style_label}>Industria</div>
                         className="max-w"
                         placeholder='Selecciona una opcion'
                         variant='bordered'
+                        classNames={styles_select}
                         selectedKeys={[value]}
                         onChange={handleSelectionChange}
                     >
@@ -106,38 +128,42 @@ function FormDatosUsuario() {
                         ))}
                     </Select>
                     <Select
-                        label="Subindustria"
+                        label=<div className={style_label}>Subindustria</div>
                         className="max-w"
                         placeholder='Selecciona una opcion'
                         variant='bordered'
+                        classNames={styles_select}
                     >
                         {value && categorias[value] && categorias[value].map((subindustria) => (
                             <SelectItem value={subindustria} key={subindustria}>{subindustria}</SelectItem>
                         ))}
                     </Select>
                 </div>
-                <div>
-                    <p>¿Te pagan a través de un banco?</p>
-                    <Checkbox isSelected={isCheckedSi} onChange={handleCheckboxSiChange}>Si</Checkbox>
-                    <Checkbox isSelected={isCheckedNo} onChange={handleCheckboxNoChange}>No</Checkbox>
+                <div className='space-y-2'>
+                    <p className={style_label}>¿Te pagan a través de un banco?</p>
+                    <div className='flex flex-col space-y-1'>
+                        <Checkbox isSelected={isCheckedSi} onChange={handleCheckboxSiChange} color='secondary'>Si</Checkbox>
+                        <Checkbox isSelected={isCheckedNo} onChange={handleCheckboxNoChange} color='secondary'>No</Checkbox>
+                    </div>
                 </div>
-                <div className='w-1/2'>
+                <div className='w-fit'>
                     <Input
                         type="Salario familiar total al mes"
-                        label=<div className=''>Salario Mensual</div>
+                        label=<div className={style_label}>Salario familiar total al mes</div>
                         placeholder='Ejemplo: $15000'
                         variant='bordered'
                         labelPlacement='inside'
-                        size='sm'
-                    //classNames={styles}
+                        size='md'
+                    classNames={styles_input}
                     />
                 </div>
                 <div>
                     <Select
-                        label="¿Como consideras tu calificación crediticia?"
+                        label=<div className={style_label}>¿Como consideras tu calificación crediticia?</div>
                         className="max-w"
                         placeholder='Selecciona una opcion'
                         variant='bordered'
+                        classNames={styles_select}
                     >
                         <SelectItem value="Buena">Buena</SelectItem>
                         <SelectItem value="Regular">Regular</SelectItem>
@@ -148,10 +174,11 @@ function FormDatosUsuario() {
                 </div>
                 <div>
                     <Select
-                        label="¿Como usarias el prestamo?"
+                        label=<div className={style_label}>"¿Como usarias el prestamo?"</div>
                         className="max-w"
                         placeholder='Selecciona una opcion'
                         variant='bordered'
+                        classNames={styles_select}
                     >
                         <SelectItem value ="Inversion">Inversion</SelectItem>
                         <SelectItem value ="Educacion">Educacion</SelectItem>
