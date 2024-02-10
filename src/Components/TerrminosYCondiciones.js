@@ -16,7 +16,7 @@ function TerrminosYCondiciones() {
           <div id='directorio' className="flex flex-col md:flex-row md:space-x-2 lg:space-x-0">
               <div className="w-full md:w-1/3 space-y-5">
                   <div className='space-y-2'>
-                      <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Administradora foncre s.a. de c.v. sofom enr</p>
+                      <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">BURS FINANCIERA MEXICANA S.A.P.I. DE C.V.</p>
                       <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Bur ai 2023 todos los derechos reservados. </p>
                   </div>
                   <div className="flex space-x-12">
@@ -79,7 +79,7 @@ function TerrminosYCondiciones() {
               <div className="w-full flex flex-col space-y-4">
                   <div className='space-y-4'>
                       <p className='rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]'>
-                          El Buró de Entidades Financieras contiene información de administradora foncre S.A. de C.V., SOFOM, E.N.R.
+                          El Buró de Entidades Financieras contiene información BURS FINANCIERA MEXICANA S.A.P.I. DE C.V., SOFOM, E.N.R.
                           sobre nuestro desempeño frente a los usuarios, por la prestación de productos y servicios.
                       </p>
                       <p className='rubik-Medium-15 text-white md:text-[12px] lg:text-[15px] '>
