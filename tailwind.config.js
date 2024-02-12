@@ -13,6 +13,15 @@ module.exports = {
         md: "700px",
         lg: "1024px",
       },
+      fontFamily: {
+        rubik: ['Rubik', 'sans-serif'],
+      },
+      fontWeight: {
+        'extra-bold': 600,
+        'bold': 500,
+        'medium': 400,
+        'regular': 300,
+      },
       colors: {
         'dark-blue-50': '#f3f0ff',
         'dark-blue-100': '#eae4ff',
@@ -57,6 +66,7 @@ module.exports = {
     nextui({
       addCommonColors: true,
     }),
+    require('tailwindcss-font-inter')(),
   ]
 }
 
