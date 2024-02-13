@@ -9,7 +9,7 @@ bullet.html
 
 # testing
 /coverage
-
+.env
 # production
 /build
 

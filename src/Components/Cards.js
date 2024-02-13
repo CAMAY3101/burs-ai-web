@@ -16,7 +16,7 @@ function Cards() {
 
               <div className=''>
                   <p className="rubik-Regular-15 text-white/50 md:text-[12px] lg:text-[15px] mb-1">Dirección</p>
-                  <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Av. de las Américas 1545 piso 20, Providencia, 44630 Guadalajara, Jal.</p>
+                  <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Av. Empresarios 135. Colonia puerta de hierro 45116 Zapopan, Jalisco</p>
               </div>
           </div>
 
