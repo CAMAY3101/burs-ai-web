@@ -1,8 +1,8 @@
 import React from 'react'
 import ReCAPTCHA from "react-google-recaptcha";
 
-import bursColorIcon from "../Assets/icons/burs-color-icon.png"
-import thickIcon from "../Assets/icons/tick-icon.png"
+import bursColorIcon from "../../Assets/icons/burs-color-icon.png"
+import thickIcon from "../../Assets/icons/tick-icon.png"
 
 import {Input, Button} from "@nextui-org/react"
 
