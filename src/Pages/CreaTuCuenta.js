@@ -1,6 +1,7 @@
 import React from 'react'
 
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
+import thickIcon from "../Assets/icons/tick-icon.png"
 
 import {Input, Button} from "@nextui-org/react"
 
@@ -29,6 +30,27 @@ const styles_input = {
 };
 
 function CreaTuCuenta() {
+    const [emailValue, setEmailValue] = React.useState('');
+    const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+
+    const isInvalid = React.useMemo(() => {
+        if (emailValue === '') return false;
+        return validateEmail(emailValue) ? false : true;
+    }, [emailValue]);
+
+    const [password, setPassword] = React.useState('');
+
+    const handleChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const isLongEnough = password.length >= 8;
+
+
   return (
     <div className='flex flex-col items-center'>
         <div className='flex flex-col items-center space-y-2 my-9'>
@@ -44,6 +66,9 @@ function CreaTuCuenta() {
                 size='md'
                 variant='bordered'
                 classNames={styles_input}
+                value={emailValue}
+                errorMessage={isInvalid && "Ingresa un correo válido."}
+                onValueChange={setEmailValue}
             />
             <div className='space-y-4'>
                 <Input
@@ -54,22 +79,40 @@ function CreaTuCuenta() {
                     size='md'
                     variant='bordered'
                     classNames={styles_input}
+
+                    value={password}
+                    onChange={handleChange}
                 />
-                <ul className="space-y-1 pl-2 font-rubik font-regular text-[9px] text-purple-950">
-                    <li>
-                        Contraseña debe tener mínimo 8 caracteres. 
+                <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
+                    <li className={`flex flex-row ${isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}` }>
+                        <div className={`w-3 h-3 mr-1 ${isLongEnough ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon'/>
+                        </div>
+                        <p>Contraseña debe tener mínimo 8 caracteres.</p>
                     </li>
-                    <li >
-                        Al menos una letra minúscula 
+                    <li className={`flex flex-row ${hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${hasLowerCase ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos una letra minúscula </p>
                     </li>
-                    <li >
-                        Al menos una letra mayúscula.
+                    <li className={`flex flex-row ${hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${hasUpperCase ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos una letra mayúscula.</p>
                     </li>
-                    <li >
-                        Al menos un número 
+                    <li className={`flex flex-row ${hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${hasNumber ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos un número </p>
                     </li>
-                    <li >
-                        Al menos un caracter especial
+                    <li className={`flex flex-row ${hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${hasSpecialChar ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos un caracter especial</p>
                     </li>
                 </ul>
             </div>
