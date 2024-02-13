@@ -1,4 +1,5 @@
 import React from 'react'
+import ReCAPTCHA from "react-google-recaptcha";
 
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import thickIcon from "../Assets/icons/tick-icon.png"
@@ -30,6 +31,7 @@ const styles_input = {
 };
 
 function CreaTuCuenta() {
+    // Email validation
     const [emailValue, setEmailValue] = React.useState('');
     const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
@@ -38,6 +40,7 @@ function CreaTuCuenta() {
         return validateEmail(emailValue) ? false : true;
     }, [emailValue]);
 
+    // Password validation
     const [password, setPassword] = React.useState('');
 
     const handleChange = (e) => {
@@ -50,6 +53,8 @@ function CreaTuCuenta() {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     const isLongEnough = password.length >= 8;
 
+    // Captcha
+    const [recaptchaValue, setRecaptchaValue] = React.useState(null);
 
   return (
     <div className='flex flex-col items-center'>
@@ -116,9 +121,14 @@ function CreaTuCuenta() {
                     </li>
                 </ul>
             </div>
+            <ReCAPTCHA
+                sitekey='6LfSz3ApAAAAAMEcI9ZZbOn0jHZotcLlNOpCTSsp'
+                onChange={(value) => setRecaptchaValue(value)}
+            />
             <Button
                 size='md'
                 className='w-full bg-purple-heart-500 text-purple-50 rounded-3xl'
+                disabled={isInvalid || !isLongEnough || !hasLowerCase || !hasUpperCase || !hasNumber || !hasSpecialChar || !recaptchaValue}
             >
                 Crear Cuenta
             </Button>
