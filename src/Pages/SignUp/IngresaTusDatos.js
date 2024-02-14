@@ -2,12 +2,35 @@ import React from 'react'
 
 import { Input, Button } from "@nextui-org/react" 
 
+const styles_input = {
+    label: [
+        "group-data-[filled-within=true]:text-dark-blue-950",
+        "font-rubik",
+        "font-medium",
+        "text-base",
+    ],
+    input: [
+        "font-rubik",
+        "font-regular",
+        "text-[15px]",
+        "text-dark-blue-950",
+        "placeholder:text-dark-blue-300",
+    ],
+    inputWrapper: [
+        "rounded-xl",
+        "border-dark-blue-400",
+        "data-[hover=true]:border-dark-blue-700",
+        "group-data-[focus=true]:border-dark-blue-900",
+        "!cursor-text",
+        "space-y-8"
+    ]
+};
 function IngresaTusDatos() {
   return (
     <div className='flex flex-col items-center space-y-7 mt-9'>
-        <ol class="flex items-center w-11/12  space-x-4 text-sm font-medium text-center text-gray-500">
-            <li class="flex items-center text-blue-600 dark:text-blue-500">
-                <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
+        <ol class="flex items-center w-11/12  space-x-4">
+            <li class="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
+                <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
                     1
                 </span>
                   Registro <span class="hidden sm:inline-flex sm:ms-2">de Datos</span>
@@ -15,8 +38,8 @@ function IngresaTusDatos() {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                 </svg>
             </li>
-            <li class="flex items-center">
-                <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+            <li class="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
                     2
                 </span>
                     Verificación <span class="hidden sm:inline-flex sm:ms-2">de Datos</span>
@@ -24,8 +47,8 @@ function IngresaTusDatos() {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                 </svg>
             </li>
-            <li class="flex items-center">
-                <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+            <li class="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
                     3
                 </span>
                   Solicitar <span class="hidden sm:inline-flex sm:ms-2">Prestamo</span>
@@ -33,7 +56,7 @@ function IngresaTusDatos() {
         </ol>
 
         <div className='w-11/12 flex flex-col space-y-5'>
-            <h1> Ingresa tus datos </h1>
+            <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos </h1>
             <Input
                 isRequired
                 type='password'
@@ -41,6 +64,7 @@ function IngresaTusDatos() {
                 placeholder='Ejemplo: Juan'
                 size='md'
                 variant='bordered'
+                classNames={styles_input}
                 
             />
             <Input
@@ -50,6 +74,7 @@ function IngresaTusDatos() {
                 placeholder='Ej: 25'
                 size='md'
                 variant='bordered'
+                classNames={styles_input}
             />
             <Input
                 isRequired
@@ -58,6 +83,7 @@ function IngresaTusDatos() {
                 placeholder='Ej: 55 1234 5678'
                 size='md'
                 variant='bordered'
+                classNames={styles_input}
             />
             <Button
                 size='large'
