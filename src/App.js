@@ -13,7 +13,8 @@ import FooterCustom from './Components/Footer';
 import Landing from './Pages/Landing';
 import QuieroInvertir from './Pages/QuieroInvertir';
 import SolicitarPrestamo from './Pages/SolicitarPrestamo';
-import CreaTuCuenta from './Pages/CreaTuCuenta';
+import CreaTuCuenta from './Pages/SignUp/CreaTuCuenta';
+import IngresaTusDatos from './Pages/SignUp/IngresaTusDatos';
 
 function App() {
   const { Header, Sider, Footer, Content } = Layout;
@@ -29,6 +30,7 @@ function App() {
               <Route path='/quiero-invertir' element = { <QuieroInvertir/> } />
               <Route path='/solicitar-prestamo' element = { <SolicitarPrestamo/> } />
               <Route path='/crear-cuenta' element = { <CreaTuCuenta/> } />
+              <Route path='/crear-cuenta-2' element = { <IngresaTusDatos/> } />
             </Routes>
           </Content>
           <Footer>
