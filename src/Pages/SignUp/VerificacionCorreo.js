@@ -2,6 +2,29 @@ import React from 'react'
 
 import { Input, Button } from "@nextui-org/react"
 
+const styles_input = {
+    label: [
+        "group-data-[filled-within=true]:text-dark-blue-950",
+        "font-rubik",
+        "font-medium",
+        "text-base",
+    ],
+    input: [
+        "font-rubik",
+        "font-regular",
+        "text-[15px]",
+        "text-dark-blue-950",
+        "placeholder:text-dark-blue-300",
+    ],
+    inputWrapper: [
+        "rounded-xl",
+        "border-dark-blue-400",
+        "data-[hover=true]:border-dark-blue-700",
+        "group-data-[focus=true]:border-dark-blue-900",
+        "!cursor-text",
+    ]
+};
+
 function VerificacionCorreo() {
   return (
       <div className='flex flex-col items-center space-y-14 mt-9'>
@@ -31,21 +54,30 @@ function VerificacionCorreo() {
                   Solicitar <span class="hidden sm:inline-flex sm:ms-2">Prestamo</span>
               </li>
           </ol>
-          <div className='w-11/12 flex flex-col space-y-8'>
-            <h1>Te enviamos un codigo al correo XX XXXX XXXX</h1>
-            <p>Ingresa el codigo OTP que te enviamos por correo</p>
-            <div className='flex-col space-y-4'>
+          <div className='w-11/12 flex flex-col space-y-12'>
+            <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo al correo XX XXXX XXXX</h1>
+            <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por correo</p>
+            <div className='flex-col space-y-3'>
                 <Input
-                 label='Codigo OTP'
-                 labelPlacement='outside'
-                 placeholder='Ingresa el codigo'
+                    type='text'
+                    label='Codigo OTP'
+                    labelPlacement='outside'
+                    placeholder='Ingresa el codigo'
+                    variant='bordered'
+                    classNames={styles_input}
                 />
-                <Button>Reenviar codigo</Button>
+                <Button
+                    variant='light'
+                    className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
+                >
+                Reenviar codigo
+                </Button>
             </div>
             </div>
             <div className='w-11/12'>
                 <Button
                     className='w-full'
+                    color='secondary'
                 >
                 Verficar Correo
                 </Button>
