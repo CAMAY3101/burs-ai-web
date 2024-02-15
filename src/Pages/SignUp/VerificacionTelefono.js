@@ -31,21 +31,22 @@ function VerificacionTelefono() {
               </li>
           </ol>
           <div className='w-11/12 flex flex-col space-y-8'>
-              <h1>Te enviamos un codigo al numero XX XXXX XXXX</h1>
-              <p>Subtitle</p>
+              <h1>Te enviamos un codigo al telefono XX XXXX XXXX</h1>
+              <p>Ingresa el codigo OTP que te enviamos por SMS</p>
               <div className='flex-col space-y-4'>
                   <Input
-                      label='Codigo de verificacion'
+                      label='Codigo OTP'
                       labelPlacement='outside'
+                      placeholder='Ingresa el codigo'
                   />
-                  <Button>Reenviar</Button>
+                  <Button>Reenviar codigo</Button>
               </div>
           </div>
           <div className='w-11/12'>
               <Button
                   className='w-full'
               >
-                  Verficar Correo
+                  Verficar Telefono
               </Button>
           </div>
 
