@@ -15,6 +15,8 @@ import QuieroInvertir from './Pages/QuieroInvertir';
 import SolicitarPrestamo from './Pages/SolicitarPrestamo';
 import CreaTuCuenta from './Pages/SignUp/CreaTuCuenta';
 import IngresaTusDatos from './Pages/SignUp/IngresaTusDatos';
+import VerificacionCorreo from './Pages/SignUp/VerificacionCorreo';
+import VerificacionTelefono from './Pages/SignUp/VerificacionTelefono';
 
 function App() {
   const { Header, Sider, Footer, Content } = Layout;
@@ -31,6 +33,8 @@ function App() {
               <Route path='/solicitar-prestamo' element = { <SolicitarPrestamo/> } />
               <Route path='/crear-cuenta' element = { <CreaTuCuenta/> } />
               <Route path='/crear-cuenta-2' element = { <IngresaTusDatos/> } />
+              <Route path='/verficacion-correo' element = { <VerificacionCorreo/> } />
+              <Route path='/verficacion-telefono' element = { <VerificacionTelefono/> } />
             </Routes>
           </Content>
           <Footer>
