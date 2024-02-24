@@ -32,12 +32,15 @@ const styles_input = {
 };
 
 function IngresaTusDatos() {
+    //----------------------Variables----------------------
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
-    //const [country, setCountry] = useState('mx');
     const [phone, setPhone] = useState('');
-    //const [selectedCountry, setSelectedCountry] = useState(); // Establecer 'mx' como predeterminado
+    const { id_usuario } = useParams();
+    const navigate = useNavigate();
+    
+    //----------------------Cambiar formato de telefono----------------------
 
     // Busca el índice del país 'mx' (México) en la lista predeterminada
     const mexicoIndex = defaultCountries.findIndex((country) => parseCountry(country).iso2 === 'mx');
@@ -55,6 +58,8 @@ function IngresaTusDatos() {
         // Reemplaza el país 'mx' en la lista predeterminada con el país modificado
         defaultCountries[mexicoIndex] = modifiedMexicoCountryData;
     }
+
+    //----------------------Porpiedades de react-international-phone----------------------
     const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
         usePhoneInput({
             defaultCountry: "mx",
@@ -69,14 +74,23 @@ function IngresaTusDatos() {
         setCountry(country.iso2); // Actualizar el país seleccionado cuando cambie
     }, [country]);
 
-    
-
-    const {id_usuario} = useParams();
-
+    //----------------------coneccion API----------------------
     const handleSubmit = async () => {
         console.log(id_usuario,name, lastName, age, phone);
         try{
-           
+            const response = await axios.post('http://localhost:3001/usuarios/updateDataUser', {
+                id_usuario: id_usuario,
+                nombre: name,
+                apellidos: lastName,
+                edad: age,
+                telefono: phone,
+            });
+            if (response.data.message === 'Datos de usuario actualizados con éxito'){
+                navigate(`/verficar-correo`); // Redirige a la página de verificación de correo
+            }
+            else{
+                console.error('Error al actualizar los datos del usuario:', response.data.error);
+            }
 
         }catch(error){
             //console.log(error);
@@ -113,7 +127,7 @@ function IngresaTusDatos() {
             </ol>
 
             <div className='w-11/12 flex flex-col space-y-10'>
-                <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos {id_usuario} </h1>
+                <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos</h1>
                 <div className='flex-col space-y-12'>
                     <Input
                         isRequired
