@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Button } from "@nextui-org/react"
 
@@ -26,6 +28,27 @@ const styles_input = {
 };
 
 function VerificacionCorreo() {
+    const [otpCode, setOtpCode] = useState('');
+    const { id_usuario } = useParams();
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+        console.log(id_usuario, otpCode);
+        try {
+            const response = await axios.post('http://localhost:3001/usuarios/verifyEmail', {
+                id_usuario: id_usuario,
+                code: otpCode
+            });
+            if (response.data.message === 'Correo electrónico verificado con éxito') {
+                navigate(`/verificar-telefono/${id_usuario}`); 
+            }
+            else {
+                console.error('Error al actualizar los datos del usuario:', response.data.error);
+            }
+        } catch (error) {
+            //console.log(error);
+        }
+    };
   return (
       <div className='flex flex-col items-center space-y-14 mt-9'>
           <ol class="flex items-center w-11/12  space-x-4">
@@ -65,6 +88,9 @@ function VerificacionCorreo() {
                     placeholder='Ingresa el codigo'
                     variant='bordered'
                     classNames={styles_input}
+
+                    value={otpCode}
+                    onValueChange={setOtpCode}
                 />
                 <Button
                     variant='light'
@@ -78,6 +104,7 @@ function VerificacionCorreo() {
                 <Button
                     className='w-full'
                     color='secondary'
+                    onClick={handleSubmit}
                 >
                 Verficar Correo
                 </Button>

@@ -31,10 +31,10 @@ function App() {
               <Route path='/' element = { <Landing/> } />
               <Route path='/quiero-invertir' element = { <QuieroInvertir/> } />
               <Route path='/solicitar-prestamo' element = { <SolicitarPrestamo/> } />
-              <Route path='/crear-cuenta' element = { <CreaTuCuenta/> } />
-              <Route path='/crear-cuenta-2' element = { <IngresaTusDatos/> } />
-              <Route path='/verficacion-correo' element = { <VerificacionCorreo/> } />
-              <Route path='/verficacion-telefono' element = { <VerificacionTelefono/> } />
+              <Route path='/registro' element = { <CreaTuCuenta/> } />
+              <Route path='/ingresar-datos/:id_usuario' element = { <IngresaTusDatos/> } />
+              <Route path='/verificar-correo/:id_usuario' element = { <VerificacionCorreo/> } />
+              <Route path='/verificar-telefono/:id_usuario' element = { <VerificacionTelefono/> } />
             </Routes>
           </Content>
           <Footer>

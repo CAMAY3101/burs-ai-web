@@ -1,5 +1,7 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from "react-google-recaptcha";
+import axios from 'axios';
 
 import bursColorIcon from "../../Assets/icons/burs-color-icon.png"
 import thickIcon from "../../Assets/icons/tick-icon.png"
@@ -31,6 +33,10 @@ const styles_input = {
 };
 
 function CreaTuCuenta() {
+    const [showMessage, setShowMessage] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const navigate = useNavigate();
+
     // Email validation
     const [emailValue, setEmailValue] = React.useState('');
     const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
@@ -55,6 +61,32 @@ function CreaTuCuenta() {
 
     // Captcha
     const [recaptchaValue, setRecaptchaValue] = React.useState(null);
+
+    // Submit
+    const handleSubmit = async () => {
+        try{
+            const response = await axios.post('http://localhost:3001/usuarios/createUser', {
+                correo: emailValue,
+                contrasena: password,
+            });
+            // Maneja la respuesta del backend
+            if (response.data.message === 'Usuario creado con éxito') {
+                console.log('Usuario creado con éxito');
+                // Puedes redirigir a otra página o mostrar un mensaje de éxito
+                const id_usuario = response.data.id_usuario;
+                console.log('id_usuario:', id_usuario);
+                navigate(`/ingresar-datos/${id_usuario}`);
+
+            } else {
+                console.error('Error al crear el usuario:', response.data.error);
+                // Puedes mostrar un mensaje de error al usuario
+            }
+        } catch (error) {
+            setShowMessage(!showMessage);
+            setMessage('Error al crear el usuario: ' + error);
+            console.error('Error al crear el usuario:', error);
+        }
+    };                        
 
   return (
     <div className='flex flex-col items-center'>
@@ -128,10 +160,12 @@ function CreaTuCuenta() {
             <Button
                 size='md'
                 className='w-full bg-purple-heart-500 text-purple-50 rounded-3xl'
-                disabled={isInvalid || !isLongEnough || !hasLowerCase || !hasUpperCase || !hasNumber || !hasSpecialChar || !recaptchaValue}
+                isDisabled={isInvalid || !isLongEnough || !hasLowerCase || !hasUpperCase || !hasNumber || !hasSpecialChar || !recaptchaValue}
+                onClick={handleSubmit}
             >
                 Crear Cuenta
             </Button>
+              {showMessage && <p className="text-sm mt-4">{message}</p>}
         </div>
     </div>
   )
