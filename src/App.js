@@ -33,8 +33,8 @@ function App() {
               <Route path='/solicitar-prestamo' element = { <SolicitarPrestamo/> } />
               <Route path='/registro' element = { <CreaTuCuenta/> } />
               <Route path='/ingresar-datos/:id_usuario' element = { <IngresaTusDatos/> } />
-              <Route path='/verficar-correo' element = { <VerificacionCorreo/> } />
-              <Route path='/verficar-telefono' element = { <VerificacionTelefono/> } />
+              <Route path='/verificar-correo/:id_usuario' element = { <VerificacionCorreo/> } />
+              <Route path='/verificar-telefono/:id_usuario' element = { <VerificacionTelefono/> } />
             </Routes>
           </Content>
           <Footer>

@@ -86,7 +86,7 @@ function IngresaTusDatos() {
                 telefono: phone,
             });
             if (response.data.message === 'Datos de usuario actualizados con éxito'){
-                navigate(`/verficar-correo`); // Redirige a la página de verificación de correo
+                navigate(`/verificar-correo/${id_usuario}`); // Redirige a la página de verificación de correo
             }
             else{
                 console.error('Error al actualizar los datos del usuario:', response.data.error);
