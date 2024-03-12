@@ -8,6 +8,8 @@ import 'react-international-phone/style.css';
 
 import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
 
+axios.defaults.withCredentials = true;
+
 const styles_input = {
     label: [
         "group-data-[filled-within=true]:text-dark-blue-950",
@@ -76,17 +78,16 @@ function IngresaTusDatos() {
 
     //----------------------coneccion API----------------------
     const handleSubmit = async () => {
-        console.log(id_usuario,name, lastName, age, phone);
+        console.log(name, lastName, age, phone);
         try{
             const response = await axios.post('http://localhost:3001/usuarios/updateDataUser', {
-                id_usuario: id_usuario,
                 nombre: name,
                 apellidos: lastName,
                 edad: age,
                 telefono: phone,
             });
-            if (response.data.message === 'Datos de usuario actualizados con éxito'){
-                navigate(`/verificar-correo/${id_usuario}`); // Redirige a la página de verificación de correo
+            if (response.data.status === 'success'){
+                navigate('/verificar-correo'); // Redirige a la página de verificación de correo
             }
             else{
                 console.error('Error al actualizar los datos del usuario:', response.data.error);

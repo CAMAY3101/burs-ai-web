@@ -8,6 +8,8 @@ import thickIcon from "../../Assets/icons/tick-icon.png"
 
 import {Input, Button} from "@nextui-org/react"
 
+axios.defaults.withCredentials = true;
+
 const styles_input = {
     label: [
         "group-data-[filled-within=true]:text-dark-blue-950",
@@ -70,15 +72,14 @@ function CreaTuCuenta() {
                 contrasena: password,
             });
             // Maneja la respuesta del backend
-            if (response.data.message === 'Usuario creado con éxito') {
+            if (response.data.status === 'success') {
                 console.log('Usuario creado con éxito');
+                console.log('response', response);
                 // Puedes redirigir a otra página o mostrar un mensaje de éxito
-                const id_usuario = response.data.id_usuario;
-                console.log('id_usuario:', id_usuario);
-                navigate(`/ingresar-datos/${id_usuario}`);
+                navigate(`/ingresar-datos`);
 
             } else {
-                console.error('Error al crear el usuario:', response.data.error);
+                console.error('Error en linea 79', response.data.message);
                 // Puedes mostrar un mensaje de error al usuario
             }
         } catch (error) {

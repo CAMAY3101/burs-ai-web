@@ -27,20 +27,21 @@ const styles_input = {
     ]
 };
 
+axios.defaults.withCredentials = true;
+
 function VerificacionCorreo() {
     const [otpCode, setOtpCode] = useState('');
     const { id_usuario } = useParams();
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
-        console.log(id_usuario, otpCode);
+        //console.log( otpCode);
         try {
             const response = await axios.post('http://localhost:3001/usuarios/verifyEmail', {
-                id_usuario: id_usuario,
                 code: otpCode
             });
-            if (response.data.message === 'Correo electrónico verificado con éxito') {
-                navigate(`/verificar-telefono/${id_usuario}`); 
+            if (response.data.status === 'success') {
+                navigate('/verificar-telefono'); 
             }
             else {
                 console.error('Error al actualizar los datos del usuario:', response.data.error);

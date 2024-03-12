@@ -33,10 +33,9 @@ function VerificacionTelefono() {
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
-        console.log(id_usuario, otpCode);
+        console.log( otpCode);
         try {
             const response = await axios.post('http://localhost:3001/usuarios/verifyPhoneNumber', {
-                id_usuario: id_usuario,
                 code: otpCode
             });
             if (response.data.message === 'Telefono verificado con éxito') {
