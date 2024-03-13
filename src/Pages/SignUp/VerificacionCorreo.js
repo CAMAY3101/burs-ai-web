@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { Input, Button } from "@nextui-org/react"
+import { Input, Button } from "@nextui-org/react";
+import toast, { Toaster } from 'react-hot-toast';
 
 const styles_input = {
     label: [
@@ -31,7 +32,6 @@ axios.defaults.withCredentials = true;
 
 function VerificacionCorreo() {
     const [otpCode, setOtpCode] = useState('');
-    const { id_usuario } = useParams();
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
@@ -41,13 +41,29 @@ function VerificacionCorreo() {
                 code: otpCode
             });
             if (response.data.status === 'success') {
-                navigate('/verificar-telefono'); 
-            }
-            else {
-                console.error('Error al actualizar los datos del usuario:', response.data.error);
+                toast.success('Correo verificado con éxito');
+                setTimeout(() => {
+                    navigate('/verificar-telefono');
+                }, 2000);
             }
         } catch (error) {
-            //console.log(error);
+            if(error.response.status === 400) {
+                toast.error('Codigo incorrecto')
+            }
+            else {
+                toast.error('Error al verificar el correo, intentalo de nuevo')
+            }
+        }
+    };
+
+    const handleResend = async () => {
+        try {
+            const response = await axios.post('http://localhost:3001/usuarios/resendOTPCodeEmail');
+            if (response.data.status === 'success') {
+                toast('Codigo reenviado')
+            }
+        } catch (error) {
+            toast.error('Error al reenviar el codigo')
         }
     };
   return (
@@ -96,6 +112,7 @@ function VerificacionCorreo() {
                 <Button
                     variant='light'
                     className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
+                    onClick={handleResend}
                 >
                 Reenviar codigo
                 </Button>
@@ -110,8 +127,10 @@ function VerificacionCorreo() {
                 Verficar Correo
                 </Button>
             </div>
-
-          
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            /> 
       </div>
   )
 }
