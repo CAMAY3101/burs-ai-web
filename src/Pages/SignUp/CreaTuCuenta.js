@@ -8,7 +8,8 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import bursColorIcon from "../../Assets/icons/burs-color-icon.png"
 import thickIcon from "../../Assets/icons/tick-icon.png"
-
+import visibleEyeIcon from "../../Assets/icons/visible-eye.png"
+import invisibleEyeIcon from "../../Assets/icons/invisible-eye.png"
 
 axios.defaults.withCredentials = true;
 
@@ -32,13 +33,16 @@ const styles_input = {
         "data-[hover=true]:border-dark-blue-700",
         "group-data-[focus=true]:border-dark-blue-900",
         "!cursor-text",
-        "space-y-8"
+        "space-y-8",
+        //"py-6",
     ]
 };
 
 function CreaTuCuenta() {
-    const [showMessage, setShowMessage] = React.useState(false);
-    const [message, setMessage] = React.useState('');
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    const toggleVisibility = () => setIsVisible(!isVisible);
+
     const navigate = useNavigate();
 
     // Email validation
@@ -101,7 +105,7 @@ function CreaTuCuenta() {
                 type='email'
                 label = 'Correo Electrónico'
                 placeholder='ejemplo@outlook.com'
-                size='md'
+                size='lg'
                 variant='bordered'
                 classNames={styles_input}
                 value={emailValue}
@@ -111,12 +115,21 @@ function CreaTuCuenta() {
             <div className='space-y-4'>
                 <Input
                     isRequired
-                    type='password'
                     label='Contraseña'
                     placeholder='Ingresa contraseña'
-                    size='md'
+                    size='lg'
                     variant='bordered'
                     classNames={styles_input}
+                    endContent={
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                            {isVisible ? (
+                                <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
+                            ) : (
+                                <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
+                            )}
+                        </button>
+                    }
+                    type={isVisible ? "text" : "password"}
 
                     value={password}
                     onChange={handleChange}
