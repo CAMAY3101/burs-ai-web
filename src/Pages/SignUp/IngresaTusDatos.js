@@ -7,6 +7,7 @@ import { usePhoneInput, FlagImage, defaultCountries, parseCountry,} from "react-
 import 'react-international-phone/style.css';
 
 import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
+import toast, { Toaster } from 'react-hot-toast';
 
 axios.defaults.withCredentials = true;
 
@@ -39,7 +40,6 @@ function IngresaTusDatos() {
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
-    const { id_usuario } = useParams();
     const navigate = useNavigate();
     
     //----------------------Cambiar formato de telefono----------------------
@@ -78,7 +78,6 @@ function IngresaTusDatos() {
 
     //----------------------coneccion API----------------------
     const handleSubmit = async () => {
-        console.log(name, lastName, age, phone);
         try{
             const response = await axios.post('http://localhost:3001/usuarios/updateDataUser', {
                 nombre: name,
@@ -89,12 +88,8 @@ function IngresaTusDatos() {
             if (response.data.status === 'success'){
                 navigate('/verificar-correo'); // Redirige a la página de verificación de correo
             }
-            else{
-                console.error('Error al actualizar los datos del usuario:', response.data.error);
-            }
-
         }catch(error){
-            //console.log(error);
+            toast.error('Error al actualizar los datos del usuario, intente de nuevo')
         }
     };
 
@@ -227,13 +222,13 @@ function IngresaTusDatos() {
                         value={inputValue}
                         onChange={handlePhoneValueChange}
                         inputRef={inputRef} 
-                        //onChange={handleInputChange}
                     />  
                 </div>
                 
                 <Button
                     size='large'
                     color='secondary'
+                    isDisabled={!name || !lastName || !age || !phone}
                     onClick = {handleSubmit}
                 >
                 Continuar

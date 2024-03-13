@@ -82,7 +82,6 @@ function CreaTuCuenta() {
 
             } 
         } catch (error) {
-            console.error('Error en linea 83', error);
             if(error.response.status === 400){
                 toast.error(error.response.data.message)
             }
