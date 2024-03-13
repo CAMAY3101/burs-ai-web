@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 
+import {Input, Button} from "@nextui-org/react"
+import toast, { Toaster } from 'react-hot-toast';
+
 import bursColorIcon from "../../Assets/icons/burs-color-icon.png"
 import thickIcon from "../../Assets/icons/tick-icon.png"
 
-import {Input, Button} from "@nextui-org/react"
 
 axios.defaults.withCredentials = true;
 
@@ -71,22 +73,20 @@ function CreaTuCuenta() {
                 correo: emailValue,
                 contrasena: password,
             });
-            // Maneja la respuesta del backend
             if (response.data.status === 'success') {
-                console.log('Usuario creado con éxito');
-                console.log('response', response);
-                // Puedes redirigir a otra página o mostrar un mensaje de éxito
                 navigate(`/ingresar-datos`);
 
-            } else {
-                console.error('Error en linea 79', response.data.message);
-                // Puedes mostrar un mensaje de error al usuario
-            }
+            } 
         } catch (error) {
-            setShowMessage(!showMessage);
-            setMessage('Error al crear el usuario: ' + error);
-            console.error('Error al crear el usuario:', error);
+            console.error('Error en linea 83', error);
+            if(error.response.status === 400){
+                toast.error(error.response.data.message)
+            }
+            else{
+                toast.error('Error al crear usuario, intente de nuevo')
+            }
         }
+        
     };                        
 
   return (
@@ -166,7 +166,10 @@ function CreaTuCuenta() {
             >
                 Crear Cuenta
             </Button>
-              {showMessage && <p className="text-sm mt-4">{message}</p>}
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     </div>
   )
