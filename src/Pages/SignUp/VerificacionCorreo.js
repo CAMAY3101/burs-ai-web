@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Button } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
@@ -32,18 +32,27 @@ axios.defaults.withCredentials = true;
 
 function VerificacionCorreo() {
     const [otpCode, setOtpCode] = useState('');
+    const {id_usuario}= useParams();
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
         //console.log( otpCode);
         try {
-            const response = await axios.post('http://localhost:3001/usuarios/verifyEmail', {
+            const response = await axios.post('https://bursapi.com/usuarios/verifyEmail', {
+                id_usuario: id_usuario,
                 code: otpCode
             });
-            if (response.data.status === 'success') {
+            // if (response.data.status === 'success') {
+            //     toast.success('Correo verificado con éxito');
+            //     setTimeout(() => {
+            //         navigate('/verificar-telefono');
+            //     }, 2000);
+            // }
+            console.log(response);
+            if (response.status === 200) {
                 toast.success('Correo verificado con éxito');
                 setTimeout(() => {
-                    navigate('/verificar-telefono');
+                    navigate(`/verificar-telefono/${id_usuario}`);
                 }, 2000);
             }
         } catch (error) {
@@ -58,7 +67,7 @@ function VerificacionCorreo() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/usuarios/resendOTPCodeEmail');
+            const response = await axios.post('http://bursapi.com/usuarios/resendOTPCodeEmail');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }
@@ -112,7 +121,7 @@ function VerificacionCorreo() {
                 <Button
                     variant='light'
                     className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
-                    onClick={handleResend}
+                    //onClick={handleResend}
                 >
                 Reenviar codigo
                 </Button>

@@ -73,21 +73,30 @@ function CreaTuCuenta() {
     // Submit
     const handleSubmit = async () => {
         try{
-            const response = await axios.post('http://localhost:3001/usuarios/createUser', {
+            const response = await axios.post('https://bursapi.com/usuarios/createUser', {
                 correo: emailValue,
                 contrasena: password,
             });
-            if (response.data.status === 'success') {
-                navigate(`/ingresar-datos`);
+            // if (response.data.status === 'success') {
+            //     navigate(`/ingresar-datos`);
 
-            } 
+            // }
+            if (response.data.message === 'Usuario creado con éxito') {
+                console.log('Usuario creado con éxito');
+                // Puedes redirigir a otra página o mostrar un mensaje de éxito
+                const id_usuario = response.data.id_usuario;
+                navigate(`/ingresar-datos/${id_usuario}`);
+            }
+
         } catch (error) {
             if(error.response.status === 400){
-                toast.error(error.response.data.message)
+                //toast.error(error.response.data.message)
+                toast.error(error.response.data.error)
             }
             else{
                 toast.error('Error al crear usuario, intente de nuevo')
             }
+            console.log(error)
         }
         
     };

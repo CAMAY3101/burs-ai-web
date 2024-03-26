@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Input, Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -28,16 +28,26 @@ const styles_input = {
     ]
 };
 
+axios.defaults.withCredentials = true;
+
 function VerificacionTelefono() {
     const [otpCode, setOtpCode] = useState('');
+    const {id_usuario}= useParams();
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/usuarios/verifyPhoneNumber', {
+            const response = await axios.post('https://bursapi.com/usuarios/verifyPhoneNumber', {
+                id_usuario: id_usuario,
                 code: otpCode
             });
-            if (response.data.message === 'Telefono verificado con éxito') {
+            // if (response.data.message === 'Telefono verificado con éxito') {
+            //     toast.success('Telefono verificado con éxito');
+            //     setTimeout(() => {
+            //         navigate('/');
+            //     }, 2000);
+            // }
+            if (response.status === 200) {
                 toast.success('Telefono verificado con éxito');
                 setTimeout(() => {
                     navigate('/');
@@ -46,8 +56,7 @@ function VerificacionTelefono() {
         } catch (error) {
             if (error.response.status === 400) {
                 toast.error('Codigo incorrecto')
-            }
-            else {
+            } else {
                 toast.error('Error al verificar el telefono, intentalo de nuevo')
             }
         }
@@ -55,7 +64,7 @@ function VerificacionTelefono() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/usuarios/resendOTPCodePhoneNumber');
+            const response = await axios.post('http://bursapi.com/usuarios/resendOTPCodePhoneNumber');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }
@@ -63,6 +72,7 @@ function VerificacionTelefono() {
             toast.error('Error al reenviar el codigo')
         }
     };
+
     return (
         <div className='flex flex-col items-center space-y-14 mt-9'>
             <ol class="flex items-center w-11/12  space-x-4">
@@ -108,7 +118,7 @@ function VerificacionTelefono() {
                         <Button
                             variant='light'
                             className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
-                            onClick={handleResend} 
+                            //onClick={handleResend} 
                         >
                         Reenviar codigo
                         </Button>

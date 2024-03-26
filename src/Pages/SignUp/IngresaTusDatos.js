@@ -40,6 +40,7 @@ function IngresaTusDatos() {
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
+    const { id_usuario } = useParams();
     const navigate = useNavigate();
     
     //----------------------Cambiar formato de telefono----------------------
@@ -79,15 +80,20 @@ function IngresaTusDatos() {
     //----------------------coneccion API----------------------
     const handleSubmit = async () => {
         try{
-            const response = await axios.post('http://localhost:3001/usuarios/updateDataUser', {
+            const response = await axios.post('https://bursapi.com/usuarios/updateDataUser', {
+                id_usuario: id_usuario,
                 nombre: name,
                 apellidos: lastName,
                 edad: age,
                 telefono: phone,
             });
-            if (response.data.status === 'success'){
-                navigate('/verificar-correo'); // Redirige a la página de verificación de correo
+            // if (response.data.status === 'success'){
+            //     navigate('/verificar-correo'); // Redirige a la página de verificación de correo
+            // }
+            if (response.data.message === 'Datos de usuario actualizados con éxito') {
+                navigate(`/verificar-correo/${id_usuario}`); // Redirige a la página de verificación de correo
             }
+
         }catch(error){
             toast.error('Error al actualizar los datos del usuario, intente de nuevo')
         }
