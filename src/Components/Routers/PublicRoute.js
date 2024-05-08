@@ -1,5 +1,5 @@
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL } from '../../config/router/paths';
+import { Navigate, Outlet} from 'react-router-dom';
+import { INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL } from '../../Config/Router/paths';
 import { useAuthContext } from '../../Contexts/authContext';
 import IngresarDatos from '../../Pages/CreateAccount/IngresaTusDatos';
 import VerificarCorreo from '../../Pages/CreateAccount/VerificacionCorreo';

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthContext } from '../../Contexts/authContext';
-import { LOGIN, INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL } from '../../config/router/paths';
+import { LOGIN, INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL } from '../../Config/Router/paths';
 import IngresarDatos from '../../Pages/CreateAccount/IngresaTusDatos';
 import VerificarCorreo from '../../Pages/CreateAccount/VerificacionCorreo';
 import VerificarTelefono from '../../Pages/CreateAccount/VerificacionTelefono';
@@ -8,7 +8,7 @@ import TuHistorial from '../../Pages/SolicitarPrestamo/TuHistorial';
 import React from 'react'
 
 export default function SolicitarPrestamoRoute() {
-    const { tokenExist, checkToken, verificationStep, } = useAuthContext();
+    const { tokenExist,  verificationStep, } = useAuthContext();
     console.log('Solicitar Prestamo route');
 
     if (!tokenExist) {

@@ -6,10 +6,10 @@ import axios from 'axios';
 import {Input, Button} from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 
-import bursColorIcon from "../../Assets/icons/burs-color-icon.png"
-import thickIcon from "../../Assets/icons/tick-icon.png"
-import visibleEyeIcon from "../../Assets/icons/visible-eye.png"
-import invisibleEyeIcon from "../../Assets/icons/invisible-eye.png"
+import bursColorIcon from "../Assets/icons/burs-color-icon.png"
+import thickIcon from "../Assets/icons/tick-icon.png"
+import visibleEyeIcon from "../Assets/icons/visible-eye.png"
+import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 axios.defaults.withCredentials = true;
 
@@ -38,7 +38,7 @@ const styles_input = {
     ]
 };
 
-function CreaTuCuenta() {
+function SignUp() {
     const [isVisible, setIsVisible] = React.useState(false);
 
     const toggleVisibility = () => setIsVisible(!isVisible);
@@ -195,4 +195,4 @@ function CreaTuCuenta() {
   )
 }
 
-export default CreaTuCuenta
+export default SignUp
