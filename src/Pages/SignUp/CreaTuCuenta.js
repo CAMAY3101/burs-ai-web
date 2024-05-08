@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 
+import {Input, Button} from "@nextui-org/react"
+import toast, { Toaster } from 'react-hot-toast';
+
 import bursColorIcon from "../../Assets/icons/burs-color-icon.png"
 import thickIcon from "../../Assets/icons/tick-icon.png"
+import visibleEyeIcon from "../../Assets/icons/visible-eye.png"
+import invisibleEyeIcon from "../../Assets/icons/invisible-eye.png"
 
-import {Input, Button} from "@nextui-org/react"
+axios.defaults.withCredentials = true;
 
 const styles_input = {
     label: [
@@ -28,13 +33,16 @@ const styles_input = {
         "data-[hover=true]:border-dark-blue-700",
         "group-data-[focus=true]:border-dark-blue-900",
         "!cursor-text",
-        "space-y-8"
+        "space-y-8",
+        //"py-6",
     ]
 };
 
 function CreaTuCuenta() {
-    const [showMessage, setShowMessage] = React.useState(false);
-    const [message, setMessage] = React.useState('');
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    const toggleVisibility = () => setIsVisible(!isVisible);
+
     const navigate = useNavigate();
 
     // Email validation
@@ -65,29 +73,33 @@ function CreaTuCuenta() {
     // Submit
     const handleSubmit = async () => {
         try{
-            const response = await axios.post('http://localhost:3001/usuarios/createUser', {
+            const response = await axios.post('https://bursapi.com/usuarios/createUser', {
                 correo: emailValue,
                 contrasena: password,
             });
-            // Maneja la respuesta del backend
+            // if (response.data.status === 'success') {
+            //     navigate(`/ingresar-datos`);
+
+            // }
             if (response.data.message === 'Usuario creado con éxito') {
                 console.log('Usuario creado con éxito');
                 // Puedes redirigir a otra página o mostrar un mensaje de éxito
                 const id_usuario = response.data.id_usuario;
-                console.log('id_usuario:', id_usuario);
                 navigate(`/ingresar-datos/${id_usuario}`);
-
-            } else {
-                console.error('Error al crear el usuario:', response.data.error);
-                // Puedes mostrar un mensaje de error al usuario
             }
-        } catch (error) {
-            setShowMessage(!showMessage);
-            setMessage('Error al crear el usuario: ' + error);
-            console.error('Error al crear el usuario:', error);
-        }
-    };                        
 
+        } catch (error) {
+            if(error.response.status === 400){
+                //toast.error(error.response.data.message)
+                toast.error(error.response.data.error)
+            }
+            else{
+                toast.error('Error al crear usuario, intente de nuevo')
+            }
+            console.log(error)
+        }
+        
+    };
   return (
     <div className='flex flex-col items-center'>
         <div className='flex flex-col items-center space-y-2 my-9'>
@@ -100,7 +112,7 @@ function CreaTuCuenta() {
                 type='email'
                 label = 'Correo Electrónico'
                 placeholder='ejemplo@outlook.com'
-                size='md'
+                size='lg'
                 variant='bordered'
                 classNames={styles_input}
                 value={emailValue}
@@ -110,12 +122,21 @@ function CreaTuCuenta() {
             <div className='space-y-4'>
                 <Input
                     isRequired
-                    type='password'
                     label='Contraseña'
                     placeholder='Ingresa contraseña'
-                    size='md'
+                    size='lg'
                     variant='bordered'
                     classNames={styles_input}
+                    endContent={
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                            {isVisible ? (
+                                <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
+                            ) : (
+                                <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
+                            )}
+                        </button>
+                    }
+                    type={isVisible ? "text" : "password"}
 
                     value={password}
                     onChange={handleChange}
@@ -165,7 +186,10 @@ function CreaTuCuenta() {
             >
                 Crear Cuenta
             </Button>
-              {showMessage && <p className="text-sm mt-4">{message}</p>}
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     </div>
   )

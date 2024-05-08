@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Input, Button } from "@nextui-org/react"
+import { Input, Button } from "@nextui-org/react";
+import toast, { Toaster } from 'react-hot-toast';
 
 const styles_input = {
     label: [
@@ -27,26 +28,51 @@ const styles_input = {
     ]
 };
 
+axios.defaults.withCredentials = true;
+
 function VerificacionCorreo() {
     const [otpCode, setOtpCode] = useState('');
-    const { id_usuario } = useParams();
+    const {id_usuario}= useParams();
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
-        console.log(id_usuario, otpCode);
+        //console.log( otpCode);
         try {
-            const response = await axios.post('http://localhost:3001/usuarios/verifyEmail', {
+            const response = await axios.post('https://bursapi.com/usuarios/verifyEmail', {
                 id_usuario: id_usuario,
                 code: otpCode
             });
-            if (response.data.message === 'Correo electrónico verificado con éxito') {
-                navigate(`/verificar-telefono/${id_usuario}`); 
-            }
-            else {
-                console.error('Error al actualizar los datos del usuario:', response.data.error);
+            // if (response.data.status === 'success') {
+            //     toast.success('Correo verificado con éxito');
+            //     setTimeout(() => {
+            //         navigate('/verificar-telefono');
+            //     }, 2000);
+            // }
+            console.log(response);
+            if (response.status === 200) {
+                toast.success('Correo verificado con éxito');
+                setTimeout(() => {
+                    navigate(`/verificar-telefono/${id_usuario}`);
+                }, 2000);
             }
         } catch (error) {
-            //console.log(error);
+            if(error.response.status === 400) {
+                toast.error('Codigo incorrecto')
+            }
+            else {
+                toast.error('Error al verificar el correo, intentalo de nuevo')
+            }
+        }
+    };
+
+    const handleResend = async () => {
+        try {
+            const response = await axios.post('http://bursapi.com/usuarios/resendOTPCodeEmail');
+            if (response.data.status === 'success') {
+                toast('Codigo reenviado')
+            }
+        } catch (error) {
+            toast.error('Error al reenviar el codigo')
         }
     };
   return (
@@ -95,6 +121,7 @@ function VerificacionCorreo() {
                 <Button
                     variant='light'
                     className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
+                    //onClick={handleResend}
                 >
                 Reenviar codigo
                 </Button>
@@ -109,8 +136,10 @@ function VerificacionCorreo() {
                 Verficar Correo
                 </Button>
             </div>
-
-          
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            /> 
       </div>
   )
 }
