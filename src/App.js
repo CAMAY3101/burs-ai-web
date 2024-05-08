@@ -9,7 +9,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Layout} from '@douyinfe/semi-ui';
 import './Styles/App.scss';
 import Navbar from './Components/Navbar'
-import FooterCustom from './Components/Footer';
+import FooterCustom from './Components/footer.js';
 import Landing from './Pages/Landing';
 import QuieroInvertir from './Pages/QuieroInvertir';
 import SolicitarPrestamo from './Pages/SolicitarPrestamo';
