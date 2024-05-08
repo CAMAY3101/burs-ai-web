@@ -2,6 +2,8 @@ import React from 'react'
 import { Rating } from '@douyinfe/semi-ui';
 import { Card, CardHeader, CardBody, CardFooter, Accordion, AccordionItem, Divider } from "@nextui-org/react";
 
+import '../Styles/Landing.scss'
+
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
