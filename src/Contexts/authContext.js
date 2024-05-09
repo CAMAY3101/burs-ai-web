@@ -18,8 +18,6 @@ export default function AuthContextProvider({ children }) {
     const checkToken = useCallback(() => {
         axios.get('https://bursapi.com/check-cookie', { withCredentials: true })
             .then((response) => {
-                console.log('Response:', response);
-                console.log('Token exist:', response.data.tokenExist);
                 if (response.data.tokenExist === true) {
                     window.sessionStorage.setItem(AUTHENTICATED, true);
                     setTokenExist(true);

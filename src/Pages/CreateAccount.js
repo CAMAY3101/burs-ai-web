@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 
@@ -10,6 +9,8 @@ import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import thickIcon from "../Assets/icons/tick-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
+
+import { useAuthContext } from '../Contexts/authContext';
 
 axios.defaults.withCredentials = true;
 
@@ -39,11 +40,12 @@ const styles_input = {
 };
 
 function SignUp() {
+
+    const { checkToken, navigateToNextStep } = useAuthContext();
+
     const [isVisible, setIsVisible] = React.useState(false);
 
     const toggleVisibility = () => setIsVisible(!isVisible);
-
-    const navigate = useNavigate();
 
     // Email validation
     const [emailValue, setEmailValue] = React.useState('');
@@ -71,27 +73,24 @@ function SignUp() {
     const [recaptchaValue, setRecaptchaValue] = React.useState(null);
 
     // Submit
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try{
             const response = await axios.post('https://bursapi.com/usuarios/createUser', {
                 correo: emailValue,
                 contrasena: password,
-            });
-            // if (response.data.status === 'success') {
-            //     navigate(`/ingresar-datos`);
+            }, { withCredentials: true });
 
-            // }
-            if (response.data.message === 'Usuario creado con éxito') {
-                console.log('Usuario creado con éxito');
-                // Puedes redirigir a otra página o mostrar un mensaje de éxito
-                const id_usuario = response.data.id_usuario;
-                navigate(`/ingresar-datos/${id_usuario}`);
+            await checkToken();
+
+            if (response.data.status === 'success') {
+                navigateToNextStep(1);
             }
 
         } catch (error) {
             if(error.response.status === 400){
-                //toast.error(error.response.data.message)
-                toast.error(error.response.data.error)
+                toast.error(error.response.data.message)
+                //toast.error(error.response.data.error)
             }
             else{
                 toast.error('Error al crear usuario, intente de nuevo')

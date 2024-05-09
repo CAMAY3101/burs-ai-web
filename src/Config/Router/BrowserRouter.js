@@ -15,7 +15,7 @@ import Footer from "../../Components/Footer";
 
 import Landing from "../../Pages/Landing";
 import QuieroInvertir from "../../Pages/QuieroInvertir";
-import Login from "../../Pages/Login";
+import Login from "../../Pages/LogIn";
 import SignUp from '../../Pages/CreateAccount';
 
 import IngresarDatos from '../../Pages/CreateAccount/IngresaTusDatos';
@@ -31,11 +31,23 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Landing />
+                element: (
+                    <div>
+                        <Navbar />
+                        <Landing />
+                        <Footer />
+                    </div>
+                )
             },
             {
                 path: QUIERO_INVERTIR,
-                element: <QuieroInvertir />
+                element: (
+                    <div>
+                        <Navbar />
+                        <QuieroInvertir />
+                        <Footer />
+                    </div>
+                )
             },
             {
                 path: LOGIN,

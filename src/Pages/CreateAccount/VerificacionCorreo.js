@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import { Input, Button } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
+
+import { useAuthContext } from '../../Contexts/authContext';
 
 const styles_input = {
     label: [
@@ -31,28 +32,19 @@ const styles_input = {
 axios.defaults.withCredentials = true;
 
 function VerificacionCorreo() {
+    const { tokenExist, checkToken, navigateToNextStep } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
-    const {id_usuario}= useParams();
-    const navigate = useNavigate();
 
     const handleSubmit = async () => {
         //console.log( otpCode);
         try {
             const response = await axios.post('https://bursapi.com/usuarios/verifyEmail', {
-                id_usuario: id_usuario,
                 code: otpCode
             });
-            // if (response.data.status === 'success') {
-            //     toast.success('Correo verificado con éxito');
-            //     setTimeout(() => {
-            //         navigate('/verificar-telefono');
-            //     }, 2000);
-            // }
-            console.log(response);
-            if (response.status === 200) {
+            if (response.data.status === 'success') {
                 toast.success('Correo verificado con éxito');
                 setTimeout(() => {
-                    navigate(`/verificar-telefono/${id_usuario}`);
+                    navigateToNextStep(3);
                 }, 2000);
             }
         } catch (error) {
@@ -67,7 +59,7 @@ function VerificacionCorreo() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('http://bursapi.com/usuarios/resendOTPCodeEmail');
+            const response = await axios.post('https://bursapi.com/usuarios/resendOTPCodeEmail');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }
@@ -77,30 +69,30 @@ function VerificacionCorreo() {
     };
   return (
       <div className='flex flex-col items-center space-y-14 mt-9'>
-          <ol class="flex items-center w-11/12  space-x-4">
-              <li class="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
-                  <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
+          <ol className="flex items-center w-11/12  space-x-4">
+              <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
+                  <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
                       1
                   </span>
-                  Registro <span class="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                  <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                  Registro <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
+                  <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                   </svg>
               </li>
-              <li class="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
-                  <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
+              <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
+                  <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
                       2
                   </span>
-                  Verificación <span class="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                  <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                  Verificación <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
+                  <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                   </svg>
               </li>
-              <li class="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
-                  <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
+              <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                  <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
                       3
                   </span>
-                  Solicitar <span class="hidden sm:inline-flex sm:ms-2">Prestamo</span>
+                  Solicitar <span className="hidden sm:inline-flex sm:ms-2">Prestamo</span>
               </li>
           </ol>
           <div className='w-11/12 flex flex-col space-y-12'>
@@ -121,7 +113,7 @@ function VerificacionCorreo() {
                 <Button
                     variant='light'
                     className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
-                    //onClick={handleResend}
+                    onClick={handleResend}
                 >
                 Reenviar codigo
                 </Button>

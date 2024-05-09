@@ -9,6 +9,8 @@ import TuHistorial from '../../Pages/SolicitarPrestamo/TuHistorial';
 export default function PublicRoute() {
     const { tokenExist, verificationStep } = useAuthContext();
     console.log('Public route');
+    console.log('Token exist:', tokenExist);
+    console.log('Verification step:', verificationStep);
 
     if (tokenExist) {
         switch (verificationStep) {
