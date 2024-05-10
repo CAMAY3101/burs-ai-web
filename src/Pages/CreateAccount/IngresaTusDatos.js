@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
 import "../../Styles/Common.scss";
 
 import { usePhoneInput, FlagImage, defaultCountries, parseCountry,} from "react-international-phone";
 import 'react-international-phone/style.css';
 
 import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+
+import { useAuthContext } from '../../Contexts/authContext';
 
 axios.defaults.withCredentials = true;
 
@@ -36,12 +37,11 @@ const styles_input = {
 
 function IngresaTusDatos() {
     //----------------------Variables----------------------
+    const { tokenExist, checkToken, navigateToNextStep } = useAuthContext();
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
-    const { id_usuario } = useParams();
-    const navigate = useNavigate();
     
     //----------------------Cambiar formato de telefono----------------------
 
@@ -81,17 +81,16 @@ function IngresaTusDatos() {
     const handleSubmit = async () => {
         try{
             const response = await axios.post('https://bursapi.com/usuarios/updateDataUser', {
-                id_usuario: id_usuario,
                 nombre: name,
                 apellidos: lastName,
                 edad: age,
                 telefono: phone,
             });
-            // if (response.data.status === 'success'){
-            //     navigate('/verificar-correo'); // Redirige a la página de verificación de correo
-            // }
-            if (response.data.message === 'Datos de usuario actualizados con éxito') {
-                navigate(`/verificar-correo/${id_usuario}`); // Redirige a la página de verificación de correo
+
+            await checkToken();
+
+            if (response.data.status === 'success' && tokenExist === true){
+                navigateToNextStep(2);
             }
 
         }catch(error){
@@ -101,30 +100,30 @@ function IngresaTusDatos() {
 
     return (
         <div className='flex flex-col items-center space-y-14 mt-9'>
-            <ol class="flex items-center w-11/12  space-x-4">
-                <li class="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
-                    <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
+            <ol className="flex items-center w-11/12  space-x-4">
+                <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
+                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
                         1
                     </span>
-                    Registro <span class="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                    <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                    Registro <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
+                    <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                     </svg>
                 </li>
-                <li class="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
-                    <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
+                <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
                         2
                     </span>
-                        Verificación <span class="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                    <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                        Verificación <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
+                    <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                     </svg>
                 </li>
-                <li class="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
-                    <span class="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
+                <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
                         3
                     </span>
-                    Solicitar <span class="hidden sm:inline-flex sm:ms-2">Prestamo</span>
+                    Solicitar <span className="hidden sm:inline-flex sm:ms-2">Prestamo</span>
                 </li>
             </ol>
 

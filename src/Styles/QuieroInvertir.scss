@@ -10,25 +10,4 @@
         background-image: url("../Assets/QuieroInvertir/portadaMD.png"); // Ajuste para width mayor a 1024px
     }
 }
-.h-shadow{
-    letter-spacing: 5px;
-    word-spacing: 1px;
-    background-color: $persian-rose-700;
-    //text-shadow: 3px 2px 5px rgba(255, 0, 169, 1), -3px 2px 11px rgba(223, 0, 136, 1);
-}
 
-//-------Invertir-------
-.subtitle-card-invertir{
-    color: $purple-heart-900;
-}
-.text-card-invertir{
-    color: $dark-blue-600;
-}
-.bg-icon-invertir{
-    background-color: $dark-blue-50;
-}
-
-//-------Simulador-------
-.simulador-container{
-    background: linear-gradient(90deg, #FF58DB 0%, #A92FFF 60.52%, #8218DB 100%);
-}
