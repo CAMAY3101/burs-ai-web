@@ -1,5 +1,5 @@
 import { Navigate, Outlet} from 'react-router-dom';
-import { INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL } from '../../Config/Router/paths';
+import { INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL, QUIERO_INVERTIR } from '../../Config/Router/paths';
 import { useAuthContext } from '../../Contexts/authContext';
 import IngresarDatos from '../../Pages/CreateAccount/IngresaTusDatos';
 import VerificarCorreo from '../../Pages/CreateAccount/VerificacionCorreo';
@@ -8,10 +8,11 @@ import TuHistorial from '../../Pages/SolicitarPrestamo/TuHistorial';
 
 export default function PublicRoute() {
     const { tokenExist, verificationStep } = useAuthContext();
-    console.log('Public route');
-    console.log('Token exist:', tokenExist);
-    console.log('Verification step:', verificationStep);
 
+    // if user is trying to access  to QUIERO_INVERTIR or / path let him in even if he is not authenticated
+    if (window.location.pathname === QUIERO_INVERTIR || window.location.pathname === '/') {
+        return <Outlet />;
+    }
     if (tokenExist) {
         switch (verificationStep) {
             case 1:

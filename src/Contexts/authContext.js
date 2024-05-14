@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -22,14 +22,19 @@ export default function AuthContextProvider({ children }) {
                     window.sessionStorage.setItem(AUTHENTICATED, true);
                     setTokenExist(true);
                 } else {
-                    window.sessionStorage.setItem(AUTHENTICATED, false);
-                    setTokenExist(false);
+                    window.sessionStorage.removeItem(AUTHENTICATED);
+                    window.sessionStorage.removeItem(PROGRESS_INDEX);
+
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
     }, []);
+
+    useEffect(() => {
+        checkToken(); // Verificar el token al cargar el componente
+    }, [checkToken]);
 
     const navigateToNextStep = useCallback((nextStep) => {
         window.sessionStorage.setItem(PROGRESS_INDEX, nextStep.toString());
