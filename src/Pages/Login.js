@@ -9,10 +9,14 @@ import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
+import { SIGNUP } from '../Config/Router/paths';
 
 axios.defaults.withCredentials = true;
 
 const styles_input = {
+  base: [
+    "w-10/12",
+  ],
   label: [
     "group-data-[filled-within=true]:text-dark-blue-950",
     "font-rubik",
@@ -87,12 +91,12 @@ function LogIn() {
 
   };
   return (
-    <div className='flex flex-col items-center'>
+    <div className=''>
       <div className='flex flex-col items-center space-y-2 my-9'>
         <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
         <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
       </div>
-      <div className='w-10/12 space-y-8 py-4'>
+      <div className='flex flex-col items-center space-y-8 my-4'>
         <Input
           isRequired
           type='email'
@@ -105,38 +109,41 @@ function LogIn() {
           errorMessage={isInvalid && "Ingresa un correo válido."}
           onValueChange={setEmailValue}
         />
-        <div className='space-y-4'>
-          <Input
-            isRequired
-            label='Contraseña'
-            placeholder='Ingresa contraseña'
-            size='lg'
-            variant='bordered'
-            classNames={styles_input}
-            endContent={
-              <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                {isVisible ? (
-                  <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
-                ) : (
-                  <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
-                )}
-              </button>
-            }
-            type={isVisible ? "text" : "password"}
+        <Input
+          isRequired
+          label='Contraseña'
+          placeholder='Ingresa contraseña'
+          size='lg'
+          variant='bordered'
+          classNames={styles_input}
+          endContent={
+            <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+              {isVisible ? (
+                <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
+              ) : (
+                <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
+              )}
+            </button>
+          }
+          type={isVisible ? "text" : "password"}
 
-            value={password}
-            onChange={handleChange}
-          />
-          
-        </div>
+          value={password}
+          onChange={handleChange}
+        />
         <Button
           size='md'
-          className='w-full bg-purple-heart-500 text-purple-50 rounded-3xl'
+          className='w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl'
           isDisabled={isInvalid || !isLongEnough || emailValue === '' || password === ''}
           onClick={handleSubmit}
         >
           Ingresar
         </Button>
+        <div className='flex flex-col items-start w-10/12'>
+          <p className='font-rubik font-light text-sm text-dark-blue-950'>
+            ¿No tienes una cuenta?  
+            <a  className='text-dark-blue-700 font-normal' href={SIGNUP}> Registrate</a>
+          </p>
+        </div>
         <Toaster
           position="top-center"
           reverseOrder={false}
