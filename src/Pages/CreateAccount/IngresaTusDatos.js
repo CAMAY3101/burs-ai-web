@@ -8,6 +8,7 @@ import 'react-international-phone/style.css';
 import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
 import toast from 'react-hot-toast';
 
+import NavbarLoan from '../../Components/Loan Service/NavbarLoan';
 import { useAuthContext } from '../../Contexts/authContext';
 
 axios.defaults.withCredentials = true;
@@ -78,8 +79,8 @@ function IngresaTusDatos() {
     }, [country]);
 
     //----------------------coneccion API----------------------
-    const handleSubmit = async () => {
-        try{
+    async function handleSubmit() {
+        try {
             const response = await axios.post('https://bursapi.com/usuarios/updateDataUser', {
                 nombre: name,
                 apellidos: lastName,
@@ -89,155 +90,158 @@ function IngresaTusDatos() {
 
             await checkToken();
 
-            if (response.data.status === 'success' && tokenExist === true){
+            if (response.data.status === 'success' && tokenExist === true) {
                 navigateToNextStep(2);
             }
 
-        }catch(error){
-            toast.error('Error al actualizar los datos del usuario, intente de nuevo')
+        } catch (error) {
+            toast.error('Error al actualizar los datos del usuario, intente de nuevo');
         }
-    };
+    }
 
     return (
-        <div className='flex flex-col items-center space-y-14 mt-9'>
-            <ol className="flex items-center w-11/12  space-x-4">
-                <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
-                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
-                        1
-                    </span>
-                    Registro <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                    <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
-                    </svg>
-                </li>
-                <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
-                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
-                        2
-                    </span>
-                        Verificación <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                    <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
-                    </svg>
-                </li>
-                <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
-                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
-                        3
-                    </span>
-                    Solicitar <span className="hidden sm:inline-flex sm:ms-2">Prestamo</span>
-                </li>
-            </ol>
+        <div>
+            <NavbarLoan />
+            <div className='flex flex-col items-center space-y-14 mt-9'>
+                <ol className="flex items-center w-11/12  space-x-4">
+                    <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
+                        <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
+                            1
+                        </span>
+                        Registro <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
+                        <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                        </svg>
+                    </li>
+                    <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                        <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
+                            2
+                        </span>
+                            Verificación <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
+                        <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                        </svg>
+                    </li>
+                    <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
+                        <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
+                            3
+                        </span>
+                        Solicitar <span className="hidden sm:inline-flex sm:ms-2">Prestamo</span>
+                    </li>
+                </ol>
 
-            <div className='w-11/12 flex flex-col space-y-10'>
-                <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos</h1>
-                <div className='flex-col space-y-12'>
-                    <Input
-                        isRequired
-                        type='text'
-                        label='Nombre(s)'
-                        placeholder='Ejemplo: Juan'
-                        size='md'
-                        variant='bordered'
-                        classNames={styles_input}
-                        labelPlacement='outside'
-                        value={name}
-                        onValueChange={setName}
-                    />
-                    <Input
-                        isRequired
-                        type='text'
-                        label='Apellido(s)'
-                        placeholder='Ejemplo: Perez Lopez'
-                        size='md'
-                        variant='bordered'
-                        classNames={styles_input}
-                        labelPlacement='outside'
-                        value={lastName}
-                        onValueChange={setLastName}
-                    />
-                    <Input
-                        isRequired
-                        type='number'
-                        label='Edad'
-                        placeholder='Ej: 25'
-                        size='md'
-                        variant='bordered'
-                        classNames={styles_input}
-                        labelPlacement='outside'
-                        className='w-1/2'
-                        min={18}
-                        max={100}
-                        value={age}
-                        onValueChange={setAge}
-                    />
-                    <Input
-                        isRequired
-                        type='tel'
-                        label='Telefono'
-                        placeholder='Ej: 55 1234 5678'
-                        size='md'
-                        variant='bordered'
-                        classNames={styles_input}
-                        labelPlacement='outside'
-                        startContent={
-                            <div className='flex items-center'>
-                                <Select
-                                    value={country.iso2}
-                                    onChange={(e) => setCountry(e.target.value)}
-                                    placeholder={<FlagImage iso2={country.iso2}  />}
-                                    renderValue={(value) => (
-                                        <FlagImage iso2={country.iso2} />
-                                    )}
-                                    className='w-[50px]'
-                                    classNames={{
-                                        trigger: [
-                                            "shadow-none",
-                                            "bg-transparent",
-                                            "rounded-none",
-                                            "p-0",
-                                            "min-h-unit-5",
-                                            "h-6"
-                                        ],
-                                        innerWrapper: [
-                                            "group-data-[has-label=true]:pt-0",
-                                        ],
-                                    }}
-                                    popoverProps={{
-                                        classNames: {
-                                            base: "w-[200px]",
-                                        },
-                                    }}
-                                >
-                                    {defaultCountries.map((c) => {
-                                        const parsedCountry = parseCountry(c);
-                                        return (
-                                            <SelectItem key={parsedCountry.iso2} value={parsedCountry.iso2}>
-                                                <div className="flex gap-2 items-center">
-                                                    <FlagImage iso2={parsedCountry.iso2} className='flex-shrink-0' style={{ width: '24px', height: '24px' }} />
-                                                    <div className="flex flex-col">
-                                                        <span className="text-small">{parsedCountry.name}</span>
-                                                        <span className="text-tiny text-default-400">({parsedCountry.dialCode})</span>
+                <div className='w-11/12 flex flex-col space-y-10'>
+                    <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos</h1>
+                    <div className='flex-col space-y-12'>
+                        <Input
+                            isRequired
+                            type='text'
+                            label='Nombre(s)'
+                            placeholder='Ejemplo: Juan'
+                            size='md'
+                            variant='bordered'
+                            classNames={styles_input}
+                            labelPlacement='outside'
+                            value={name}
+                            onValueChange={setName}
+                        />
+                        <Input
+                            isRequired
+                            type='text'
+                            label='Apellido(s)'
+                            placeholder='Ejemplo: Perez Lopez'
+                            size='md'
+                            variant='bordered'
+                            classNames={styles_input}
+                            labelPlacement='outside'
+                            value={lastName}
+                            onValueChange={setLastName}
+                        />
+                        <Input
+                            isRequired
+                            type='number'
+                            label='Edad'
+                            placeholder='Ej: 25'
+                            size='md'
+                            variant='bordered'
+                            classNames={styles_input}
+                            labelPlacement='outside'
+                            className='w-1/2'
+                            min={18}
+                            max={100}
+                            value={age}
+                            onValueChange={setAge}
+                        />
+                        <Input
+                            isRequired
+                            type='tel'
+                            label='Telefono'
+                            placeholder='Ej: 55 1234 5678'
+                            size='md'
+                            variant='bordered'
+                            classNames={styles_input}
+                            labelPlacement='outside'
+                            startContent={
+                                <div className='flex items-center'>
+                                    <Select
+                                        value={country.iso2}
+                                        onChange={(e) => setCountry(e.target.value)}
+                                        placeholder={<FlagImage iso2={country.iso2}  />}
+                                        renderValue={(value) => (
+                                            <FlagImage iso2={country.iso2} />
+                                        )}
+                                        className='w-[50px]'
+                                        classNames={{
+                                            trigger: [
+                                                "shadow-none",
+                                                "bg-transparent",
+                                                "rounded-none",
+                                                "p-0",
+                                                "min-h-unit-5",
+                                                "h-6"
+                                            ],
+                                            innerWrapper: [
+                                                "group-data-[has-label=true]:pt-0",
+                                            ],
+                                        }}
+                                        popoverProps={{
+                                            classNames: {
+                                                base: "w-[200px]",
+                                            },
+                                        }}
+                                    >
+                                        {defaultCountries.map((c) => {
+                                            const parsedCountry = parseCountry(c);
+                                            return (
+                                                <SelectItem key={parsedCountry.iso2} value={parsedCountry.iso2}>
+                                                    <div className="flex gap-2 items-center">
+                                                        <FlagImage iso2={parsedCountry.iso2} className='flex-shrink-0' style={{ width: '24px', height: '24px' }} />
+                                                        <div className="flex flex-col">
+                                                            <span className="text-small">{parsedCountry.name}</span>
+                                                            <span className="text-tiny text-default-400">({parsedCountry.dialCode})</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </SelectItem>
-                                        );
-                                    })}
-                                </Select>
-                            </div>
-                        }
-                        value={inputValue}
-                        onChange={handlePhoneValueChange}
-                        inputRef={inputRef} 
-                    />  
+                                                </SelectItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </div>
+                            }
+                            value={inputValue}
+                            onChange={handlePhoneValueChange}
+                            inputRef={inputRef} 
+                        />  
+                    </div>
+                    
+                    <Button
+                        size='large'
+                        color='secondary'
+                        isDisabled={!name || !lastName || !age || !phone}
+                        onClick = {handleSubmit}
+                    >
+                    Continuar
+                    </Button>
                 </div>
-                
-                <Button
-                    size='large'
-                    color='secondary'
-                    isDisabled={!name || !lastName || !age || !phone}
-                    onClick = {handleSubmit}
-                >
-                Continuar
-                </Button>
             </div>
         </div>
     )
