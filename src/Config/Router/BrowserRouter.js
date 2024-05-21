@@ -15,7 +15,7 @@ import Footer from "../../Components/Footer";
 
 import Landing from "../../Pages/Landing";
 import QuieroInvertir from "../../Pages/QuieroInvertir";
-import Login from "../../Pages/LogIn";
+import Login from "../../Pages/Login";
 import SignUp from '../../Pages/CreateAccount';
 
 import IngresarDatos from '../../Pages/CreateAccount/IngresaTusDatos';
