@@ -1,12 +1,15 @@
 import React from 'react'
 import NavbarLoan from '../../Components/SolicitarPrestamo/NavbarLoan'
 
-
+import IngresaTusDatos from '../../Components/SolicitarPrestamo/IngresaTusDatos';
+import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
+import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
+import TuHistorial from '../../Components/SolicitarPrestamo/TuHistorial';
 
 import { useAuthContext } from '../../Contexts/authContext'
 
 function Solicitar() {
-    const { tokenExist, verificationStep } = useAuthContext();
+    const { verificationStep } = useAuthContext();
     return (
         <div>
             <NavbarLoan />
@@ -38,7 +41,10 @@ function Solicitar() {
                             Solicitar <span className="hidden lg:inline-flex lg:ms-2">Prestamo</span>
                         </li>
                     </ol>
-
+                    {verificationStep === 1 && <IngresaTusDatos />}
+                    {verificationStep === 2 && <VerificacionCorreo />}
+                    {verificationStep === 3 && <VerificacionTelefono />}
+                    {verificationStep === 4 && <TuHistorial />}
                 </div>
             </div>
             
