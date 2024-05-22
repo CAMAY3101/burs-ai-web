@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Input, Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 
+import NavbarLoan from '../../Components/Loan Service/NavbarLoan';
 import { useAuthContext } from '../../Contexts/authContext';
 
 
@@ -68,70 +69,75 @@ function VerificacionTelefono() {
     };
 
     return (
-        <div className='flex flex-col items-center space-y-14 mt-9'>
-            <ol className="flex items-center w-11/12  space-x-4">
-                <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
-                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
-                        1
-                    </span>
-                    Registro <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                    <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
-                    </svg>
-                </li>
-                <li className="flex items-center text-purple-heart-700/80 font-rubik font-medium text-sm">
-                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-700/80 rounded-full shrink-0">
-                        2
-                    </span>
-                    Verificación <span className="hidden sm:inline-flex sm:ms-2">de Datos</span>
-                    <svg className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
-                    </svg>
-                </li>
-                <li className="flex items-center text-purple-heart-200 font-rubik font-medium text-sm">
-                    <span className="flex items-center justify-center w-6 h-6 me-2 font-rubik font-medium text-sm text-dark-blue-50 bg-purple-heart-200 rounded-full shrink-0">
-                        3
-                    </span>
-                    Solicitar <span className="hidden sm:inline-flex sm:ms-2">Prestamo</span>
-                </li>
-            </ol>
-            <div className='w-11/12 flex flex-col space-y-8'>
-                <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo al telefono XX XXXX XXXX</h1>
-                <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por SMS</p>
-                <div className='flex-col space-y-4'>
-                        <Input
-                            label='Codigo OTP'
-                            labelPlacement='outside'
-                            placeholder='Ingresa el codigo'
-                            variant='bordered'
-                            classNames={styles_input}
+        <div>
+            <NavbarLoan />
+            <div className='flex flex-col items-center'>
+                <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
+                    <ol id='progress bar' className="flex items-center space-x-10">
+                        <li className="flex items-center text-dark-blue-700 font-rubik font-medium text-xs sm:text-sm">
+                            <span className="flex items-center justify-center w-9 h-9 me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base text-dark-blue-50 bg-dark-blue-700 rounded-full border-1">
+                                1
+                            </span>
+                            Registro <span className="hidden lg:inline-flex lg:ms-2">de Datos</span>
+                            <svg className="w-4 h-4 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                            </svg>
+                        </li>
+                        <li className="flex items-center text-dark-blue-700 font-rubik font-medium text-xs sm:text-sm">
+                            <span className="flex items-center justify-center w-9 h-9 me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base border-dark-blue-700 rounded-full border-1">
+                                2
+                            </span>
+                            Verificacion <span className="hidden lg:inline-flex lg:ms-2">de Datos</span>
+                            <svg className="w-4 h-4 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
+                            </svg>
+                        </li>
+                        <li className="flex items-center text-dark-blue-200 font-rubik font-regular text-xs sm:text-sm">
+                            <span className="flex items-center justify-center w-9 h-9 me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base text-dark-blue-950/30 border-dark-blue-950/50 bg-dark-blue-100 rounded-full border-1">
+                                3
+                            </span>
+                            Solicitar <span className="hidden lg:inline-flex lg:ms-2">Prestamo</span>
+                        </li>
+                    </ol>
+                    <div className='flex flex-col space-y-12'>
+                        <div className='flex flex-col space-y-5'>
+                            <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo al telefono XX XXXX XXXX</h1>
+                            <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
+                        </div>
+                        <div className='flex-col space-y-3'>
+                            <Input
+                                type='text'
+                                label='Codigo OTP'
+                                labelPlacement='outside'
+                                placeholder='Ingresa el codigo'
+                                variant='bordered'
+                                classNames={styles_input}
 
-                            value={otpCode}
-                            onValueChange={setOtpCode}
-                        />
+                                value={otpCode}
+                                onValueChange={setOtpCode}
+                            />
+                            <Button
+                                variant='light'
+                                className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
+                                onClick={handleResend}
+                            >
+                                Reenviar codigo
+                            </Button>
+                        </div>
                         <Button
-                            variant='light'
-                            className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
-                            onClick={handleResend} 
+                            className='w-full'
+                            color='secondary'
+                            onClick={handleSubmit}
                         >
-                        Reenviar codigo
+                            Verificar Telefono
                         </Button>
+                        <Toaster
+                            position="top-center"
+                            reverseOrder={false}
+                        />
+                    </div>
                 </div>
             </div>
-            <div className='w-11/12'>
-                <Button
-                    className='w-full'
-                    color='secondary'
-                    onClick={handleSubmit}
-                >
-                    Verficar Telefono
-                </Button>
-            </div>
-            <Toaster
-                position='top-center'
-                reverseOrder={false}
-            />
-
         </div>
     )
 }

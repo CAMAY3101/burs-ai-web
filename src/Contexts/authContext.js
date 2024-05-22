@@ -23,8 +23,8 @@ export default function AuthContextProvider({ children }) {
                     setTokenExist(true);
                 } else {
                     window.sessionStorage.removeItem(AUTHENTICATED);
+                    setTokenExist(false);
                     window.sessionStorage.removeItem(PROGRESS_INDEX);
-
                 }
             })
             .catch((error) => {
@@ -66,6 +66,20 @@ export default function AuthContextProvider({ children }) {
         }
     }, [checkToken, navigateToNextStep]);
 
+    const logout = useCallback(() => {
+        axios.get('https://bursapi.com/usuarios/logout', { withCredentials: true })
+            .then((response) => {
+                console.log('Response:', response);
+                window.sessionStorage.removeItem(AUTHENTICATED);
+                window.sessionStorage.removeItem(PROGRESS_INDEX);
+                setTokenExist(false);
+                setVerificationStep(0);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, []);
+
     const value = useMemo(
         () => ({
             tokenExist,
@@ -73,9 +87,10 @@ export default function AuthContextProvider({ children }) {
             login,
             checkToken,
             navigateToNextStep,
-            getVerificationStepFromApi
+            getVerificationStepFromApi,
+            logout
         }),
-        [tokenExist, verificationStep, login, checkToken, navigateToNextStep, getVerificationStepFromApi]
+        [tokenExist, verificationStep, login, checkToken, navigateToNextStep, getVerificationStepFromApi, logout]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

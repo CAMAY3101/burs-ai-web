@@ -9,7 +9,6 @@ import TuHistorial from '../../Pages/SolicitarPrestamo/TuHistorial';
 export default function VerificationRoute() {
     const { tokenExist, checkToken, verificationStep, } = useAuthContext();
     checkToken();
-    console.log('Verification route');
 
 
     if (!tokenExist) {
@@ -17,6 +16,7 @@ export default function VerificationRoute() {
     }
 
     if (tokenExist) {
+        console.log('Verification route token exist');
         switch (verificationStep) {
             case 1:
                 return (

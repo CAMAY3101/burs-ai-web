@@ -15,7 +15,7 @@ function NavbarLoan() {
             
             <NavbarItem className="" >
                 <Link className="font-rubik font-medium text-dark-blue-400 text-sm" href="/quiero-invertir">
-                    Logout
+                    Cerrar Sesión
                 </Link>
             </NavbarItem>
         </Navbar>
