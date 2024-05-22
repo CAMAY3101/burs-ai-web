@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Input, Button } from "@nextui-org/react"
+
+import { Input, Button } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
 
-import NavbarLoan from '../../Components/Loan Service/NavbarLoan';
+import NavbarLoan from './NavbarLoan';
 import { useAuthContext } from '../../Contexts/authContext';
-
 
 const styles_input = {
     label: [
@@ -32,34 +32,35 @@ const styles_input = {
 
 axios.defaults.withCredentials = true;
 
-function VerificacionTelefono() {
-    const { navigateToNextStep } = useAuthContext();
+function VerificacionCorreo() {
+    const { tokenExist, checkToken, navigateToNextStep } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
 
     const handleSubmit = async () => {
+        //console.log( otpCode);
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/verifyPhoneNumber', {
+            const response = await axios.post('https://bursapi.com/usuarios/verifyEmail', {
                 code: otpCode
             });
-            if (response.data.message === 'Telefono verificado con éxito') {
-                toast.success('Telefono verificado con éxito');
+            if (response.data.status === 'success') {
+                toast.success('Correo verificado con éxito');
                 setTimeout(() => {
-                    navigateToNextStep(4);
+                    navigateToNextStep(3);
                 }, 2000);
             }
-
         } catch (error) {
-            if (error.response.status === 400) {
+            if(error.response.status === 400) {
                 toast.error('Codigo incorrecto')
-            } else {
-                toast.error('Error al verificar el telefono, intentalo de nuevo')
+            }
+            else {
+                toast.error('Error al verificar el correo, intentalo de nuevo')
             }
         }
     };
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/resendOTPCodePhoneNumber');
+            const response = await axios.post('https://bursapi.com/usuarios/resendOTPCodeEmail');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }
@@ -67,7 +68,6 @@ function VerificacionTelefono() {
             toast.error('Error al reenviar el codigo')
         }
     };
-
     return (
         <div>
             <NavbarLoan />
@@ -101,8 +101,8 @@ function VerificacionTelefono() {
                     </ol>
                     <div className='flex flex-col space-y-12'>
                         <div className='flex flex-col space-y-5'>
-                            <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo al telefono XX XXXX XXXX</h1>
-                            <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
+                            <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo al correo XX XXXX XXXX</h1>
+                            <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por correo</p>
                         </div>
                         <div className='flex-col space-y-3'>
                             <Input
@@ -121,7 +121,7 @@ function VerificacionTelefono() {
                                 className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
                                 onClick={handleResend}
                             >
-                                Reenviar codigo
+                            Reenviar codigo
                             </Button>
                         </div>
                         <Button
@@ -129,17 +129,17 @@ function VerificacionTelefono() {
                             color='secondary'
                             onClick={handleSubmit}
                         >
-                            Verificar Telefono
+                            Verficar Correo
                         </Button>
                         <Toaster
                             position="top-center"
                             reverseOrder={false}
                         />
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
-export default VerificacionTelefono
+export default VerificacionCorreo

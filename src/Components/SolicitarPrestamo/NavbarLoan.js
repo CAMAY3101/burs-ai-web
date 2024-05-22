@@ -2,8 +2,15 @@ import React from 'react'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from '@nextui-org/react'
 import logo from '../../Assets/icons/burs-color-icon.png'
 
-function NavbarLoan() {
+import {useAuthContext} from '../../Contexts/authContext'
 
+function NavbarLoan() {
+    const { logout } = useAuthContext()
+
+    const handleLogout = (e) => {
+        e.preventDefault()
+        logout()
+    }
 
     return (
         <Navbar className="shadow-[#F3F0FF_0px_3px_10px] h-[70px] mb-16">
@@ -14,7 +21,7 @@ function NavbarLoan() {
             </NavbarBrand>
             
             <NavbarItem className="" >
-                <Link className="font-rubik font-medium text-dark-blue-400 text-sm" href="/quiero-invertir">
+                <Link className="font-rubik font-medium text-dark-blue-400 text-sm" onClick={handleLogout}>
                     Cerrar Sesión
                 </Link>
             </NavbarItem>

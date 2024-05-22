@@ -42,7 +42,7 @@ export default function AuthContextProvider({ children }) {
     }, []);
 
     const getVerificationStepFromApi = useCallback(function () {
-        axios.get('https://bursapi.com/usuarios//getVerificacionStepStatus', { withCredentials: true })
+        axios.get('https://bursapi.com/usuarios/getVerificacionStepStatus', { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 console.log('Verification step:', response.data.verificationStep);
@@ -67,13 +67,12 @@ export default function AuthContextProvider({ children }) {
     }, [checkToken, navigateToNextStep]);
 
     const logout = useCallback(() => {
-        axios.get('https://bursapi.com/usuarios/logout', { withCredentials: true })
+        axios.post('https://bursapi.com/usuarios/logout', { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 window.sessionStorage.removeItem(AUTHENTICATED);
                 window.sessionStorage.removeItem(PROGRESS_INDEX);
                 setTokenExist(false);
-                setVerificationStep(0);
             })
             .catch((error) => {
                 console.error('Error:', error);
