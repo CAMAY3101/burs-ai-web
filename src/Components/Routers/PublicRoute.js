@@ -12,7 +12,9 @@ export default function PublicRoute() {
     }
     if (tokenExist) {
         // if verification step is 1 or 2 navigate to PRESTAMO_SOLICITUD
-        if (verificationStep === 1 || verificationStep === 2) {
+        console.log('Verification step:', verificationStep);
+        console.log('type of verification step:', typeof verificationStep)
+        if (verificationStep >= 1) {
             return (
                 <div>
                     <Navigate to={PRESTAMO_SOLICITUD} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Input, Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
@@ -35,6 +35,22 @@ axios.defaults.withCredentials = true;
 function VerificacionTelefono() {
     const { navigateToNextStep } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
+    const [phoneSecure, setPhoneSecure] = useState('')
+
+    useEffect(() => {
+        const fetchSecurePhone = async () => {
+            try {
+                const response = await axios.get('https://bursapi.com/usuarios/getSecurePhoneUser');
+                if (response.data.status === 'success') {
+                    setPhoneSecure('al telefono ' + response.data.phone);
+                }
+            } catch (error) {
+                setPhoneSecure('a tu telefono');
+            }
+        };
+
+        fetchSecurePhone();
+    }, []);
 
     const handleSubmit = async () => {
         try {
@@ -72,7 +88,7 @@ function VerificacionTelefono() {
         <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
             <div className='flex flex-col space-y-12'>
                 <div className='flex flex-col space-y-5'>
-                    <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo al telefono XX XXXX XXXX</h1>
+                    <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo {phoneSecure}</h1>
                     <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
                 </div>
                 <div className='flex-col space-y-3'>
