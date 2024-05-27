@@ -5,6 +5,7 @@ import IngresaTusDatos from '../../Components/SolicitarPrestamo/IngresaTusDatos'
 import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
 import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
 import TuHistorial from '../../Components/SolicitarPrestamo/TuHistorial';
+import SeleccionMonto from '../../Components/SolicitarPrestamo/SeleccionMonto';
 
 import { useAuthContext } from '../../Contexts/authContext'
 
@@ -45,6 +46,7 @@ function Solicitar() {
                     {verificationStep === 2 && <VerificacionCorreo />}
                     {verificationStep === 3 && <VerificacionTelefono />}
                     {verificationStep === 4 && <TuHistorial />}
+                    {verificationStep === 5 && <SeleccionMonto />}
                 </div>
             </div>
             

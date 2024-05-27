@@ -55,6 +55,7 @@ export default function AuthContextProvider({ children }) {
 
     const login = useCallback((step) => {
         checkToken();
+        console.log('Step:', step);
         if (step === 'ingresar datos') {
             navigateToNextStep(1);
         } else if (step === 'verificar correo') {
@@ -63,6 +64,8 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(3);
         } else if (step === 'ingresar historial') {
             navigateToNextStep(4);
+        } else if (step === 'Seleccion de monto') {
+            navigateToNextStep(5);
         }
     }, [checkToken, navigateToNextStep]);
 
