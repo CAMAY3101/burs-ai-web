@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import {
     LOGIN, SIGNUP, QUIERO_INVERTIR,
-    PRESTAMO, PRESTAMO_SOLICITUD
+    PRESTAMO, PRESTAMO_SOLICITUD, PRESTAMO_VERIFICACION
 } from "../../Config/Router/paths";
 
 import PublicRoute from "../../Components/Routers/PublicRoute";
@@ -16,6 +16,7 @@ import Login from "../../Pages/Login";
 import SignUp from '../../Pages/CreateAccount';
 
 import Solicitar from '../../Pages/SolicitarPrestamo/Solicitar';
+import Verificacion from '../../Pages/SolicitarPrestamo/Verificacion';
 
 export const router = createBrowserRouter([  
     {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
             {
                 path: PRESTAMO_SOLICITUD,
                 element: <Solicitar />
+            },
+            {
+                path: PRESTAMO_VERIFICACION,
+                element: <Verificacion />
             }
         ]
     },

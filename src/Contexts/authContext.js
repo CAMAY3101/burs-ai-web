@@ -58,13 +58,13 @@ export default function AuthContextProvider({ children }) {
         console.log('Step:', step);
         if (step === 'ingresar datos') {
             navigateToNextStep(1);
-        } else if (step === 'verificar correo') {
-            navigateToNextStep(2);
-        } else if (step === 'verificar telefono') {
-            navigateToNextStep(3);
         } else if (step === 'ingresar historial') {
+            navigateToNextStep(2);
+        } else if (step === 'seleccion de monto') {
+            navigateToNextStep(3);
+        } else if (step === 'verificar correo') {
             navigateToNextStep(4);
-        } else if (step === 'Seleccion de monto') {
+        } else if (step === 'verificar telefono') {
             navigateToNextStep(5);
         }
     }, [checkToken, navigateToNextStep]);

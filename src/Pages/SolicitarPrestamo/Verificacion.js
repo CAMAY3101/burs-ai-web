@@ -1,23 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavbarLoan from '../../Components/SolicitarPrestamo/NavbarLoan'
 
-import IngresaTusDatos from '../../Components/SolicitarPrestamo/IngresaTusDatos';
+
 import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
 import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
-import TuHistorial from '../../Components/SolicitarPrestamo/TuHistorial';
-import SeleccionMonto from '../../Components/SolicitarPrestamo/SeleccionMonto';
 
 import { useAuthContext } from '../../Contexts/authContext'
 
-function Solicitar() {
+function Verificacion() {
     const { verificationStep } = useAuthContext();
+
     return (
         <div>
             <NavbarLoan />
             <div className='flex flex-col items-center'>
                 <div className='md:w-1/2 lg:w-10/12 flex flex-col items-center space-y-14'>
                     <ol id='progress bar' className="flex items-center space-x-10">
-                        <li className="flex items-center text-dark-blue-700 font-rubik font-medium text-xs sm:text-sm">
+                        <li className="flex items-center text-dark-blue-700 font-rubik font-regular text-xs sm:text-sm">
                             <span className="flex items-center justify-center w-9 h-9 me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base border-dark-blue-700 rounded-full border-1">
                                 1
                             </span>
@@ -26,8 +25,8 @@ function Solicitar() {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                             </svg>
                         </li>
-                        <li className="flex items-center text-dark-blue-200 font-rubik font-regular text-xs sm:text-sm">
-                            <span className="flex items-center justify-center w-9 h-9 me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base text-dark-blue-950/30 border-dark-blue-950/50 bg-dark-blue-100 rounded-full border-1">
+                        <li className="flex items-center text-dark-blue-700 font-rubik font-medium text-xs sm:text-sm">
+                            <span className="flex items-center justify-center w-9 h-9 me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base text-dark-blue-100 bg-dark-blue-700 rounded-full border-1">
                                 2
                             </span>
                             Verificacion <span className="hidden lg:inline-flex lg:ms-2">de Datos</span>
@@ -42,14 +41,13 @@ function Solicitar() {
                             Solicitar <span className="hidden lg:inline-flex lg:ms-2">Prestamo</span>
                         </li>
                     </ol>
-                    {verificationStep === 1 && <IngresaTusDatos />}
-                    {verificationStep === 2 && <TuHistorial />}
-                    {verificationStep === 3 && <SeleccionMonto />}
+                    {verificationStep === 4 && <VerificacionCorreo />}
+                    {verificationStep === 5 && <VerificacionTelefono />}
                 </div>
             </div>
-            
+
         </div>
     )
 }
 
-export default Solicitar
+export default Verificacion

@@ -83,18 +83,6 @@ function TuHistorial() {
 
   async function handleSubmit() {
     try {
-      const data = {
-        salarioMensual: salarioMensual,
-        ocupacion: ocupacion.anchorKey,
-        industria: industria.anchorKey,
-        subindustria: subindustria.anchorKey,
-        pagoAtravesBanco: pagoAtravesBanco,
-        salarioFamiliar: salarioFamiliar,
-        calificacionCrediticia: calificacionCrediticia.anchorKey,
-        usoPrestamo: usoPrestamo.anchorKey
-      }
-      console.log(data);
-
       const response = await axios.post('https://bursapi.com/historial/updateDataHistorial', {
         salario_mensual: salarioMensual,
         ocupacion: ocupacion.anchorKey,
@@ -105,7 +93,6 @@ function TuHistorial() {
         calificacion_crediticia: calificacionCrediticia.anchorKey,
         uso_prestamo: usoPrestamo.anchorKey
       });
-      console.log(response);
 
       if (response.data.status === 'success' ) {
         setTimeout(() => {

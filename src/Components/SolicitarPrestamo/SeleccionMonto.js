@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Slider } from "@nextui-org/react";
+import { useAuthContext } from '../../Contexts/authContext';
 
 const styles_slider = {
     startContent: [
@@ -17,7 +18,13 @@ const styles_slider = {
 }
 
 function SeleccionMonto() {
-    const [value, setValue] = React.useState(500000); // Valor inicial para el Slider 
+    const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
+    const { navigateToNextStep } = useAuthContext();
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigateToNextStep(4);
+    }
     
     return (
         <div className='sm:w-11/12 lg:w-5/12 space-y-5 '>
@@ -47,6 +54,7 @@ function SeleccionMonto() {
             <Button
                 color='secondary'
                 className='w-full'
+                onClick={handleSubmit}
             >
                 Siguiente
             </Button>
