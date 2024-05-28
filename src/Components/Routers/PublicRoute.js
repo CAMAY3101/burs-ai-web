@@ -1,10 +1,7 @@
 import { Navigate, Outlet} from 'react-router-dom';
-import { INGRESAR_DATOS, VERIFICAR_CORREO, VERIFICAR_TELEFONO, TU_HISTORIAL, QUIERO_INVERTIR } from '../../Config/Router/paths';
+import { QUIERO_INVERTIR, PRESTAMO_SOLICITUD } from '../../Config/Router/paths';
 import { useAuthContext } from '../../Contexts/authContext';
-import IngresarDatos from '../../Pages/CreateAccount/IngresaTusDatos';
-import VerificarCorreo from '../../Pages/CreateAccount/VerificacionCorreo';
-import VerificarTelefono from '../../Pages/CreateAccount/VerificacionTelefono';
-import TuHistorial from '../../Pages/SolicitarPrestamo/TuHistorial';
+import Solicitar from '../../Pages/SolicitarPrestamo/Solicitar';
 
 export default function PublicRoute() {
     const { tokenExist, verificationStep } = useAuthContext();
@@ -14,38 +11,16 @@ export default function PublicRoute() {
         return <Outlet />;
     }
     if (tokenExist) {
-        switch (verificationStep) {
-            case 1:
-                return (
-                    <div className='publicRoute case 1'>
-                        <Navigate to={INGRESAR_DATOS} />
-                        <IngresarDatos />
-                    </div>
-                );
-            case 2:
-                return (
-                    <div className='publicRoute case 2'>
-                        <Navigate to={VERIFICAR_CORREO} />
-                        <VerificarCorreo />
-                    </div>
-                );
-            case 3:
-                return (
-                    <div className='publicRoute case 3'>
-                        <Navigate to={VERIFICAR_TELEFONO} />
-                        <VerificarTelefono />
-                    </div>
-                );
-            case 4:
-                return (
-                    <div className='publicRoute case 4'>
-                        <Navigate to={TU_HISTORIAL} />
-                        <TuHistorial />
-                    </div>
-                );
-            default:
-                console.log('Verification Route default');
-                return null;
+        // if verification step is 1 or 2 navigate to PRESTAMO_SOLICITUD
+        console.log('Verification step:', verificationStep);
+        console.log('type of verification step:', typeof verificationStep)
+        if (verificationStep >= 1) {
+            return (
+                <div>
+                    <Navigate to={PRESTAMO_SOLICITUD} />
+                    <Solicitar />
+                </div>
+            )
         }
     }
 

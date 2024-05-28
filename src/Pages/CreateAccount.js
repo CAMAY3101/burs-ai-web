@@ -11,6 +11,7 @@ import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
+import { LOGIN } from '../Config/Router/paths';
 
 axios.defaults.withCredentials = true;
 
@@ -189,6 +190,12 @@ function SignUp() {
                 position="top-center"
                 reverseOrder={false}
             />
+        </div>
+        <div className='flex flex-col items-start w-10/12 mt-4'>
+            <p className='font-rubik font-light text-sm text-dark-blue-950'>
+                ¿Ya tienes una cuenta?
+                <a className='text-dark-blue-700 font-normal' href={LOGIN}> Inicia Sesión</a>
+            </p>
         </div>
     </div>
   )

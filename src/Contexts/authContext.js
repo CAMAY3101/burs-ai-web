@@ -23,8 +23,8 @@ export default function AuthContextProvider({ children }) {
                     setTokenExist(true);
                 } else {
                     window.sessionStorage.removeItem(AUTHENTICATED);
+                    setTokenExist(false);
                     window.sessionStorage.removeItem(PROGRESS_INDEX);
-
                 }
             })
             .catch((error) => {
@@ -42,7 +42,7 @@ export default function AuthContextProvider({ children }) {
     }, []);
 
     const getVerificationStepFromApi = useCallback(function () {
-        axios.get('https://bursapi.com/usuarios//getVerificacionStepStatus', { withCredentials: true })
+        axios.get('https://bursapi.com/usuarios/getVerificacionStepStatus', { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 console.log('Verification step:', response.data.verificationStep);
@@ -55,16 +55,32 @@ export default function AuthContextProvider({ children }) {
 
     const login = useCallback((step) => {
         checkToken();
+        console.log('Step:', step);
         if (step === 'ingresar datos') {
             navigateToNextStep(1);
-        } else if (step === 'verificar correo') {
-            navigateToNextStep(2);
-        } else if (step === 'verificar telefono') {
-            navigateToNextStep(3);
         } else if (step === 'ingresar historial') {
+            navigateToNextStep(2);
+        } else if (step === 'seleccion de monto') {
+            navigateToNextStep(3);
+        } else if (step === 'verificar correo') {
             navigateToNextStep(4);
+        } else if (step === 'verificar telefono') {
+            navigateToNextStep(5);
         }
     }, [checkToken, navigateToNextStep]);
+
+    const logout = useCallback(() => {
+        axios.post('https://bursapi.com/usuarios/logout', { withCredentials: true })
+            .then((response) => {
+                console.log('Response:', response);
+                window.sessionStorage.removeItem(AUTHENTICATED);
+                window.sessionStorage.removeItem(PROGRESS_INDEX);
+                setTokenExist(false);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, []);
 
     const value = useMemo(
         () => ({
@@ -73,9 +89,10 @@ export default function AuthContextProvider({ children }) {
             login,
             checkToken,
             navigateToNextStep,
-            getVerificationStepFromApi
+            getVerificationStepFromApi,
+            logout
         }),
-        [tokenExist, verificationStep, login, checkToken, navigateToNextStep, getVerificationStepFromApi]
+        [tokenExist, verificationStep, login, checkToken, navigateToNextStep, getVerificationStepFromApi, logout]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
