@@ -12,6 +12,7 @@ import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
 import { LOGIN } from '../Config/Router/paths';
+import { Link } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -103,7 +104,9 @@ function SignUp() {
   return (
     <div className='flex flex-col items-center'>
         <div className='flex flex-col items-center space-y-2 my-9'>
-            <img className='w-20' alt='icon-color-burs' src={bursColorIcon}/>
+            <Link to = '/'>
+                <img className='w-20' alt='icon-color-burs' src={bursColorIcon}/>
+            </Link>
             <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Crea tu cuenta</h1>
         </div>
         <div className='w-10/12 space-y-8 py-4'>

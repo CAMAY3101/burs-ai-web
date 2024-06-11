@@ -4,6 +4,7 @@ import NavbarLoan from '../../Components/SolicitarPrestamo/NavbarLoan'
 
 import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
 import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
+import VerificacionIdentidad from '../../Components/SolicitarPrestamo/VerificacionIdentidad';
 
 import { useAuthContext } from '../../Contexts/authContext'
 
@@ -43,6 +44,7 @@ function Verificacion() {
                     </ol>
                     {verificationStep === 4 && <VerificacionCorreo />}
                     {verificationStep === 5 && <VerificacionTelefono />}
+                    {verificationStep === 6 && <VerificacionIdentidad />}
                 </div>
             </div>
 

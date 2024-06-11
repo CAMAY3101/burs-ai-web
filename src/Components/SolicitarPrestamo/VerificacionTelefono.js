@@ -60,7 +60,7 @@ function VerificacionTelefono() {
             if (response.data.message === 'Telefono verificado con éxito') {
                 toast.success('Telefono verificado con éxito');
                 setTimeout(() => {
-                    navigateToNextStep(4);
+                    navigateToNextStep(6);
                 }, 2000);
             }
 

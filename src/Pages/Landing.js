@@ -1,6 +1,6 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import { Rating } from '@douyinfe/semi-ui';
-import { Card, CardHeader, CardBody, CardFooter, Accordion, AccordionItem, Divider } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Accordion, AccordionItem, Divider, Button, Modal, ModalHeader,ModalContent, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 
 import '../Styles/Landing.scss'
 
@@ -16,10 +16,10 @@ import TimeIcon from '../Assets/Landing/time.png'
 import secuirtyimage from '../Assets/Landing/seguridad.webp'
 import FQAS from '../Assets/Landing/faqs2.png'
 
-const sizeIcon = "w-14 h-14 iconHero"
-const backgroundIconClass = "rounded-full w-20 h-20 flex items-center justify-center mb-4 bg-persian-rose-50/50"
-const subtitleIconClass = "text-center text-persian-rose-100 rubik-Medium-23"
-const textIconClass = "text-center text-persian-rose-100 rubik-Medium-18"
+const backgroundIconClass = "rounded-full w-10 h-10 md:w-20 md:h-20 flex items-center justify-center mb-4 bg-persian-rose-300/40"
+const sizeIcon = "w-7 h-7 md:w-14 md:h-14"
+const subtitleIconClass = "text-center text-purple-heart-900 font-rubik font-medium text-sm md:text-[23px]"
+const textIconClass = "text-center text-purple-heart-800 font-rubik font-medium text-xs md:text-lg"
 
 const backgroundIconClassRecompensa = "bg-dark-blue-100 rounded-full flex items-center justify-center w-24 h-24 md:w-24 md:h-24 lg:w-28 lg:h-28"
 const sizeIconRecompensa = "w-16 h-16 md:w-16 md:h-16 lg:w-20 lg:h-20"
@@ -53,52 +53,46 @@ const settings = {
 };
 
 const Landing = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  useEffect(() => {
+    // Abrir el modal automáticamente cuando el componente se monta
+    console.log('is open', isOpen);
+    onOpen();
+  }, []);
+
   return (
     <div>
-      <div id='proceso'>
-        <div className="bg-cover bg-center h-screen flex items-center justify-center px-10 mb-10 sm:justify-end md:px-10 cover-hero">
-          <div className="flex flex-col justify-end space-y-2 sm:space-y-10">
-            <div className="mb-10 text-center">
-              <span className="text-dark-blue-50 rubik-Bold-18 sm:text-4xl">
-                Recibe tu préstamo
-              </span>
+      <div id='proceso' className='block'>
+        <div className="bg-cover bg-center h-screen flex flex-col justify-center items-center lg:items-end px-12 mb-20 cover-hero">
+          <Card className='w-11/12 md:w-7/12 lg:w-1/3 bg-dark-blue-50/80 shadow-[0_12px_25px_0_(6, 28, 61, 0.15)] rounded-2xl'>
+            <CardBody className="flex flex-col text-center">
+              <p className="text-purple-heart-900 font-rubik font-bold text-xl md:text-xl">
+                Obtén un préstamo desde
+              </p>
               <br />
-              <span className="text-persian-rose-300 rubik-Bold-23 sm:text-5xl">
-                seguro y en minutos
-              </span>
+              <p className="text-persian-rose-500 font-rubik font-bold text-2xl md:text-3xl">
+                $400 hasta $10,000
+              </p>
               <br />
-              <span className="text-dark-blue-50 rubik-Bold-18 sm:text-4xl">
-                en solo 3 pasos
-              </span>
-            </div>
-            <div className="flex flex-col sm:flex-row space-y-10 sm:space-y-0 sm:space-x-16 md:space-x-24" >
-              <div className="flex flex-col items-center">
-                <div className={backgroundIconClass}>
-                  <img src={cash} alt="Icon" className={sizeIcon} />
-                </div>
-                <p className={subtitleIconClass}>Selecciona</p>
-                <p className={textIconClass}>el dinero que necesitas</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className={backgroundIconClass}>
-                  <img src={inspection} alt="Icon" className={sizeIcon} />
-                </div>
-                <p className={subtitleIconClass}>Completa</p>
-                <p className={textIconClass}>el formulario</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className={backgroundIconClass}>
-                  <img src={smilingFace} alt="Icon" className={sizeIcon} />
-                </div>
-                <p className={subtitleIconClass}>Disfruta</p>
-                <p className={textIconClass}>una vez aprobado el prestamo</p>
-              </div>
-            </div>
-          </div>
-      </div>
+              <p className="text-purple-heart-900 font-rubik font-bold text-xl md:text-2xl">
+                Dinero al instante, sin comisiones ocultas
+              </p>
+            </CardBody>
+            <CardFooter className="flex justify-center">
+              <Button
+                className="w-1/2 bg-gradient-to-t from-dark-blue-500 to-dark-blue-700 
+            text-dark-blue-50 border-dark-blue-400 font-rubik font-bold text-sm md:text-lg"
+                size='lg'
+              >
+                Inicia tu solicitud
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
 
-      <div id='recompensa'>
+      <div id='recompensa' className='block'>
         <div className="flex flex-col mb-10 space-y-32 md:px-7 md:items-center md:space-y-20 lg:space-y-32 lg:px-36">
           <h1 className="rubik-Bold-45 text-center sm:text-5xl lg:text-7xl title-recompensa">El credito que confia en ti</h1>
           <div className="flex flex-col justify-center space-y-20 px-4 sm:px-0 lg:px-5 sm:flex-row sm:space-y-0 md:space-x-20">
@@ -199,6 +193,71 @@ const Landing = () => {
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size = "3xl">
+        <ModalContent>
+          {(onClose) => (
+            <div>
+              <ModalHeader></ModalHeader>
+              <ModalBody className='my-6'>
+                <div className="flex flex-col justify-end space-y-2 sm:space-y-10">
+                  <div className="mb-5 text-center">
+                    <span className="text-dark-blue-900 rubik-Bold-18 sm:text-4xl">
+                      Recibe tu préstamo
+                    </span>
+                    <br />
+                    <span className="text-persian-rose-300 rubik-Bold-23 sm:text-5xl">
+                      seguro y en minutos
+                    </span>
+                    <br />
+                    <span className="text-dark-blue-900 rubik-Bold-18 sm:text-4xl">
+                      en solo 3 pasos
+                    </span>
+                  </div>
+
+                  <div className="flex space-x-16 md:space-x-20" >
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className={backgroundIconClass}>
+                        <img src={cash} alt="Icon" className={sizeIcon} />
+                      </div>
+                      <div>
+                        <p className={subtitleIconClass}>Selecciona</p>
+                        <p className={textIconClass}>el dinero que necesitas</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className={backgroundIconClass}>
+                        <img src={inspection} alt="Icon" className={sizeIcon} />
+                      </div>
+                      <div>
+                        <p className={subtitleIconClass}>Completa</p>
+                        <p className={textIconClass}>el formulario</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className={backgroundIconClass}>
+                        <img src={smilingFace} alt="Icon" className={sizeIcon} />
+                      </div>
+                      <div>
+                        <p className={subtitleIconClass}>Disfruta</p>
+                        <p className={textIconClass}>una vez aprobado el prestamo</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button 
+                  className="bg-gradient-to-t from-dark-blue-500 to-dark-blue-700 text-dark-blue-50 border-dark-blue-400 font-rubik font-medium text-xs md:text-sm"
+                 onPress={onClose}>
+                  Solicita tu préstamo
+                </Button>
+              </ModalFooter>
+            </div>
+          )}
+        </ModalContent>
+      </Modal>
+
     </div>
   )
 }

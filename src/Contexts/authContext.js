@@ -32,10 +32,6 @@ export default function AuthContextProvider({ children }) {
             });
     }, []);
 
-    useEffect(() => {
-        checkToken(); // Verificar el token al cargar el componente
-    }, [checkToken]);
-
     const navigateToNextStep = useCallback((nextStep) => {
         window.sessionStorage.setItem(PROGRESS_INDEX, nextStep.toString());
         setVerificationStep(nextStep);
@@ -66,6 +62,8 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(4);
         } else if (step === 'verificar telefono') {
             navigateToNextStep(5);
+        } else if (step === 'verificar identidad') {
+            navigateToNextStep(6);
         }
     }, [checkToken, navigateToNextStep]);
 

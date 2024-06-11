@@ -96,7 +96,7 @@ function TuHistorial() {
 
       if (response.data.status === 'success' ) {
         setTimeout(() => {
-          navigateToNextStep(5);
+          navigateToNextStep(3);
         }, 2000);
       }
 
