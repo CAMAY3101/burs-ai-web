@@ -60,7 +60,7 @@ function VerificacionCorreo() {
             if (response.data.status === 'success') {
                 toast.success('Correo verificado con éxito');
                 setTimeout(() => {
-                    navigateToNextStep(3);
+                    navigateToNextStep(5);
                 }, 2000);
             }
         } catch (error) {

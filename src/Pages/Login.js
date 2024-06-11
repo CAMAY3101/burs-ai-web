@@ -10,6 +10,7 @@ import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
 import { SIGNUP } from '../Config/Router/paths';
+import { Link } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -43,9 +44,10 @@ const styles_input = {
 
 function LogIn() {
 
-  const { login} = useAuthContext();
+  const { checkToken, login} = useAuthContext();
 
   const [isVisible, setIsVisible] = React.useState(false);
+  const [messageError, setMessageError] = React.useState('');
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -68,32 +70,36 @@ function LogIn() {
 
 
   // Submit
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const response = await axios.post('https://bursapi.com/usuarios/login', {
         correo: emailValue,
         contrasena: password,
       }, { withCredentials: true });
 
+      await checkToken();
+
       if (response.data.status === 'success') {
         login(response.data.progress);
       }
 
     } catch (error) {
-      if (error.response.status === 400) {
-        toast.error(error.response.data.message)
+      // si hay un error porque hay un error de conexión o un error en el servidor, asigna el error a messageError
+      if (error.response === undefined) {
+        setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+      } else {
+        setMessageError('Correo o contraseña incorrectos.');
       }
-      else {
-        toast.error('Error al crear usuario, intente de nuevo')
-      }
-      console.log(error)
     }
 
   };
   return (
     <div className=''>
       <div className='flex flex-col items-center space-y-2 my-9'>
-        <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
+        <Link to = '/'>
+          <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
+        </Link>
         <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
       </div>
       <div className='flex flex-col items-center space-y-8 my-4'>
@@ -148,6 +154,7 @@ function LogIn() {
           position="top-center"
           reverseOrder={false}
         />
+        <div className='text-[10px]'>{messageError}</div>
       </div>
     </div>
   )
