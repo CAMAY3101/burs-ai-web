@@ -56,7 +56,7 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(1);
         } else if (step === 'ingresar historial') {
             navigateToNextStep(2);
-        } else if (step === 'seleccion de monto') {
+        } else if (step === 'ingresar domicilio') {
             navigateToNextStep(3);
         } else if (step === 'verificar correo') {
             navigateToNextStep(4);

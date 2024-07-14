@@ -7,7 +7,7 @@ import VerificarTelefono from '../../Pages/CreateAccount/VerificacionTelefono';
 import TuHistorial from '../../Pages/SolicitarPrestamo/TuHistorial';
 
 export default function VerificationRoute() {
-    const { tokenExist, checkToken, verificationStep, } = useAuthContext();
+    const { tokenExist, checkToken } = useAuthContext();
     checkToken();
 
 
@@ -15,42 +15,6 @@ export default function VerificationRoute() {
         return <Navigate to={LOGIN} />;
     }
 
-    if (tokenExist) {
-        console.log('Verification route token exist');
-        switch (verificationStep) {
-            case 1:
-                return (
-                    <div>
-                        <Navigate to={INGRESAR_DATOS} />
-                        <IngresarDatos />
-                    </div>
-                );
-            case 2:
-                return (
-                    <div>
-                        <Navigate to={VERIFICAR_CORREO} />
-                        <VerificarCorreo />
-                    </div>
-                );
-            case 3:
-                return (
-                    <div>
-                        <Navigate to={VERIFICAR_TELEFONO} />
-                        <VerificarTelefono />
-                    </div>
-                );
-            case 4:
-                return (
-                    <div>
-                        <Navigate to={TU_HISTORIAL} />
-                        <TuHistorial />
-                    </div>
-                );
-            default:
-                console.log('Verification Route default');
-                return null;
-        }
-    }
-
+    
     return <Outlet />;
 }

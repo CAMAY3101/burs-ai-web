@@ -2,9 +2,8 @@ import React from 'react'
 import NavbarLoan from '../../Components/SolicitarPrestamo/NavbarLoan'
 
 import IngresaTusDatos from '../../Components/SolicitarPrestamo/IngresaTusDatos';
-import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
-import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
 import TuHistorial from '../../Components/SolicitarPrestamo/TuHistorial';
+import IngresaTuDomicilio from '../../Components/SolicitarPrestamo/IngresaTuDomicilio';
 import SeleccionMonto from '../../Components/SolicitarPrestamo/SeleccionMonto';
 
 import { useAuthContext } from '../../Contexts/authContext'
@@ -44,7 +43,8 @@ function Solicitar() {
                     </ol>
                     {verificationStep === 1 && <IngresaTusDatos />}
                     {verificationStep === 2 && <TuHistorial />}
-                    {verificationStep === 3 && <SeleccionMonto />}
+                    {verificationStep === 3 && <IngresaTuDomicilio />}
+                    {verificationStep === 4 && <SeleccionMonto />}
                 </div>
             </div>
             

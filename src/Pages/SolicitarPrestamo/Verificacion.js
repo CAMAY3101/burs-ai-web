@@ -42,9 +42,8 @@ function Verificacion() {
                             Solicitar <span className="hidden lg:inline-flex lg:ms-2">Prestamo</span>
                         </li>
                     </ol>
-                    {verificationStep === 4 && <VerificacionCorreo />}
-                    {verificationStep === 5 && <VerificacionTelefono />}
-                    {verificationStep === 6 && <VerificacionIdentidad />}
+                    {verificationStep === 5 && <VerificacionCorreo />}
+                    {verificationStep === 6 && <VerificacionTelefono />}
                 </div>
             </div>
 
