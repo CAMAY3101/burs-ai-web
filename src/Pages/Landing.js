@@ -1,5 +1,4 @@
 import {React, useEffect} from 'react'
-import { Rating } from '@douyinfe/semi-ui';
 import { Card, CardHeader, CardBody, CardFooter, Accordion, AccordionItem, Divider, Button, Modal, ModalHeader,ModalContent, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 
 import '../Styles/Landing.scss'
@@ -14,6 +13,7 @@ import smilingFace from '../Assets/Landing/smiling-face.png'
 import WinIcon from '../Assets/Landing/win.png'
 import TimeIcon from '../Assets/Landing/time.png'
 import secuirtyimage from '../Assets/Landing/seguridad.webp'
+import starIcon from '../Assets/icons/star.png'
 import FQAS from '../Assets/Landing/faqs2.png'
 
 const backgroundIconClass = "rounded-full w-10 h-10 md:w-20 md:h-20 flex items-center justify-center mb-4 bg-persian-rose-300/40"
@@ -135,7 +135,11 @@ const Landing = () => {
                     <p className='rubik-Regular-18 text-dark-blue-50'>{testimonio.opinion}</p>
                   </CardBody>
                   <CardFooter>
-                    <Rating size="small" defaultValue={5} />
+                    <img src={starIcon} alt="Star" className='w-4' />
+                    <img src={starIcon} alt="Star" className='w-4' />
+                    <img src={starIcon} alt="Star" className='w-4' />
+                    <img src={starIcon} alt="Star" className='w-4' />
+                    <img src={starIcon} alt="Star" className='w-4' />
                   </CardFooter>
                 </Card>
               ))}
