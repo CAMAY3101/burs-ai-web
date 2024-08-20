@@ -44,7 +44,7 @@ const styles_input = {
 
 function LogIn() {
 
-  const { checkToken, login} = useAuthContext();
+  const { checkToken, login, verificationStep} = useAuthContext();
 
   const [isVisible, setIsVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
@@ -79,9 +79,14 @@ function LogIn() {
       }, { withCredentials: true });
 
       await checkToken();
+      console.log('Response:', response.data);
 
       if (response.data.status === 'success') {
-        login(response.data.progress);
+        toast.success('Inicio de sesión exitoso');
+        setMessageError(`verification step: ${verificationStep}`);
+        setTimeout(() => {
+          login(response.data.progress);
+        }, 2000);
       }
 
     } catch (error) {

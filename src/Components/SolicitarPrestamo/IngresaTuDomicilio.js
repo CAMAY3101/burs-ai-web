@@ -73,8 +73,15 @@ function IngresaTuDomicilio() {
             });
 
             if (response.data.status === 'success') {
-                setTimeout(() => {
-                    navigateToNextStep(4);
+                setTimeout(async () => { 
+                    try {
+                        const responseOTP = await axios.post('https://bursapi.com/verificacion/sendOTPCodeEmail');
+                        if (responseOTP.data.status === 'success') {
+                            navigateToNextStep(4);
+                        }
+                    } catch (error) {
+                        console.error('Error enviando OTP:', error);
+                    }
                 }, 2000);
             }
         } catch (error) {

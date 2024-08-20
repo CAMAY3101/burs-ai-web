@@ -54,7 +54,7 @@ function VerificacionTelefono() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/verifyPhoneNumber', {
+            const response = await axios.post('https://bursapi.com/verificacion/verifyPhoneNumber', {
                 code: otpCode
             });
             if (response.data.message === 'Telefono verificado con éxito') {
@@ -75,7 +75,7 @@ function VerificacionTelefono() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/resendOTPCodePhoneNumber');
+            const response = await axios.post('https://bursapi.com/verificacion/resendOTPCodePhoneNumber');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }

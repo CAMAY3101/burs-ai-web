@@ -5,6 +5,8 @@ import NavbarLoan from '../../Components/SolicitarPrestamo/NavbarLoan'
 import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
 import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
 import VerificacionIdentidad from '../../Components/SolicitarPrestamo/VerificacionIdentidad';
+import VerificacionID from '../../Components/SolicitarPrestamo/VerificacionID';
+import ResultadosModelos from '../../Components/SolicitarPrestamo/ResultadosModelos';
 
 import { useAuthContext } from '../../Contexts/authContext'
 
@@ -42,8 +44,11 @@ function Verificacion() {
                             Solicitar <span className="hidden lg:inline-flex lg:ms-2">Prestamo</span>
                         </li>
                     </ol>
-                    {verificationStep === 5 && <VerificacionCorreo />}
-                    {verificationStep === 6 && <VerificacionTelefono />}
+                    {verificationStep === 4 && <VerificacionCorreo />}
+                    {verificationStep === 5 && <VerificacionTelefono />}
+                    {verificationStep === 6 && <VerificacionIdentidad />}
+                    {verificationStep === 7 && <VerificacionID />}
+                    {verificationStep === 8 && <ResultadosModelos />}
                 </div>
             </div>
 

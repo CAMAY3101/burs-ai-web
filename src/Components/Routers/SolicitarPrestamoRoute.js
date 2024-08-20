@@ -14,7 +14,7 @@ export default function SolicitarPrestamoRoute() {
         return <Navigate to={LOGIN} />;
     }
 
-    if (verificationStep >= 5) {
+    if (verificationStep >= 4) {
         return (
             <div>
                 <Navigate to={PRESTAMO_VERIFICACION} />
@@ -22,7 +22,7 @@ export default function SolicitarPrestamoRoute() {
             </div>
         )
     }
-    if (verificationStep < 5) {
+    if (verificationStep < 4) {
         return (
             <div>
                 <Navigate to={PRESTAMO_SOLICITUD} />

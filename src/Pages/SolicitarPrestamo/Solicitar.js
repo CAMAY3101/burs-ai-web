@@ -44,7 +44,6 @@ function Solicitar() {
                     {verificationStep === 1 && <IngresaTusDatos />}
                     {verificationStep === 2 && <TuHistorial />}
                     {verificationStep === 3 && <IngresaTuDomicilio />}
-                    {verificationStep === 4 && <SeleccionMonto />}
                 </div>
             </div>
             
