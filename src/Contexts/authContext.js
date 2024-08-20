@@ -8,12 +8,13 @@ const AUTHENTICATED = 'AUTHENTICATED';
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
-    const [verificationStep, setVerificationStep] = useState(() =>
-        parseInt(window.sessionStorage.getItem(PROGRESS_INDEX)) // Convertir de string a entero
-    );
-    const [tokenExist, setTokenExist] = useState(() =>
-        window.sessionStorage.getItem(AUTHENTICATED)
-    );
+    const [verificationStep, setVerificationStep] = useState(() => {
+        return parseInt(window.sessionStorage.getItem(PROGRESS_INDEX)) // Convertir de string a entero
+    });
+    
+    const [tokenExist, setTokenExist] = useState(() => {
+        return window.sessionStorage.getItem(AUTHENTICATED)
+    });
 
     const checkToken = useCallback(() => {
         axios.get('https://bursapi.com/check-cookie', { withCredentials: true })
@@ -50,13 +51,15 @@ export default function AuthContextProvider({ children }) {
     }, []);
 
     const login = useCallback((step) => {
+        console.log('Login');
+        console.log('Step:', step);
         checkToken();
         console.log('Step:', step);
         if (step === 'ingresar datos') {
             navigateToNextStep(1);
         } else if (step === 'ingresar historial') {
             navigateToNextStep(2);
-        } else if (step === 'seleccion de monto') {
+        } else if (step === 'ingresar domicilio') {
             navigateToNextStep(3);
         } else if (step === 'verificar correo') {
             navigateToNextStep(4);
@@ -64,6 +67,10 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(5);
         } else if (step === 'verificar identidad') {
             navigateToNextStep(6);
+        } else if (step === 'verificar ID') {
+            navigateToNextStep(7);
+        } else if (step === 'simulacion modelos') {
+            navigateToNextStep(8);
         }
     }, [checkToken, navigateToNextStep]);
 

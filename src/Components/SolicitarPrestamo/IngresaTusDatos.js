@@ -143,6 +143,16 @@ function IngresaTusDatos() {
                 />
                 <Input
                     isRequired
+                    type='text'
+                    label='CURP'
+                    placeholder='Ejemplo: PERJ950425HDFLPS09'
+                    size='md'
+                    variant='bordered'
+                    classNames={styles_input}
+                    labelPlacement='outside'
+                />
+                <Input
+                    isRequired
                     type='tel'
                     label='Telefono'
                     placeholder='Ej: 55 1234 5678'

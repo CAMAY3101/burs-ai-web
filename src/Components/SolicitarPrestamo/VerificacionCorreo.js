@@ -54,13 +54,20 @@ function VerificacionCorreo() {
     const handleSubmit = async () => {
         //console.log( otpCode);
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/verifyEmail', {
+            const response = await axios.post('https://bursapi.com/verificacion/verifyEmail', {
                 code: otpCode
             });
             if (response.data.status === 'success') {
                 toast.success('Correo verificado con éxito');
-                setTimeout(() => {
-                    navigateToNextStep(5);
+                setTimeout(async () => {
+                    try {
+                        const responseOTP = await axios.post('https://bursapi.com/verificacion/sendOTPCodePhoneNumber');
+                        if (responseOTP.data.status === 'success') {
+                            navigateToNextStep(5);
+                        }
+                    } catch (error) {
+                        console.error('Error enviando OTP:', error);
+                    }
                 }, 2000);
             }
         } catch (error) {
@@ -75,7 +82,7 @@ function VerificacionCorreo() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/resendOTPCodeEmail');
+            const response = await axios.post('https://bursapi.com/verificacion/resendOTPCodeEmail');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }

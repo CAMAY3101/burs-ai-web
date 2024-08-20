@@ -43,9 +43,10 @@ const styles_input = {
 
 function SignUp() {
 
-    const { checkToken, navigateToNextStep } = useAuthContext();
+    const { checkToken, navigateToNextStep, verificationStep } = useAuthContext();
 
     const [isVisible, setIsVisible] = React.useState(false);
+    const [messageError, setMessageError] = React.useState('');
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -86,7 +87,11 @@ function SignUp() {
             await checkToken();
 
             if (response.data.status === 'success') {
-                navigateToNextStep(1);
+                toast.success('Creación de usuario exitosa');
+                setTimeout(() => {
+                    navigateToNextStep(1);
+                    toast.success(`verification step: ${verificationStep}`);
+                }, 2000);
             }
 
         } catch (error) {

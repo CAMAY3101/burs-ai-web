@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Slider } from "@nextui-org/react";
 import { useAuthContext } from '../../Contexts/authContext';
+import axios from 'axios';
 
 const styles_slider = {
     startContent: [
@@ -21,9 +22,12 @@ function SeleccionMonto() {
     const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
     const { navigateToNextStep } = useAuthContext();
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigateToNextStep(4);
+    async function handleSubmit() {
+        try {
+            const response = await axios.post('https://bursapi.com/verificacion/sendOTPCodeEmail');
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
     
     return (
