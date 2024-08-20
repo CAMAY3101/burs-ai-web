@@ -8,7 +8,7 @@ import PublicRoute from "../../Components/Routers/PublicRoute";
 import SolicitarPrestamoRoute from '../../Components/Routers/SolicitarPrestamoRoute';
 
 import Navbar from "../../Components/Navbar";
-import Footer from "../../Components/Footer.js";
+import Footer from "../../Components/Footer";
 
 import Landing from "../../Pages/Landing";
 import QuieroInvertir from "../../Pages/QuieroInvertir";
