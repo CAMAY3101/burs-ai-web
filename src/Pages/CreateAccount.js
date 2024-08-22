@@ -79,7 +79,7 @@ function SignUp() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try{
-            const response = await axios.post('https://bursapi.com/usuarios/createUser', {
+            const response = await axios.post('https://api.burs.com.mx/usuarios/createUser', {
                 correo: emailValue,
                 contrasena: password,
             }, { withCredentials: true });

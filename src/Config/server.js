@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(
     "/api",
     createProxyMiddleware({
-        target: "https://bursapi.com", // URL de tu servidor API
+        target: "https://api.burs.com.mx", // URL de tu servidor API
         changeOrigin: true, // Cambia el origen de la solicitud al destino
         pathRewrite: { "^/api": "" }, // Reescribe la ruta eliminando "/api"
         secure: true, // Cambia a false si el servidor API usa un certificado autofirmado

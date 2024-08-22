@@ -24,7 +24,7 @@ function SeleccionMonto() {
     
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://bursapi.com/verificacion/sendOTPCodeEmail');
+            const response = await axios.post('https://api.burs.com.mx/verificacion/sendOTPCodeEmail');
         } catch (error) {
             console.error('Error:', error);
         }

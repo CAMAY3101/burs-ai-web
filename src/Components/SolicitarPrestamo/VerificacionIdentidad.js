@@ -10,7 +10,7 @@ function VerificacionIdentidad() {
   const { navigateToNextStep } = useAuthContext()
   async function handleSubmit() {
     try {
-      const response = await axios.post('https://bursapi.com/verificacion/verifyIdentity')
+      const response = await axios.post('https://api.burs.com.mx/verificacion/verifyIdentity')
 
       if(response.data.status === 'success') {
         navigateToNextStep(7)

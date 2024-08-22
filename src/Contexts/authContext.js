@@ -17,7 +17,7 @@ export default function AuthContextProvider({ children }) {
     });
 
     const checkToken = useCallback(() => {
-        axios.get('https://bursapi.com/check-cookie', { withCredentials: true })
+        axios.get('https://api.burs.com.mx/check-cookie', { withCredentials: true })
             .then((response) => {
                 if (response.data.tokenExist === true) {
                     window.sessionStorage.setItem(AUTHENTICATED, true);
@@ -39,7 +39,7 @@ export default function AuthContextProvider({ children }) {
     }, []);
 
     const getVerificationStepFromApi = useCallback(function () {
-        axios.get('https://bursapi.com/usuarios/getVerificacionStepStatus', { withCredentials: true })
+        axios.get('https://api.burs.com.mx/usuarios/getVerificacionStepStatus', { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 console.log('Verification step:', response.data.verificationStep);
@@ -75,7 +75,7 @@ export default function AuthContextProvider({ children }) {
     }, [checkToken, navigateToNextStep]);
 
     const logout = useCallback(() => {
-        axios.post('https://bursapi.com/usuarios/logout', { withCredentials: true })
+        axios.post('https://api.burs.com.mx/usuarios/logout', { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 window.sessionStorage.removeItem(AUTHENTICATED);

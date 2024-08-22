@@ -80,7 +80,7 @@ function IngresaTusDatos() {
     //----------------------coneccion API----------------------
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://bursapi.com/usuarios/updateDataUser', {
+            const response = await axios.post('https://api.burs.com.mx/usuarios/updateDataUser', {
                 nombre: name,
                 apellidos: lastName,
                 edad: age,

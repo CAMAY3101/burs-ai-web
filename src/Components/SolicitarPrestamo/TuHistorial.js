@@ -83,7 +83,7 @@ function TuHistorial() {
 
   async function handleSubmit() {
     try {
-      const response = await axios.post('https://bursapi.com/historial/updateDataHistorial', {
+      const response = await axios.post('https://api.burs.com.mx/historial/updateDataHistorial', {
         salario_mensual: salarioMensual,
         ocupacion: ocupacion.anchorKey,
         industria: industria.anchorKey,

@@ -61,7 +61,7 @@ function IngresaTuDomicilio() {
 
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://bursapi.com/direccion/createDireccion', {
+            const response = await axios.post('https://api.burs.com.mx/direccion/createDireccion', {
                 calle: calle,
                 numero_exterior: numExt,
                 numero_interior: numInt,
@@ -75,7 +75,7 @@ function IngresaTuDomicilio() {
             if (response.data.status === 'success') {
                 setTimeout(async () => { 
                     try {
-                        const responseOTP = await axios.post('https://bursapi.com/verificacion/sendOTPCodeEmail');
+                        const responseOTP = await axios.post('https://api.burs.com.mx/verificacion/sendOTPCodeEmail');
                         if (responseOTP.data.status === 'success') {
                             navigateToNextStep(4);
                         }

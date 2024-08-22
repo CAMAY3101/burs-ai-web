@@ -11,7 +11,7 @@ function ResultadosModelos() {
 
     async function handleSubmit() {
         try {
-            const response = await axios.get('https://bursapi.com/modelos/getAllValuesModels', {
+            const response = await axios.get('https://api.burs.com.mx/modelos/getAllValuesModels', {
                 params: {
                     expenses: egresos,
                     monto_solicitado: montoSolicitado,

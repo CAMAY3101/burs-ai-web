@@ -40,7 +40,7 @@ function VerificacionTelefono() {
     useEffect(() => {
         const fetchSecurePhone = async () => {
             try {
-                const response = await axios.get('https://bursapi.com/usuarios/getSecurePhoneUser');
+                const response = await axios.get('https://api.burs.com.mx/usuarios/getSecurePhoneUser');
                 if (response.data.status === 'success') {
                     setPhoneSecure('al telefono ' + response.data.phone);
                 }
@@ -54,7 +54,7 @@ function VerificacionTelefono() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('https://bursapi.com/verificacion/verifyPhoneNumber', {
+            const response = await axios.post('https://api.burs.com.mx/verificacion/verifyPhoneNumber', {
                 code: otpCode
             });
             if (response.data.message === 'Telefono verificado con éxito') {
@@ -75,7 +75,7 @@ function VerificacionTelefono() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('https://bursapi.com/verificacion/resendOTPCodePhoneNumber');
+            const response = await axios.post('https://api.burs.com.mx/verificacion/resendOTPCodePhoneNumber');
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }
