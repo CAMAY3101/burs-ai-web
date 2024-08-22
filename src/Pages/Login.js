@@ -105,7 +105,7 @@ function LogIn() {
         <Link to = '/'>
           <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
         </Link>
-        <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
+        <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion 2</h1>
       </div>
       <div className='flex flex-col items-center space-y-8 my-4'>
         <Input
