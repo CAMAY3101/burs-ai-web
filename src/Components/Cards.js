@@ -16,7 +16,7 @@ function Cards() {
 
               <div className=''>
                   <p className="rubik-Regular-15 text-white/50 md:text-[12px] lg:text-[15px] mb-1">Dirección</p>
-                  <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Av. Empresarios 135. Colonia puerta de hierro 45116 Zapopan, Jalisco</p>
+                  <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Av. Real Acueducto Número 300 int 902ª, Colonia Puerta de Hierro, Zapopan, Jalisco</p>
               </div>
           </div>
 
@@ -29,7 +29,7 @@ function Cards() {
 
               <div>
                   <p className="rubik-Regular-15 text-white/50 md:text-[12px] lg:text-[15px] mb-1">Numero de atención 24/7</p>
-                  <a className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]" href='tel:+523334587498'>33 3458 7498</a>
+                  <a className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]" href='tel:+523334587498'>800 030 0015</a>
               </div>
           </div>
 
@@ -42,7 +42,7 @@ function Cards() {
 
               <div>
                   <p className="rubik-Regular-15 text-white/50 md:text-[12px] lg:text-[15px] mb-1">E-Mail de atención 24/7 </p>
-                  <a className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]" href='mailto:soporte@burs.com.mx'>soporte@burs.com.mx</a>
+                  <a className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]" href='mailto:soporte@burs.com.mx'>contacto@burs.com.mx</a>
               </div>
           </div>
       </div>

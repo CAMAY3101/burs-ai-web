@@ -72,7 +72,7 @@ const Landing = () => {
               </p>
               <br />
               <p className="text-persian-rose-500 font-rubik font-bold text-2xl md:text-3xl">
-                $400 hasta $10,000
+                $500 hasta $20,000
               </p>
               <br />
               <p className="text-purple-heart-900 font-rubik font-bold text-xl md:text-2xl">
@@ -359,7 +359,7 @@ const testimonios = [
 const faqs = [
   {
     pregunta: "¿Qué es Préstamo Personal, antes BURS AI?",
-    respuesta: "Ahora los llamamos Préstamos Personales BURS AI. Es el servicio con el cual puedes pedir un préstamo desde $500 m.n. hasta $10,000 m.n., es fácil, rápido y seguro. El proceso es 100% en línea, sin necesidad de aval ni largos trámites. Además, tú eliges en cuántos días pagar y si pagas antes, pagas menos."
+    respuesta: "Ahora los llamamos Préstamos Personales BURS AI. Es el servicio con el cual puedes pedir un préstamo desde $500 m.n. hasta $20,000 m.n., es fácil, rápido y seguro. El proceso es 100% en línea, sin necesidad de aval ni largos trámites. Además, tú eliges en cuántos días pagar y si pagas antes, pagas menos."
   },
   {
     pregunta: "¿Cuáles son los requisitos de contratación?",

@@ -71,7 +71,7 @@ function TerrminosYCondiciones() {
                   Recuerda cumplir los siguientes requisitos: ser mayor de edad, ser de nacionalidad mexicana, domicilio en territorio nacional y credencial para votar original vigente.
               </p>
               <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">
-                  Desde $500 m.n. hasta $10,000 m.n. Periodo mínimo y máximo de repago podrá ser de 99 hasta 180 días en 1 o 12 cuotas a elección de la solicitud del cliente y al producto de crédito aprobado. APR (Tasa de interés anual) mínima 0% y máxima de 450%.
+                  Desde $500 m.n. hasta $20,000 m.n. Periodo mínimo y máximo de repago podrá ser de 99 hasta 180 días en 1 o 12 cuotas a elección de la solicitud del cliente y al producto de crédito aprobado. APR (Tasa de interés anual) mínima 0% y máxima de 450%.
                   Un ejemplo representativo del costo total del Préstamo Personal considerando la tasa de interés diaria sería el siguiente: Por $1,000 pagarías $1,237.50 incluyendo IVA de los intereses (Cálculo realizado con una tasa de interés diaria del 1.25%,
                   y un plazo de 99 días CAT del 69.05%). Bursa i únicamente realiza operaciones en México.
               </p>
@@ -79,7 +79,7 @@ function TerrminosYCondiciones() {
               <div className="w-full flex flex-col space-y-4">
                   <div className='space-y-4'>
                       <p className='rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]'>
-                          El Buró de Entidades Financieras contiene información BURS FINANCIERA MEXICANA S.A.P.I. DE C.V., SOFOM, E.N.R.
+                          El Buró de Entidades Financieras contiene información BURS FINANCIERA MEXICANA S.A.P.I. DE C.V.,
                           sobre nuestro desempeño frente a los usuarios, por la prestación de productos y servicios.
                       </p>
                       <p className='rubik-Medium-15 text-white md:text-[12px] lg:text-[15px] '>
