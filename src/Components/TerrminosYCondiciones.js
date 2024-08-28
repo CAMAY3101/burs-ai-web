@@ -17,7 +17,7 @@ function TerrminosYCondiciones() {
               <div className="w-full md:w-1/3 space-y-5">
                   <div className='space-y-2'>
                       <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">BURS FINANCIERA MEXICANA S.A.P.I. DE C.V.</p>
-                      <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Bur ai 2023 todos los derechos reservados. </p>
+                      <p className="rubik-Medium-15 text-white md:text-[12px] lg:text-[15px]">Burs 2023 todos los derechos reservados. </p>
                   </div>
                   <div className="flex space-x-12">
                       <div className="rounded-full w-10 h-10 flex items-center justify-center bg-icon-social-media">
