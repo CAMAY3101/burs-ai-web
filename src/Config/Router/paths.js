@@ -4,7 +4,6 @@ export const PRIVATE = '/private';
 
 export const LOGOUT = '/private/logout';
 
-export const QUIERO_INVERTIR = '/quiero-invertir';
 export const PRESTAMO = '/prestamo';
 export const PRESTAMO_SOLICITUD = '/prestamo/solicitud';
 export const PRESTAMO_VERIFICACION = '/prestamo/verificacion';

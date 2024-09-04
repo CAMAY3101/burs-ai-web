@@ -1,17 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
-import {
-    LOGIN, SIGNUP, QUIERO_INVERTIR,
+import {SIGNUP,
     PRESTAMO, PRESTAMO_SOLICITUD, PRESTAMO_VERIFICACION
 } from "../../Config/Router/paths";
 
 import PublicRoute from "../../Components/Routers/PublicRoute";
 import SolicitarPrestamoRoute from '../../Components/Routers/SolicitarPrestamoRoute';
 
-import Navbar from "../../Components/Navbar";
-import Footer from "../../Components/general/Footer";
-
-import Landing from "../../Pages/Landing";
-import QuieroInvertir from "../../Pages/QuieroInvertir";
 import Login from "../../Pages/Login";
 import SignUp from '../../Pages/CreateAccount';
 
@@ -25,26 +19,6 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: (
-                    <div>
-                        <Navbar />
-                        <Landing />
-                        <Footer />
-                    </div>
-                )
-            },
-            {
-                path: QUIERO_INVERTIR,
-                element: (
-                    <div>
-                        <Navbar />
-                        <QuieroInvertir />
-                        <Footer />
-                    </div>
-                )
-            },
-            {
-                path: LOGIN,
                 element: <Login />
             },
             {
