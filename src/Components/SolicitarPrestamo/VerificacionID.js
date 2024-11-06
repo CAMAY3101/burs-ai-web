@@ -1,34 +1,79 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@nextui-org/react'
 
-import underConstruction from '../../Assets/icons/under_construction.png'
+import pendingIcon from '../../Assets/icons/pending-icon.png'
 import axios from 'axios'
 import { useAuthContext } from '../../Contexts/authContext'
+import { endpoint } from '../../Config/utils/urls'
 
 function VerificacionID() {
     const { navigateToNextStep } = useAuthContext()
-    async function handleSubmit() {
-        try {
-            const response = await axios.post('https://api.burs.com.mx/verificacion/verifyID')
+    const [existInFAD, setExistInFAD] = useState(false)
+    const [message, setMessage] = useState('')
 
-            if (response.data.status === 'success') {
-                navigateToNextStep(8)
+    useEffect(() => {
+        const VerifyUserInFAD = async () => {
+            try {
+                const response = await axios.get(endpoint.FAD.getUserInFAD);
+                if (response.data.status === 'success') {
+                    if (response.data.exist === null) {
+                        setExistInFAD(false)
+                    } else {
+                        setExistInFAD(true)
+                    }
+                }
+            } catch (error) {
+                console.error(error)
             }
-
-        } catch (error) {
-            console.error(error)
         }
-    }
+
+        const SendFAD = async () => {
+            try {
+                const response = await axios.post(endpoint.FAD.generateToken);
+                if (response.data.status === 'success') {
+                    const validation = await axios.post(endpoint.FAD.createValidation);
+                    if (validation.data.status ==='success') {
+                        setMessage('Te enviamos una invitacion a tu correo electronico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam')
+                    }
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        const getValidationStatus = async () => {
+            try {
+                const response = await axios.post(endpoint.FAD.generateToken);
+                if (response.data.status === 'success') {
+                    const validationStep = await axios.get(endpoint.FAD.getValidationStep);
+                    console.log('validation step: ', validationStep.data)
+                    if (validationStep.data.status ==='success') {
+                        navigateToNextStep(7)
+                    } else if (validationStep.data.status === 'in progress') {
+                        setMessage(validationStep.data.message)
+                    }
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        VerifyUserInFAD()
+
+        if (existInFAD === null) {
+            SendFAD()
+        } else {
+            getValidationStatus()
+        }
+
+    }, [existInFAD, navigateToNextStep]);
+
   return (
-      <div className='flex flex-col items-center space-y-3'>
-          <h2 className=' font-rubik text-md text-dark-blue-900 '>Verificacion de ID</h2>
-          <img src={underConstruction} alt="Under Construction" />
-          <div className='flex flex-col space-y-1 justify-center items-center'>
-              <p className=' font-rubik text-sm text-dark-blue-900 '>Esta sección está en construcción</p>
-              <p className=' font-rubik text-xs text-dark-blue-900 '>Por favor, presiona el botón de continuar para seguir con el proceso</p>
-          </div>
-          <Button onClick={handleSubmit}> Continuar </Button>
-      </div>
+    <div className='w-1/3 flex flex-col items-center space-y-10'>
+        <h2 className=' font-rubik text-2xl text-dark-blue-900 '>Verificacion de INE e Identidad</h2>
+        <img src={pendingIcon} alt="Under Construction" className='w-2/4'/>
+        <p className='font-rubik text-lg text-dark-blue-900 justify-center'>{message}</p>
+    </div>
   )
 }
 

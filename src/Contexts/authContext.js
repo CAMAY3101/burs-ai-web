@@ -2,6 +2,8 @@ import { createContext, useCallback, useContext, useMemo, useState, useEffect } 
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import { endpoint } from '../Config/utils/urls';
+
 const PROGRESS_INDEX = 'PROGRESS_INDEX';
 const AUTHENTICATED = 'AUTHENTICATED';
 
@@ -17,7 +19,7 @@ export default function AuthContextProvider({ children }) {
     });
 
     const checkToken = useCallback(() => {
-        axios.get('https://api.burs.com.mx/check-cookie', { withCredentials: true })
+        axios.get(endpoint.checkToken, { withCredentials: true })
             .then((response) => {
                 if (response.data.tokenExist === true) {
                     window.sessionStorage.setItem(AUTHENTICATED, true);
@@ -34,12 +36,13 @@ export default function AuthContextProvider({ children }) {
     }, []);
 
     const navigateToNextStep = useCallback((nextStep) => {
+        console.log('Navigate to next step:', nextStep);
         window.sessionStorage.setItem(PROGRESS_INDEX, nextStep.toString());
         setVerificationStep(nextStep);
     }, []);
 
     const getVerificationStepFromApi = useCallback(function () {
-        axios.get('https://api.burs.com.mx/usuarios/getVerificacionStepStatus', { withCredentials: true })
+        axios.get(endpoint.usuarios.getVerificacionStepStatus, { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 console.log('Verification step:', response.data.verificationStep);
@@ -75,7 +78,7 @@ export default function AuthContextProvider({ children }) {
     }, [checkToken, navigateToNextStep]);
 
     const logout = useCallback(() => {
-        axios.post('https://api.burs.com.mx/usuarios/logout', { withCredentials: true })
+        axios.post(endpoint.usuarios.logout, { withCredentials: true })
             .then((response) => {
                 console.log('Response:', response);
                 window.sessionStorage.removeItem(AUTHENTICATED);

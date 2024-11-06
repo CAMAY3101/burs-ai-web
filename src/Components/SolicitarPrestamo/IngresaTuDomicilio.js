@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
 import axios from 'axios';
 import { useAuthContext } from '../../Contexts/authContext';
+import { endpoint } from '../../Config/utils/urls';
 
 const styles_input = {
     label: [
@@ -61,7 +62,7 @@ function IngresaTuDomicilio() {
 
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://api.burs.com.mx/direccion/createDireccion', {
+            const response = await axios.post(endpoint.direccion.createDireccion, {
                 calle: calle,
                 numero_exterior: numExt,
                 numero_interior: numInt,
@@ -75,7 +76,7 @@ function IngresaTuDomicilio() {
             if (response.data.status === 'success') {
                 setTimeout(async () => { 
                     try {
-                        const responseOTP = await axios.post('https://api.burs.com.mx/verificacion/sendOTPCodeEmail');
+                        const responseOTP = await axios.post(endpoint.verificacion.sendOTPCodeEmail);
                         if (responseOTP.data.status === 'success') {
                             navigateToNextStep(4);
                         }

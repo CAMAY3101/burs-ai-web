@@ -4,6 +4,7 @@ import { Input, Select, SelectItem, Checkbox, Button} from "@nextui-org/react";
 import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCrediticiaValues, usoPrestamoValues } from '../../Config/SolicitarPrestamo/historialValues';
 import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
+import { endpoint } from '../../Config/utils/urls';
 
 const styles_input = {
   label: [
@@ -83,7 +84,7 @@ function TuHistorial() {
 
   async function handleSubmit() {
     try {
-      const response = await axios.post('https://api.burs.com.mx/historial/updateDataHistorial', {
+      const response = await axios.post(endpoint.historial.updateDataHistorial, {
         salario_mensual: salarioMensual,
         ocupacion: ocupacion.anchorKey,
         industria: industria.anchorKey,

@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Slider } from "@nextui-org/react";
 import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
+import { endpoint } from '../../Config/utils/urls';
 
 const styles_slider = {
     startContent: [
@@ -24,7 +25,7 @@ function SeleccionMonto() {
     
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://api.burs.com.mx/verificacion/sendOTPCodeEmail');
+            const response = await axios.post(endpoint.verificacion.sendOTPCodeEmail);
         } catch (error) {
             console.error('Error:', error);
         }

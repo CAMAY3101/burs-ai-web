@@ -5,6 +5,7 @@ import { Input, Button } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
 
 import { useAuthContext } from '../../Contexts/authContext';
+import { endpoint } from '../../Config/utils/urls';
 
 const styles_input = {
     label: [
@@ -39,7 +40,7 @@ function VerificacionCorreo() {
     useEffect(() => {
         const fetchSecureEmail = async () => {
             try {
-                const response = await axios.get('https://api.burs.com.mx/usuarios/getSecureEmailUser');
+                const response = await axios.get(endpoint.usuarios.getSecureEmailUser);
                 if (response.data.status === 'success') {
                     setEmailSecure('al correo ' + response.data.email);
                 }
@@ -54,14 +55,14 @@ function VerificacionCorreo() {
     const handleSubmit = async () => {
         //console.log( otpCode);
         try {
-            const response = await axios.post('https://api.burs.com.mx/verificacion/verifyEmail', {
+            const response = await axios.post(endpoint.verificacion.verifyEmail, {
                 code: otpCode
             });
             if (response.data.status === 'success') {
                 toast.success('Correo verificado con éxito');
                 setTimeout(async () => {
                     try {
-                        const responseOTP = await axios.post('https://api.burs.com.mx/verificacion/sendOTPCodePhoneNumber');
+                        const responseOTP = await axios.post(endpoint.verificacion.sendOTPCodePhoneNumber);
                         if (responseOTP.data.status === 'success') {
                             navigateToNextStep(5);
                         }
@@ -82,7 +83,7 @@ function VerificacionCorreo() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('https://api.burs.com.mx/verificacion/resendOTPCodeEmail');
+            const response = await axios.post(endpoint.verificacion.resendOTPCodeEmail);
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }

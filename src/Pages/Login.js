@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 
+import { Link } from 'react-router-dom';
 import { Input, Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -10,7 +11,7 @@ import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
 import { SIGNUP } from '../Config/Router/paths';
-import { Link } from 'react-router-dom';
+import { endpoint } from '../Config/utils/urls';
 
 axios.defaults.withCredentials = true;
 
@@ -73,7 +74,7 @@ function LogIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://api.burs.com.mx/usuarios/login', {
+      const response = await axios.post(endpoint.usuarios.login, {
         correo: emailValue,
         contrasena: password,
       }, { withCredentials: true });
