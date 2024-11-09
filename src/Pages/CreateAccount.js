@@ -13,6 +13,7 @@ import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 import { useAuthContext } from '../Contexts/authContext';
 import { LOGIN } from '../Config/Router/paths';
 import { Link } from 'react-router-dom';
+import { endpoint } from '../Config/utils/urls';
 
 axios.defaults.withCredentials = true;
 
@@ -79,7 +80,7 @@ function SignUp() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try{
-            const response = await axios.post('https://api.burs.com.mx/usuarios/createUser', {
+            const response = await axios.post(endpoint.usuarios.createUser, {
                 correo: emailValue,
                 contrasena: password,
             }, { withCredentials: true });
@@ -183,7 +184,7 @@ function SignUp() {
                 </ul>
             </div>
             <ReCAPTCHA
-                sitekey='6LfSz3ApAAAAAMEcI9ZZbOn0jHZotcLlNOpCTSsp'
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
                 onChange={(value) => setRecaptchaValue(value)}
             />
             <Button

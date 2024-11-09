@@ -22,7 +22,7 @@ function VerificacionIdentidad() {
   }
   return (
     <div className='flex flex-col items-center space-y-3'>
-      <h2 className=' font-rubik text-md text-dark-blue-900 '>Verificacion de Identidad</h2>
+      <h2 className='font-rubik text-5xl text-dark-blue-900 '>Verificacion de Identidad</h2>
       <img src={underConstruction} alt="Under Construction" />
       <div className='flex flex-col space-y-1 justify-center items-center'>
         <p className=' font-rubik text-sm text-dark-blue-900 '>Esta sección está en construcción</p>

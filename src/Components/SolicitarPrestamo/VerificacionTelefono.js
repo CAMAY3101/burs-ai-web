@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Input, Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 
-import NavbarLoan from './NavbarLoan';
 import { useAuthContext } from '../../Contexts/authContext';
+import { endpoint } from '../../Config/utils/urls';
 
 
 const styles_input = {
@@ -33,14 +33,14 @@ const styles_input = {
 axios.defaults.withCredentials = true;
 
 function VerificacionTelefono() {
-    const { navigateToNextStep } = useAuthContext();
+    const { navigateToNextStep, checkToken } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
     const [phoneSecure, setPhoneSecure] = useState('')
 
     useEffect(() => {
         const fetchSecurePhone = async () => {
             try {
-                const response = await axios.get('https://api.burs.com.mx/usuarios/getSecurePhoneUser');
+                const response = await axios.get( endpoint.usuarios.getSecurePhoneUser);
                 if (response.data.status === 'success') {
                     setPhoneSecure('al telefono ' + response.data.phone);
                 }
@@ -54,13 +54,22 @@ function VerificacionTelefono() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('https://api.burs.com.mx/verificacion/verifyPhoneNumber', {
+            const response = await axios.post(endpoint.verificacion.verifyPhoneNumber, {
                 code: otpCode
             });
             if (response.data.message === 'Telefono verificado con éxito') {
                 toast.success('Telefono verificado con éxito');
-                setTimeout(() => {
-                    navigateToNextStep(6);
+                setTimeout(async () => {
+                    try {
+                        const response = await axios.post(endpoint.FAD.generateToken);
+                        if (response.data.status === 'success') {
+                            checkToken();
+                            await axios.post(endpoint.FAD.createValidation);
+                            navigateToNextStep(6);
+                        }
+                    } catch (error) {
+                        console.error('Error enviando OTP:', error);
+                    }
                 }, 2000);
             }
 
@@ -75,7 +84,7 @@ function VerificacionTelefono() {
 
     const handleResend = async () => {
         try {
-            const response = await axios.post('https://api.burs.com.mx/verificacion/resendOTPCodePhoneNumber');
+            const response = await axios.post(endpoint.verificacion.resendOTPCodePhoneNumber);
             if (response.data.status === 'success') {
                 toast('Codigo reenviado')
             }

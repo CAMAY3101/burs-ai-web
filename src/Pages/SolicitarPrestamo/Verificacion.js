@@ -46,9 +46,8 @@ function Verificacion() {
                     </ol>
                     {verificationStep === 4 && <VerificacionCorreo />}
                     {verificationStep === 5 && <VerificacionTelefono />}
-                    {verificationStep === 6 && <VerificacionIdentidad />}
-                    {verificationStep === 7 && <VerificacionID />}
-                    {verificationStep === 8 && <ResultadosModelos />}
+                    {verificationStep === 6 && <VerificacionID />}
+                    {verificationStep === 7 && <ResultadosModelos />}
                 </div>
             </div>
 

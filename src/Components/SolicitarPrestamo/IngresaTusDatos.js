@@ -9,6 +9,7 @@ import { Input, Button, Select, SelectItem } from "@nextui-org/react"
 import toast from 'react-hot-toast';
 
 import { useAuthContext } from '../../Contexts/authContext';
+import { endpoint } from '../../Config/utils/urls';
 
 axios.defaults.withCredentials = true;
 
@@ -80,7 +81,7 @@ function IngresaTusDatos() {
     //----------------------coneccion API----------------------
     async function handleSubmit() {
         try {
-            const response = await axios.post('https://api.burs.com.mx/usuarios/updateDataUser', {
+            const response = await axios.post(endpoint.usuarios.updateDataUser, {
                 nombre: name,
                 apellidos: lastName,
                 edad: age,
