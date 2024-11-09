@@ -33,7 +33,7 @@ const styles_input = {
 axios.defaults.withCredentials = true;
 
 function VerificacionTelefono() {
-    const { navigateToNextStep } = useAuthContext();
+    const { navigateToNextStep, checkToken } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
     const [phoneSecure, setPhoneSecure] = useState('')
 
@@ -59,8 +59,17 @@ function VerificacionTelefono() {
             });
             if (response.data.message === 'Telefono verificado con éxito') {
                 toast.success('Telefono verificado con éxito');
-                setTimeout(() => {
-                    navigateToNextStep(6);
+                setTimeout(async () => {
+                    try {
+                        const response = await axios.post(endpoint.FAD.generateToken);
+                        if (response.data.status === 'success') {
+                            checkToken();
+                            await axios.post(endpoint.FAD.createValidation);
+                            navigateToNextStep(6);
+                        }
+                    } catch (error) {
+                        console.error('Error enviando OTP:', error);
+                    }
                 }, 2000);
             }
 

@@ -7,66 +7,28 @@ import { useAuthContext } from '../../Contexts/authContext'
 import { endpoint } from '../../Config/utils/urls'
 
 function VerificacionID() {
-    const { navigateToNextStep } = useAuthContext()
-    const [existInFAD, setExistInFAD] = useState(false)
-    const [message, setMessage] = useState('')
+    const { navigateToNextStep, accessTokenExist } = useAuthContext()
+    const [message, setMessage] = useState('Te enviamos una invitacion a tu correo electronico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam')
+
+    const getValidationStatus = async () => {
+        try {
+            if (accessTokenExist) {
+                const validationStep = await axios.get(endpoint.FAD.getValidationStep);
+                if (validationStep.data.status === 'success') {
+                    navigateToNextStep(7);
+                } else if (validationStep.data.status === 'in progress') {
+                    setMessage(validationStep.data.message);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     useEffect(() => {
-        const VerifyUserInFAD = async () => {
-            try {
-                const response = await axios.get(endpoint.FAD.getUserInFAD);
-                if (response.data.status === 'success') {
-                    if (response.data.exist === null) {
-                        setExistInFAD(false)
-                    } else {
-                        setExistInFAD(true)
-                    }
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
+        getValidationStatus();
 
-        const SendFAD = async () => {
-            try {
-                const response = await axios.post(endpoint.FAD.generateToken);
-                if (response.data.status === 'success') {
-                    const validation = await axios.post(endpoint.FAD.createValidation);
-                    if (validation.data.status ==='success') {
-                        setMessage('Te enviamos una invitacion a tu correo electronico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam')
-                    }
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        const getValidationStatus = async () => {
-            try {
-                const response = await axios.post(endpoint.FAD.generateToken);
-                if (response.data.status === 'success') {
-                    const validationStep = await axios.get(endpoint.FAD.getValidationStep);
-                    console.log('validation step: ', validationStep.data)
-                    if (validationStep.data.status ==='success') {
-                        navigateToNextStep(7)
-                    } else if (validationStep.data.status === 'in progress') {
-                        setMessage(validationStep.data.message)
-                    }
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        VerifyUserInFAD()
-
-        if (existInFAD === null) {
-            SendFAD()
-        } else {
-            getValidationStatus()
-        }
-
-    }, [existInFAD, navigateToNextStep]);
+    }, []);
 
   return (
     <div className='w-1/3 flex flex-col items-center space-y-10'>

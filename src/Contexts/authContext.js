@@ -6,6 +6,7 @@ import { endpoint } from '../Config/utils/urls';
 
 const PROGRESS_INDEX = 'PROGRESS_INDEX';
 const AUTHENTICATED = 'AUTHENTICATED';
+const ACCESS_TOKEN = 'ACCESS_TOKEN';
 
 export const AuthContext = createContext();
 
@@ -18,6 +19,10 @@ export default function AuthContextProvider({ children }) {
         return window.sessionStorage.getItem(AUTHENTICATED)
     });
 
+    const [accessTokenExist, setAccessTokenExist] = useState(() => {
+        return window.sessionStorage.getItem(ACCESS_TOKEN)
+    });
+
     const checkToken = useCallback(() => {
         axios.get(endpoint.checkToken, { withCredentials: true })
             .then((response) => {
@@ -27,6 +32,15 @@ export default function AuthContextProvider({ children }) {
                 } else {
                     window.sessionStorage.removeItem(AUTHENTICATED);
                     setTokenExist(false);
+                    window.sessionStorage.removeItem(PROGRESS_INDEX);
+                }
+
+                if (response.data.accessTokenExist === true) {
+                    window.sessionStorage.setItem(ACCESS_TOKEN, true);
+                    setAccessTokenExist(true);
+                } else {
+                    window.sessionStorage.removeItem(ACCESS_TOKEN);
+                    setAccessTokenExist(false);
                     window.sessionStorage.removeItem(PROGRESS_INDEX);
                 }
             })
@@ -70,10 +84,8 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(5);
         } else if (step === 'verificar identidad') {
             navigateToNextStep(6);
-        } else if (step === 'verificar ID') {
-            navigateToNextStep(7);
         } else if (step === 'simulacion modelos') {
-            navigateToNextStep(8);
+            navigateToNextStep(7);
         }
     }, [checkToken, navigateToNextStep]);
 
@@ -94,13 +106,15 @@ export default function AuthContextProvider({ children }) {
         () => ({
             tokenExist,
             verificationStep,
+            accessTokenExist,
             login,
             checkToken,
             navigateToNextStep,
             getVerificationStepFromApi,
-            logout
+            logout,
+
         }),
-        [tokenExist, verificationStep, login, checkToken, navigateToNextStep, getVerificationStepFromApi, logout]
+        [tokenExist, verificationStep, accessTokenExist, login, checkToken, navigateToNextStep, getVerificationStepFromApi, logout]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
