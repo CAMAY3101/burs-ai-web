@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "../../Styles/Common.scss";
 
 import { usePhoneInput, FlagImage, defaultCountries, parseCountry,} from "react-international-phone";
 import 'react-international-phone/style.css';

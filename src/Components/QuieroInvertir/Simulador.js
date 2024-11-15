@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../Styles/QuieroInvertir.scss'
 import simuladorpng from '../../Assets/QuieroInvertir/simulador.webp'
 
 import { Slider } from "@nextui-org/react";

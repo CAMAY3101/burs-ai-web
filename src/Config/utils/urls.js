@@ -1,4 +1,4 @@
-const api_local = process.env.REACT_APP_API_URL;
+const api_local = import.meta.env.VITE_API_URL;
 
 export const endpoint = {
     checkToken: `${api_local}/check-cookie`,

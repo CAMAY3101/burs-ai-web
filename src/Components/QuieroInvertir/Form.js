@@ -2,7 +2,6 @@ import React from 'react'
 import { Input, Textarea, Button } from "@nextui-org/react";
 
 import imgForm from "../../Assets/QuieroInvertir/form.jpg"
-import '../../Styles/QuieroInvertir.scss'
 
 const styles = {
     input: [

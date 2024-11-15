@@ -184,7 +184,7 @@ function SignUp() {
                 </ul>
             </div>
             <ReCAPTCHA
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
+                  sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
                 onChange={(value) => setRecaptchaValue(value)}
             />
             <Button
