@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
+import TextField from '../CustomizeComponents/TextField.jsx'
 
 axios.defaults.withCredentials = true;
 
@@ -102,6 +103,11 @@ function IngresaTusDatos() {
         <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
             <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos</h1>
             <div className='flex-col space-y-12'>
+                <TextField
+                    type='text'
+                    label='Nombre(s)'
+                    placeholder='Ejemplo: Juan'
+                />
                 <Input
                     isRequired
                     type='text'
