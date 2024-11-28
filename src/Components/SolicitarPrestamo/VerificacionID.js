@@ -6,9 +6,12 @@ import axios from 'axios'
 import { useAuthContext } from '../../Contexts/authContext'
 import { endpoint } from '../../Config/utils/urls'
 
+
+import TitlePage from '../CustomizeComponents/TitlePage';
+
 function VerificacionID() {
     const { navigateToNextStep, accessTokenExist } = useAuthContext()
-    const [message, setMessage] = useState('Te enviamos una invitacion a tu correo electronico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam')
+    const [message, setMessage] = useState('Te enviamos una invitación a tu correo electrónico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam.')
 
     const getValidationStatus = async () => {
         try {
@@ -32,9 +35,9 @@ function VerificacionID() {
 
   return (
     <div className='w-1/3 flex flex-col items-center space-y-10'>
-        <h2 className=' font-rubik text-2xl text-dark-blue-900 '>Verificacion de INE e Identidad</h2>
+        <TitlePage title="Verificación de INE e Identidad"/>
         <img src={pendingIcon} alt="Under Construction" className='w-2/4'/>
-        <p className='font-rubik text-lg text-dark-blue-900 justify-center'>{message}</p>
+        <p className='font-rubik text-md text-dark-blue-950 justify-center'>{message}</p>
     </div>
   )
 }

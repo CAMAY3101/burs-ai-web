@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '@nextui-org/react'
-import { type } from '@testing-library/user-event/dist/type';
 
 const styles_input = {
     label: [
@@ -27,7 +26,7 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label}) {
+function TextField({type, placeholder, label,value, onValueChange}) {
   return (
     <>
           <Input
@@ -37,7 +36,9 @@ function TextField({type, placeholder, label}) {
             size='md'
             variant='bordered'
             classNames={styles_input}
-            labelPlacement='outside'
+            labelPlacement={'outside'}
+            value={value} 
+            onChange={(e) => onValueChange(e.target.value)}
           />
     </>
   )

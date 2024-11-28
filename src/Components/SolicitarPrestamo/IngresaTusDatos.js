@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { usePhoneInput, FlagImage, defaultCountries, parseCountry,} from "react-international-phone";
+import { usePhoneInput, FlagImage, defaultCountries, parseCountry, } from "react-international-phone";
 import 'react-international-phone/style.css';
 
-import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
+import { Input, Button, Select, SelectItem } from "@nextui-org/react"
 import toast from 'react-hot-toast';
 
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
-import TextField from '../CustomizeComponents/TextField.jsx'
+import TextField from '../CustomizeComponents/TextField.jsx';
+import TitlePage from '../CustomizeComponents/TitlePage.jsx';
+import ButtonContinue from '../CustomizeComponents/ButtomContinue.jsx';
 
 axios.defaults.withCredentials = true;
 
@@ -43,7 +45,7 @@ function IngresaTusDatos() {
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
-    
+
     //----------------------Cambiar formato de telefono----------------------
 
     // Busca el índice del país 'mx' (México) en la lista predeterminada
@@ -101,61 +103,31 @@ function IngresaTusDatos() {
 
     return (
         <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
-            <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tus datos</h1>
+            <TitlePage title="Ingresa tus datos" />
             <div className='flex-col space-y-12'>
                 <TextField
                     type='text'
                     label='Nombre(s)'
                     placeholder='Ejemplo: Juan'
-                />
-                <Input
-                    isRequired
-                    type='text'
-                    label='Nombre(s)'
-                    placeholder='Ejemplo: Juan'
-                    size='md'
-                    variant='bordered'
-                    classNames={styles_input}
-                    labelPlacement='outside'
                     value={name}
                     onValueChange={setName}
                 />
-                <Input
-                    isRequired
+                <TextField
                     type='text'
                     label='Apellido(s)'
                     placeholder='Ejemplo: Perez Lopez'
-                    size='md'
-                    variant='bordered'
-                    classNames={styles_input}
-                    labelPlacement='outside'
                     value={lastName}
                     onValueChange={setLastName}
                 />
-                <Input
-                    isRequired
+                <TextField
                     type='number'
                     label='Edad'
                     placeholder='Ej: 25'
-                    size='md'
-                    variant='bordered'
-                    classNames={styles_input}
-                    labelPlacement='outside'
                     className='w-1/2'
                     min={18}
                     max={100}
                     value={age}
                     onValueChange={setAge}
-                />
-                <Input
-                    isRequired
-                    type='text'
-                    label='CURP'
-                    placeholder='Ejemplo: PERJ950425HDFLPS09'
-                    size='md'
-                    variant='bordered'
-                    classNames={styles_input}
-                    labelPlacement='outside'
                 />
                 <Input
                     isRequired
@@ -171,7 +143,7 @@ function IngresaTusDatos() {
                             <Select
                                 value={country.iso2}
                                 onChange={(e) => setCountry(e.target.value)}
-                                placeholder={<FlagImage iso2={country.iso2}  />}
+                                placeholder={<FlagImage iso2={country.iso2} />}
                                 renderValue={(value) => (
                                     <FlagImage iso2={country.iso2} />
                                 )}
@@ -214,18 +186,15 @@ function IngresaTusDatos() {
                     }
                     value={inputValue}
                     onChange={handlePhoneValueChange}
-                    inputRef={inputRef} 
-                />  
+                    inputRef={inputRef}
+                />
             </div>
-            
-            <Button
-                size='large'
-                color='secondary'
+
+            <ButtonContinue
                 isDisabled={!name || !lastName || !age || !phone}
-                onClick = {handleSubmit}
-            >
-            Continuar
-            </Button>
+                handleSubmit={handleSubmit}
+            />
+
         </div>
     )
 }

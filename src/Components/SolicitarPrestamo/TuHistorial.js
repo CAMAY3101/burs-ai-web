@@ -1,51 +1,16 @@
 import React, { useState } from 'react'
-import { Input, Select, SelectItem, Checkbox, Button} from "@nextui-org/react";
+import { Input, Select, SelectItem, Checkbox, Button } from "@nextui-org/react";
 
 import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCrediticiaValues, usoPrestamoValues } from '../../Config/SolicitarPrestamo/historialValues';
 import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
 import { endpoint } from '../../Config/utils/urls';
 
-const styles_input = {
-  label: [
-    "group-data-[filled-within=true]:text-dark-blue-950",
-    "font-rubik",
-    "font-medium",
-    "text-base",
-  ],
-  input: [
-    "font-rubik",
-    "font-regular",
-    "text-[15px]",
-    "text-dark-blue-950",
-    "placeholder:text-dark-blue-300",
-  ],
-  inputWrapper: [
-    "rounded-xl",
-    "border-dark-blue-400",
-    "data-[hover=true]:border-dark-blue-700",
-    "group-data-[focus=true]:border-dark-blue-900",
-    "!cursor-text",
-  ]
-};
+import TextFieldWithInsideLabel from "../CustomizeComponents/TextFieldWithInsideLabel";
+import SelectWithInsideLabel from '../CustomizeComponents/SelectWithInsideLabel';
+import TitlePage from '../CustomizeComponents/TitlePage';
+import ButtonContinue from '../CustomizeComponents/ButtomContinue';
 
-const styles_select = {
-  trigger: [
-    "rounded-xl",
-    "border-dark-blue-400",
-    "data-[hover=true]:border-dark-blue-700",
-    "data-[open=true]:border-dark-blue-900",
-    "data-[focus=true]:border-dark-blue-900",
-    "!cursor-text",
-    "space-y-2",
-  ],
-  value: [
-    "rubik-Regular-16",
-    "text-dark-blue-800",
-  ]
-};
-
-const style_label = 'rubik-Medium-15 text-dark-blue-950'
 
 function TuHistorial() {
   const { navigateToNextStep } = useAuthContext();
@@ -95,7 +60,7 @@ function TuHistorial() {
         uso_prestamo: usoPrestamo.anchorKey
       });
 
-      if (response.data.status === 'success' ) {
+      if (response.data.status === 'success') {
         setTimeout(() => {
           navigateToNextStep(3);
         }, 2000);
@@ -108,134 +73,84 @@ function TuHistorial() {
 
   return (
     <div className='sm:w-11/12 lg:w-5/12 space-y-5 '>
-      <h3 className='rubik-Bold-23 text-purple-heart-900'>Tu historial</h3>
+      <TitlePage title="Tu historial" />
       <div className='w-full flex-col space-y-7'>
         <div className='w-1/2'>
-          <Input
+          <TextFieldWithInsideLabel
             type="number"
             label="Salario mensual"
-            placeholder='Ejemplo: $15000'
-            variant='bordered'
-            labelPlacement='inside'
-            size='md'
-            classNames={styles_input}
+            placeholder='Ejemplo:$15000'
             value={salarioMensual}
             onValueChange={setSalarioMensual}
           />
         </div>
-        <div>
-          <Select
-            label='Ocupación'
-            className="max-w"
-            placeholder="Selecciona una opcion"
-            variant='bordered'
-            size='md'
-            classNames={styles_select}
-            selectedKeys={value}
-            onSelectionChange={setOcupacion}
 
-          >
-            {ocupacionValues.map((ocupacion) => (
-              <SelectItem value={ocupacion.value} key={ocupacion.value}>
-                {ocupacion.label}
-              </SelectItem>
-            ))}
-          </Select>
+        <div>
+          <SelectWithInsideLabel
+            label="Ocupación"
+            options={ocupacionValues}
+            placeholder="Selecciona una opción"
+            selectedKeys={ocupacion}
+            onSelectionChange={setOcupacion}
+          />
         </div>
-        <div className='space-y-2'>
-          <Select
-            label={<div className={style_label}>Industria</div>}
-            className="max-w"
-            placeholder='Selecciona una opcion'
-            variant='bordered'
-            classNames={styles_select}
+
+        <div>
+          <SelectWithInsideLabel
+            label="Industria"
+            options={industriaValues}
+            placeholder="Selecciona una opción"
             selectedKeys={industria}
             onSelectionChange={setIndustria}
-          >
-            {industriaValues.map((industria) => (
-              <SelectItem value={industria.value} key={industria.value}>
-                {industria.label}
-              </SelectItem>
-            ))}
-          </Select>
-          <Select
-            label={<div className={style_label}>Subindustria</div>}
-            className="max-w"
-            placeholder='Selecciona una opcion'
-            variant='bordered'
-            classNames={styles_select}
+          />
+        </div>
+
+        <div>
+        <SelectWithInsideLabel
+            label="Subindustria"
+            options={industria.anchorKey && subIndustriasValues[industria.anchorKey] ? subIndustriasValues[industria.anchorKey] : []}
+            placeholder="Selecciona una opción"
             selectedKeys={subindustria}
             onSelectionChange={setSubindustria}
-          >
-            {industria.anchorKey && subIndustriasValues[industria.anchorKey] && subIndustriasValues[industria.anchorKey].map((subindustria) => (
-              <SelectItem value={subindustria.value} key={subindustria.value}>
-                {subindustria.label}
-              </SelectItem>
-            ))}
-          </Select>
+          />
         </div>
-        <div className='space-y-2'>
-          <p className={style_label}>¿Te pagan a través de un banco?</p>
-          <div className='flex flex-col space-y-1'>
-            <Checkbox isSelected={isCheckedSi} onChange={handleCheckboxSiChange} color='secondary'>Si</Checkbox>
-            <Checkbox isSelected={isCheckedNo} onChange={handleCheckboxNoChange} color='secondary'>No</Checkbox>
-          </div>
-        </div>
-        <div className='w-fit'>
-          <Input
+        <div>
+          <TextFieldWithInsideLabel
             type="number"
-            label={<div className={style_label}>Salario familiar total al mes</div>}
+            label='Salario familiar total al mes'
             placeholder='Ejemplo: $15000'
-            variant='bordered'
-            labelPlacement='inside'
-            size='md'
-            classNames={styles_input}
             value={salarioFamiliar}
             onValueChange={setSalarioFamiliar}
           />
         </div>
         <div>
-          <Select
-            label={<div className={style_label}>¿Como consideras tu calificación crediticia?</div>}
-            className="max-w"
-            placeholder='Selecciona una opcion'
-            variant='bordered'
-            classNames={styles_select}
+          <SelectWithInsideLabel
+            label="¿Cómo consideras tu calificación crediticia?"
+            options={calificacionCrediticiaValues}
+            placeholder="Selecciona una opción"
             selectedKeys={calificacionCrediticia}
             onSelectionChange={setCalificacionCrediticia}
-          >
-            {calificacionCrediticiaValues.map((calificacion) => (
-              <SelectItem value={calificacion.value} key={calificacion.value}>
-                {calificacion.label}
-              </SelectItem>
-            ))}
-          </Select>
+          />
         </div>
+
         <div>
-          <Select
-            label={<div className={style_label}>"¿Como usarias el prestamo?"</div>}
-            className="max-w"
-            placeholder='Selecciona una opcion'
-            variant='bordered'
-            classNames={styles_select}
+          <SelectWithInsideLabel
+            label="¿Cómo usarías el préstamo?"
+            options={usoPrestamoValues}
+            placeholder="Selecciona una opción"
             selectedKeys={usoPrestamo}
             onSelectionChange={setUsoPrestamo}
-          >
-            {usoPrestamoValues.map((uso) => (
-              <SelectItem value={uso.value} key={uso.value}>
-                {uso.label}
-              </SelectItem>
-            ))
-            }
-          </Select>
+          />
         </div>
+
       </div>
-      <Button
-        color='primary'
-        onClick={handleSubmit}
-      >
-        Enviar
-      </Button>
+      <ButtonContinue
+        isDisabled={ 
+          !ocupacion.size || !industria || !subindustria || !salarioMensual || !salarioFamiliar || !calificacionCrediticia.size || !usoPrestamo.size
+        }
+        handleSubmit={handleSubmit}
+      />
+
     </div>
   )
 }

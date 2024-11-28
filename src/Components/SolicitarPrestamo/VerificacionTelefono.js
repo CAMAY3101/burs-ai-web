@@ -1,34 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Input, Button } from "@nextui-org/react"
+import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
 
 
-const styles_input = {
-    label: [
-        "group-data-[filled-within=true]:text-dark-blue-950",
-        "font-rubik",
-        "font-medium",
-        "text-base",
-    ],
-    input: [
-        "font-rubik",
-        "font-regular",
-        "text-[15px]",
-        "text-dark-blue-950",
-        "placeholder:text-dark-blue-300",
-    ],
-    inputWrapper: [
-        "rounded-xl",
-        "border-dark-blue-400",
-        "data-[hover=true]:border-dark-blue-700",
-        "group-data-[focus=true]:border-dark-blue-900",
-        "!cursor-text",
-    ]
-};
+import TextField from '../CustomizeComponents/TextField.jsx';
+import TitlePage from '../CustomizeComponents/TitlePage.jsx';
+import ButtonContinue from '../CustomizeComponents/ButtomContinue.jsx';
+
 
 axios.defaults.withCredentials = true;
 
@@ -42,10 +24,10 @@ function VerificacionTelefono() {
             try {
                 const response = await axios.get( endpoint.usuarios.getSecurePhoneUser);
                 if (response.data.status === 'success') {
-                    setPhoneSecure('al telefono ' + response.data.phone);
+                    setPhoneSecure('al teléfono ' + response.data.phone);
                 }
             } catch (error) {
-                setPhoneSecure('a tu telefono');
+                setPhoneSecure('a tu teléfono');
             }
         };
 
@@ -57,8 +39,8 @@ function VerificacionTelefono() {
             const response = await axios.post(endpoint.verificacion.verifyPhoneNumber, {
                 code: otpCode
             });
-            if (response.data.message === 'Telefono verificado con éxito') {
-                toast.success('Telefono verificado con éxito');
+            if (response.data.message === 'Teléfono verificado con éxito') {
+                toast.success('Teléfono verificado con éxito');
                 setTimeout(async () => {
                     try {
                         const response = await axios.post(endpoint.FAD.generateToken);
@@ -75,9 +57,9 @@ function VerificacionTelefono() {
 
         } catch (error) {
             if (error.response.status === 400) {
-                toast.error('Codigo incorrecto')
+                toast.error('Código incorrecto')
             } else {
-                toast.error('Error al verificar el telefono, intentalo de nuevo')
+                toast.error('Error al verificar el teléfono, intentalo de nuevo')
             }
         }
     };
@@ -86,10 +68,10 @@ function VerificacionTelefono() {
         try {
             const response = await axios.post(endpoint.verificacion.resendOTPCodePhoneNumber);
             if (response.data.status === 'success') {
-                toast('Codigo reenviado')
+                toast('Código reenviado')
             }
         } catch (error) {
-            toast.error('Error al reenviar el codigo')
+            toast.error('Error al reenviar el código')
         }
     };
 
@@ -97,18 +79,14 @@ function VerificacionTelefono() {
         <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
             <div className='flex flex-col space-y-12'>
                 <div className='flex flex-col space-y-5'>
-                    <h1 className='font-rubik font-bold text-2xl text-dark-blue-950'>Te enviamos un codigo {phoneSecure}</h1>
+                <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
                     <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
                 </div>
                 <div className='flex-col space-y-3'>
-                    <Input
+                    <TextField
                         type='text'
                         label='Codigo OTP'
-                        labelPlacement='outside'
                         placeholder='Ingresa el codigo'
-                        variant='bordered'
-                        classNames={styles_input}
-
                         value={otpCode}
                         onValueChange={setOtpCode}
                     />
@@ -120,13 +98,10 @@ function VerificacionTelefono() {
                         Reenviar codigo
                     </Button>
                 </div>
-                <Button
-                    className='w-full'
-                    color='secondary'
-                    onClick={handleSubmit}
-                >
-                    Verificar Telefono
-                </Button>
+                <ButtonContinue
+                    handleSubmit={handleSubmit}
+                    label="Verificar Teléfono"
+                />
                 <Toaster
                     position="top-center"
                     reverseOrder={false}
