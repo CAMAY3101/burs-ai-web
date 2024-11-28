@@ -1,6 +1,6 @@
 const api_local = import.meta.env.VITE_API_URL;
 
-export const endpoint = { // test
+export const endpoint = {
     checkToken: `${api_local}/check-cookie`,
     usuarios: {
         getUsuarios: `${api_local}/usuarios/getUsuarios`,
