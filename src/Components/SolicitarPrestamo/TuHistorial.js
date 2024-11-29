@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { Input, Select, SelectItem, Checkbox, Button } from "@nextui-org/react";
-
 import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCrediticiaValues, usoPrestamoValues } from '../../Config/SolicitarPrestamo/historialValues';
 import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
 import { endpoint } from '../../Config/utils/urls';
 
-import TextFieldWithInsideLabel from "../CustomizeComponents/TextFieldWithInsideLabel";
-import SelectWithInsideLabel from '../CustomizeComponents/SelectWithInsideLabel';
+import TextField from "../CustomizeComponents/TextField";
+import SelectField from '../CustomizeComponents/SelectField';
 import TitlePage from '../CustomizeComponents/TitlePage';
-import ButtonContinue from '../CustomizeComponents/ButtomContinue';
+import Button1 from '../CustomizeComponents/Button1';
 
 
 function TuHistorial() {
@@ -72,11 +70,11 @@ function TuHistorial() {
   }
 
   return (
-    <div className='sm:w-11/12 lg:w-5/12 space-y-5 '>
+    <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
       <TitlePage title="Tu historial" />
-      <div className='w-full flex-col space-y-7'>
+      <div className='w-full flex flex-col space-y-10'>
         <div className='w-1/2'>
-          <TextFieldWithInsideLabel
+          <TextField
             type="number"
             label="Salario mensual"
             placeholder='Ejemplo:$15000'
@@ -86,7 +84,7 @@ function TuHistorial() {
         </div>
 
         <div>
-          <SelectWithInsideLabel
+          <SelectField
             label="Ocupación"
             options={ocupacionValues}
             placeholder="Selecciona una opción"
@@ -96,7 +94,7 @@ function TuHistorial() {
         </div>
 
         <div>
-          <SelectWithInsideLabel
+          <SelectField
             label="Industria"
             options={industriaValues}
             placeholder="Selecciona una opción"
@@ -106,7 +104,7 @@ function TuHistorial() {
         </div>
 
         <div>
-        <SelectWithInsideLabel
+        <SelectField
             label="Subindustria"
             options={industria.anchorKey && subIndustriasValues[industria.anchorKey] ? subIndustriasValues[industria.anchorKey] : []}
             placeholder="Selecciona una opción"
@@ -114,17 +112,20 @@ function TuHistorial() {
             onSelectionChange={setSubindustria}
           />
         </div>
-        <div>
-          <TextFieldWithInsideLabel
+
+        <div className='w-1/2'>
+          <TextField
             type="number"
             label='Salario familiar total al mes'
             placeholder='Ejemplo: $15000'
             value={salarioFamiliar}
             onValueChange={setSalarioFamiliar}
+            className="mt-5"
           />
         </div>
+
         <div>
-          <SelectWithInsideLabel
+          <SelectField
             label="¿Cómo consideras tu calificación crediticia?"
             options={calificacionCrediticiaValues}
             placeholder="Selecciona una opción"
@@ -134,7 +135,7 @@ function TuHistorial() {
         </div>
 
         <div>
-          <SelectWithInsideLabel
+          <SelectField
             label="¿Cómo usarías el préstamo?"
             options={usoPrestamoValues}
             placeholder="Selecciona una opción"
@@ -144,7 +145,7 @@ function TuHistorial() {
         </div>
 
       </div>
-      <ButtonContinue
+      <Button1
         isDisabled={ 
           !ocupacion.size || !industria || !subindustria || !salarioMensual || !salarioFamiliar || !calificacionCrediticia.size || !usoPrestamo.size
         }

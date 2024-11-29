@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@nextui-org/react';
 
-const ButtonContinue = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
+const Button1 = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
   return (
     <Button
       size="large"
@@ -15,4 +15,4 @@ const ButtonContinue = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
   );
 };
 
-export default ButtonContinue;
+export default Button1;

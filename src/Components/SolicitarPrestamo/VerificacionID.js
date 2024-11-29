@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '@nextui-org/react'
-
 import pendingIcon from '../../Assets/icons/pending-icon.png'
 import axios from 'axios'
 import { useAuthContext } from '../../Contexts/authContext'
 import { endpoint } from '../../Config/utils/urls'
-
 
 import TitlePage from '../CustomizeComponents/TitlePage';
 

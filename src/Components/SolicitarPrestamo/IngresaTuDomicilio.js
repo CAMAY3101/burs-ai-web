@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Input, Button, Select, SelectItem } from "@nextui-org/react"
 import axios from 'axios';
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import SelectField from '../CustomizeComponents/SelectField.jsx'
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
-import ButtonContinue from '../CustomizeComponents/ButtomContinue.jsx';
+import Button1 from '../CustomizeComponents/Button1.jsx'
 
 
 function IngresaTuDomicilio() {
@@ -79,8 +78,7 @@ function IngresaTuDomicilio() {
                         onValueChange={setNumInt}
                     />
                 </div>
-
-                <div className='flex space-x-5'>
+                <div className='flex space-x-5' >
                     <TextField
                         type='text'
                         label='Colonia'
@@ -130,7 +128,7 @@ function IngresaTuDomicilio() {
                 />
             </div>
 
-            <ButtonContinue
+            <Button1
                 isDisabled={!calle || !numExt || !numInt || !colonia || !cp || !municipio || !estado || !tipoVivienda}
                 handleSubmit={handleSubmit}
             />

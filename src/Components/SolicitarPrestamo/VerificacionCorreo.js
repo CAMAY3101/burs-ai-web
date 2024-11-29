@@ -9,7 +9,7 @@ import { endpoint } from '../../Config/utils/urls';
 
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
-import ButtonContinue from '../CustomizeComponents/ButtomContinue.jsx';
+import Button1 from '../CustomizeComponents/Button1.jsx';
 
 axios.defaults.withCredentials = true;
 
@@ -96,7 +96,7 @@ function VerificacionCorreo() {
                         Reenviar codigo
                     </Button>
                 </div>
-                <ButtonContinue
+                <Button1
                     handleSubmit={handleSubmit}
                     label="Verificar Correo"
                 />

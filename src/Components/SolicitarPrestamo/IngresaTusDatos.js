@@ -4,14 +4,14 @@ import axios from 'axios';
 import { usePhoneInput, FlagImage, defaultCountries, parseCountry, } from "react-international-phone";
 import 'react-international-phone/style.css';
 
-import { Input, Button, Select, SelectItem } from "@nextui-org/react"
+import { Input, Select, SelectItem } from "@nextui-org/react"
 import toast from 'react-hot-toast';
 
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
-import ButtonContinue from '../CustomizeComponents/ButtomContinue.jsx';
+import Button1 from '../CustomizeComponents/Button1.jsx'
 
 axios.defaults.withCredentials = true;
 
@@ -190,7 +190,7 @@ function IngresaTusDatos() {
                 />
             </div>
 
-            <ButtonContinue
+            <Button1
                 isDisabled={!name || !lastName || !age || !phone}
                 handleSubmit={handleSubmit}
             />
