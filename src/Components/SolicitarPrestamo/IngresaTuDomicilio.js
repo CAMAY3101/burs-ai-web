@@ -1,53 +1,12 @@
-import React, { useState} from 'react';
-import { Input, Button, Select, SelectItem } from "@nextui-org/react" 
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
+import TextField from '../CustomizeComponents/TextField.jsx';
+import SelectField from '../CustomizeComponents/SelectField.jsx'
+import TitlePage from '../CustomizeComponents/TitlePage.jsx';
+import Button1 from '../CustomizeComponents/Button1.jsx'
 
-const styles_input = {
-    label: [
-        "text-dark-blue-950",
-        "font-rubik",
-        "font-medium",
-        "text-base",
-    ],
-    input: [
-        "font-rubik",
-        "font-regular",
-        "text-[15px]",
-        "text-dark-blue-950",
-        "placeholder:text-dark-blue-300",
-    ],
-    inputWrapper: [
-        "rounded-xl",
-        "border-dark-blue-400",
-        "data-[hover=true]:border-dark-blue-700",
-        "group-data-[focus=true]:border-dark-blue-900",
-        "!cursor-text",
-    ]
-};
-
-const styles_select = {
-    label: [
-        "group-data-[filled-within=true]:text-dark-blue-950",
-        "font-rubik",
-        "font-medium",
-        "text-base",
-    ],
-    trigger: [
-        "rounded-xl",
-        "border-dark-blue-400",
-        "data-[hover=true]:border-dark-blue-700",
-        "data-[open=true]:border-dark-blue-900",
-        "data-[focus=true]:border-dark-blue-900",
-        "!cursor-text",
-        "space-y-2",
-    ],
-    value: [
-        "rubik-Regular-16",
-        "text-dark-blue-800",
-    ]
-};
 
 function IngresaTuDomicilio() {
     const { navigateToNextStep } = useAuthContext();
@@ -74,7 +33,7 @@ function IngresaTuDomicilio() {
             });
 
             if (response.data.status === 'success') {
-                setTimeout(async () => { 
+                setTimeout(async () => {
                     try {
                         const responseOTP = await axios.post(endpoint.verificacion.sendOTPCodeEmail);
                         if (responseOTP.data.status === 'success') {
@@ -90,136 +49,91 @@ function IngresaTuDomicilio() {
         }
     }
 
-  return (
-      <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
-          <h1 className='font-rubik font-bold text-xl text-purple-heart-950'> Ingresa tu domicilio</h1>
-          <div className='flex-col space-y-12'>
-              <Input
-                  isRequired
-                  type='text'
-                  label='Calle'
-                  placeholder='Ejemplo: Av. Insurgentes Sur'
-                  size='md'
-                  variant='bordered'
-                  classNames={styles_input}
-                  labelPlacement='outside'
-                  value={calle}
-                  onValueChange={setCalle}
-              />
+    return (
+        <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
+            <TitlePage title="Ingresa tu domicilio" />
+            <div className='flex-col space-y-12'>
 
-              <div id='num ext e int' className='flex space-x-5' >
-                  <Input
-                      isRequired
-                      type='text'
-                      label='Numero Exterior'
-                      placeholder='Ejemplo: 25'
-                      size='md'
-                      variant='bordered'
-                      classNames={styles_input}
-                      labelPlacement='outside'
+                <TextField
+                    type='text'
+                    label='Calle'
+                    placeholder='Ejemplo: Av. Insurgentes Sur'
+                    value={calle}
+                    onValueChange={setCalle}
+                />
+
+                <div id='num ext e int' className='flex space-x-5' >
+                    <TextField
+                        type='text'
+                        label='Numero Exterior'
+                        placeholder='Ejemplo: 25'
                         value={numExt}
                         onValueChange={setNumExt}
-                  />
-                  <Input
-                      type='text'
-                      label='Numero Interior'
-                      placeholder='Ej: 25'
-                      size='md'
-                      variant='bordered'
-                      classNames={styles_input}
-                      labelPlacement='outside'
+                    />
+                    <TextField
+                        type='text'
+                        label='Numero Interior'
+                        placeholder='Ej: 25'
                         value={numInt}
                         onValueChange={setNumInt}
-
-                  />
-              </div>
-
-              <div className='flex space-x-5'>
-                  <Input
-                      isRequired
-                      type='text'
-                      label='Colonia'
-                      placeholder='Ejemplo: Del Valle'
-                      size='md'
-                      variant='bordered'
-                      classNames={styles_input}
-                      labelPlacement='outside'
-                      className='w-7/12'
-                      value={colonia}
+                    />
+                </div>
+                <div className='flex space-x-5' >
+                    <TextField
+                        type='text'
+                        label='Colonia'
+                        placeholder='Ejemplo: Del Valle'
+                        value={colonia}
                         onValueChange={setColonia}
-                  />
+                    />
+                    <TextField
+                        isRequired
+                        type='text'
+                        label='C.P.'
+                        placeholder='Ejemplo: 12345'
+                        value={cp}
+                        onValueChange={setCp}
+                    />
+                </div>
 
-                  <Input
-                      isRequired
-                      type='text'
-                      label='C.P.'
-                      placeholder='Ejemplo: 12345'
-                      size='md'
-                      variant='bordered'
-                      classNames={styles_input}
-                      labelPlacement='outside'
-                      className='w-5/12'
-                      value={cp}
-                      onValueChange={setCp}
-                  />
-              </div>
-
-              <Input
-                  isRequired
-                  type='text'
-                  label='Municipio'
-                  placeholder='Ejemplo: PERJ950425HDFLPS09'
-                  size='md'
-                  variant='bordered'
-                  classNames={styles_input}
-                  labelPlacement='outside'
+                <TextField
+                    isRequired
+                    type='text'
+                    label='Municipio'
+                    placeholder='Ejemplo: Nezahualcóyotl'
                     value={municipio}
                     onValueChange={setMunicipio}
-              />
-
-              <Input
-                  isRequired
-                  type='text'
-                  label='Estado'
-                  placeholder='Ejemplo: PERJ950425HDFLPS09'
-                  size='md'
-                  variant='bordered'
-                  classNames={styles_input}
-                  labelPlacement='outside'
+                />
+                <TextField
+                    isRequired
+                    type='text'
+                    label='Estado'
+                    placeholder='Ejemplo: Estado de México'
                     value={estado}
                     onValueChange={setEstado}
-              />
-
-              <Select
-                  label='Tipo de vivienda'
-                  className="max-w"
-                  placeholder='Selecciona una opcion'
-                  variant='bordered'
-                  classNames={styles_select}
-                  labelPlacement='outside'
+                />
+                <SelectField
+                    label="Tipo de vivienda"
+                    options={[
+                        { value: 'propia', label: 'Propia' },
+                        { value: 'pagando', label: 'Pagando' },
+                        { value: 'alquilada con contrato formal', label: 'Alquilada con contrato formal' },
+                        { value: 'alquilada sin contrato formal', label: 'Alquilada sin contrato formal' },
+                        { value: 'vivienda familiar', label: 'Vivienda familiar' },
+                        { value: 'huesped', label: 'Huésped' },
+                    ]}
+                    placeholder="Selecciona una opción"
                     selectedKeys={tipoVivienda}
                     onSelectionChange={setTipoVivienda}
-              >
+                />
+            </div>
 
-                <SelectItem value='propia' key='propia'>Propia</SelectItem>
-                <SelectItem value='pagando' key='pagando'>Pagando</SelectItem>
-                <SelectItem value='alquilada con contrato formal' key='alquilada con contrato formal'>Alquilada con contrato formal</SelectItem>
-                <SelectItem value='alquilada sin contrato formal' key='alquilada sin contrato formal'>Alquilada sin contrato formal</SelectItem>
-                <SelectItem value='vivienda familiar' key='vivienda familiar'>Vivienda familiar</SelectItem>
-                <SelectItem value='huesped' key='huesped'>Huesped</SelectItem>
-
-              </Select>
-          </div>
-
-          <Button
-              size='large'
-              color='secondary' 
-                onClick={handleSubmit} 
-          >
-              Continuar
-          </Button>
-      </div>
-  )
+            <Button1
+                isDisabled={!calle || !numExt || !numInt || !colonia || !cp || !municipio || !estado || !tipoVivienda}
+                handleSubmit={handleSubmit}
+            />
+        </div>
+    )
 }
 
 export default IngresaTuDomicilio
