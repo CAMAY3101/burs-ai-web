@@ -6,7 +6,20 @@ import TextField from '../CustomizeComponents/TextField.jsx';
 import SelectField from '../CustomizeComponents/SelectField.jsx'
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx'
+import * as yup from 'yup';
 
+// Esquema de validación con Yup
+const validationSchema = yup.object().shape({
+    calle: yup.string().required('La calle es obligatoria'),
+    numExt: yup.string().required('El número exterior es obligatorio'),
+    numInt: yup.string().nullable(),
+    colonia: yup.string().required('La colonia es obligatoria'),
+    cp: yup.string().required('El código postal es obligatorio')
+        .matches(/^\d{5}$/, 'El código postal debe ser un número de 5 dígitos'),
+    municipio: yup.string().required('El municipio es obligatorio'),
+    estado: yup.string().required('El estado es obligatorio'),
+    tipoVivienda: yup.string().required('El tipo de vivienda es obligatorio'),
+});
 
 function IngresaTuDomicilio() {
     const { navigateToNextStep } = useAuthContext();
@@ -18,9 +31,21 @@ function IngresaTuDomicilio() {
     const [municipio, setMunicipio] = useState('');
     const [estado, setEstado] = useState('');
     const [tipoVivienda, setTipoVivienda] = useState('');
+    const [errors, setErrors] = useState({});
 
     async function handleSubmit() {
+        const valuesToValidate = {
+            calle,
+            numExt,
+            numInt,
+            colonia,
+            cp,
+            municipio,
+            estado,
+            tipoVivienda,
+        };
         try {
+            await validationSchema.validate(valuesToValidate, { abortEarly: false });
             const response = await axios.post(endpoint.direccion.createDireccion, {
                 calle: calle,
                 numero_exterior: numExt,
@@ -45,7 +70,16 @@ function IngresaTuDomicilio() {
                 }, 2000);
             }
         } catch (error) {
-            console.error(error);
+            if (error.name === 'ValidationError') {
+                // Mapeo de errores de Yup al estado
+                const validationErrors = {};
+                error.inner.forEach((err) => {
+                    validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
+            } else {
+                console.error(error);
+            }
         }
     }
 
@@ -62,6 +96,8 @@ function IngresaTuDomicilio() {
                     onValueChange={setCalle}
                 />
 
+                {errors.calle && <p className="text-red-500 text-sm">{errors.calle}</p>}
+
                 <div id='num ext e int' className='flex space-x-5' >
                     <TextField
                         type='text'
@@ -70,13 +106,17 @@ function IngresaTuDomicilio() {
                         value={numExt}
                         onValueChange={setNumExt}
                     />
+                    {errors.numExt && <p className="text-red-500 text-sm">{errors.numExt}</p>}
+
                     <TextField
                         type='text'
                         label='Numero Interior'
                         placeholder='Ej: 25'
                         value={numInt}
                         onValueChange={setNumInt}
+                        isRequired={false}
                     />
+                    {errors.numInt && <p className="text-red-500 text-sm">{errors.numInt}</p>}
                 </div>
                 <div className='flex space-x-5' >
                     <TextField
@@ -86,6 +126,7 @@ function IngresaTuDomicilio() {
                         value={colonia}
                         onValueChange={setColonia}
                     />
+                    {errors.colonia && <p className="text-red-500 text-sm">{errors.colonia}</p>}
                     <TextField
                         isRequired
                         type='text'
@@ -94,6 +135,7 @@ function IngresaTuDomicilio() {
                         value={cp}
                         onValueChange={setCp}
                     />
+                    {errors.cp && <p className="text-red-500 text-sm">{errors.cp}</p>}
                 </div>
 
                 <TextField
@@ -104,6 +146,7 @@ function IngresaTuDomicilio() {
                     value={municipio}
                     onValueChange={setMunicipio}
                 />
+                {errors.municipio && <p className="text-red-500 text-sm">{errors.municipio}</p>}
                 <TextField
                     isRequired
                     type='text'
@@ -112,6 +155,8 @@ function IngresaTuDomicilio() {
                     value={estado}
                     onValueChange={setEstado}
                 />
+                {errors.estado && <p className="text-red-500 text-sm">{errors.estado}</p>}
+
                 <SelectField
                     label="Tipo de vivienda"
                     options={[
@@ -126,10 +171,11 @@ function IngresaTuDomicilio() {
                     selectedKeys={tipoVivienda}
                     onSelectionChange={setTipoVivienda}
                 />
+                {errors.tipoVivienda && <p className="text-red-500 text-sm">{errors.tipoVivienda}</p>}
             </div>
 
             <Button1
-                isDisabled={!calle || !numExt || !numInt || !colonia || !cp || !municipio || !estado || !tipoVivienda}
+                isDisabled={!calle || !numExt || !colonia || !cp || !municipio || !estado || !tipoVivienda}
                 handleSubmit={handleSubmit}
             />
         </div>

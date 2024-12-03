@@ -8,6 +8,29 @@ import TextField from "../CustomizeComponents/TextField";
 import SelectField from '../CustomizeComponents/SelectField';
 import TitlePage from '../CustomizeComponents/TitlePage';
 import Button1 from '../CustomizeComponents/Button1';
+import * as yup from 'yup';
+
+//Esquema de validación con yup
+const validationSchema = yup.object().shape({
+  salarioMensual: yup.number().required('El salario mensual es obligatorio')
+    .min(1, 'El salario mensual debe ser mayor a 0')
+    .typeError('El salario mensual debe ser un número válido'),
+  ocupacion: yup.array().min(1, 'Debes seleccionar al menos una ocupación')
+    .required('La ocupación es obligatoria'),
+  industria: yup.array().min(1, 'Debes seleccionar al menos una industria')
+    .required('La industria es obligatoria'),
+  subindustria: yup.array().min(1, 'Debes seleccionar al menos una subindustria')
+    .required('La subindustria es obligatoria'),
+  salarioFamiliar: yup.number().required('El salario familiar es obligatorio')
+    .min(1, 'El salario familiar debe ser mayor a 0')
+    .typeError('El salario familiar debe ser un número válido'),
+  calificacionCrediticia: yup.array().min(1, 'Debes seleccionar al menos una calificación crediticia')
+    .required('La calificación crediticia es obligatoria'),
+  usoPrestamo: yup.array().min(1, 'Debes seleccionar al menos un uso para el préstamo')
+    .required('El uso del préstamo es obligatorio'),
+  pagoAtravesBanco: yup.boolean().required('Es necesario indicar si el pago es a través de un banco'),
+});
+
 
 
 function TuHistorial() {
@@ -26,6 +49,9 @@ function TuHistorial() {
   const [salarioFamiliar, setSalarioFamiliar] = useState('');
   const [calificacionCrediticia, setCalificacionCrediticia] = useState(new Set([]));
   const [usoPrestamo, setUsoPrestamo] = useState(new Set([]));
+
+      // Estado para manejar los errores de validación
+      const [errors, setErrors] = useState({});
 
   const handleCheckboxSiChange = () => {
     setIsCheckedSi(!isCheckedSi);
@@ -46,7 +72,20 @@ function TuHistorial() {
   };
 
   async function handleSubmit() {
+    // Convierte los valores de Set a Array para validarlos
+    const valuesToValidate = {
+      salarioMensual,
+      ocupacion: Array.from(ocupacion),
+      industria: Array.from(industria),
+      subindustria: Array.from(subindustria),
+      salarioFamiliar,
+      calificacionCrediticia: Array.from(calificacionCrediticia),
+      usoPrestamo: Array.from(usoPrestamo),
+      pagoAtravesBanco,
+    };  
+
     try {
+      await validationSchema.validate(valuesToValidate, { abortEarly: false });
       const response = await axios.post(endpoint.historial.updateDataHistorial, {
         salario_mensual: salarioMensual,
         ocupacion: ocupacion.anchorKey,
@@ -65,14 +104,22 @@ function TuHistorial() {
       }
 
     } catch (error) {
-      console.error('Error:', error);
-    }
+      if (error.name === 'ValidationError') {
+          const validationErrors = {};
+          error.inner.forEach(err => {
+              validationErrors[err.path] = err.message;
+          });
+          setErrors(validationErrors);
+      } else {
+          toast.error('Error al actualizar los datos del usuario, intente de nuevo');
+      }
+  }
   }
 
   return (
     <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
       <TitlePage title="Tu historial" />
-      <div className='w-full flex flex-col space-y-10'>
+      <div className='flex-col space-y-12'>
         <div className='w-1/2'>
           <TextField
             type="number"
@@ -81,6 +128,7 @@ function TuHistorial() {
             value={salarioMensual}
             onValueChange={setSalarioMensual}
           />
+          {errors.salarioMensual && <p className="text-red-500 text-sm">{errors.salarioMensual}</p>}
         </div>
 
         <div>
@@ -91,6 +139,7 @@ function TuHistorial() {
             selectedKeys={ocupacion}
             onSelectionChange={setOcupacion}
           />
+          {errors.ocupacion && <p className="text-red-500 text-sm">{errors.ocupacion}</p>}
         </div>
 
         <div>
@@ -101,6 +150,7 @@ function TuHistorial() {
             selectedKeys={industria}
             onSelectionChange={setIndustria}
           />
+          {errors.industria && <p className="text-red-500 text-sm">{errors.industria}</p>}
         </div>
 
         <div>
@@ -111,9 +161,10 @@ function TuHistorial() {
             selectedKeys={subindustria}
             onSelectionChange={setSubindustria}
           />
+          {errors.subindustria && <p className="text-red-500 text-sm">{errors.subindustria}</p>}
         </div>
 
-        <div className='w-1/2'>
+        <div className='w-2/3 mt-5'>
           <TextField
             type="number"
             label='Salario familiar total al mes'
@@ -122,6 +173,7 @@ function TuHistorial() {
             onValueChange={setSalarioFamiliar}
             className="mt-5"
           />
+          {errors.salarioFamiliar && <p className="text-red-500 text-sm">{errors.salarioFamiliar}</p>}
         </div>
 
         <div>
@@ -132,6 +184,7 @@ function TuHistorial() {
             selectedKeys={calificacionCrediticia}
             onSelectionChange={setCalificacionCrediticia}
           />
+          {errors.calificacionCrediticia && <p className="text-red-500 text-sm">{errors.calificacionCrediticia}</p>}
         </div>
 
         <div>
@@ -142,6 +195,7 @@ function TuHistorial() {
             selectedKeys={usoPrestamo}
             onSelectionChange={setUsoPrestamo}
           />
+          {errors.usoPrestamo && <p className="text-red-500 text-sm">{errors.usoPrestamo}</p>}
         </div>
 
       </div>

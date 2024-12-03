@@ -11,7 +11,8 @@ import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
-import Button1 from '../CustomizeComponents/Button1.jsx'
+import Button1 from '../CustomizeComponents/Button1.jsx';
+import * as yup from 'yup';
 
 axios.defaults.withCredentials = true;
 
@@ -38,6 +39,20 @@ const styles_input = {
     ]
 };
 
+// Esquema de validación con yup
+const validationSchema = yup.object().shape({
+    name: yup.string().required('El nombre es obligatorio').min(2, 'El nombre es obligatorio'),
+    lastName: yup.string().required('El apellido es obligatorio').min(2, 'El apellido es obligatorio'),
+    age: yup.number()
+        .required('La edad es obligatoria')
+        .integer('La edad debe ser un número entero')
+        .min(18, 'Debes tener al menos 18 años')
+        .max(100, 'La edad máxima es 100 años'),
+    phone: yup.string()
+        .required('El teléfono es obligatorio')
+        .matches(/^\+\d{1,3}\s?\(?\d{1,3}\)?\s?\d{4}\s?\d{6}$/, 'El número de teléfono no es válido')
+});
+
 function IngresaTusDatos() {
     //----------------------Variables----------------------
     const { tokenExist, checkToken, navigateToNextStep } = useAuthContext();
@@ -45,6 +60,9 @@ function IngresaTusDatos() {
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
+
+    // Estado para manejar los errores de validación
+    const [errors, setErrors] = useState({});
 
     //----------------------Cambiar formato de telefono----------------------
 
@@ -65,7 +83,7 @@ function IngresaTusDatos() {
         defaultCountries[mexicoIndex] = modifiedMexicoCountryData;
     }
 
-    //----------------------Porpiedades de react-international-phone----------------------
+    //----------------------Propiedades de react-international-phone----------------------
     const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
         usePhoneInput({
             defaultCountry: "mx",
@@ -83,6 +101,8 @@ function IngresaTusDatos() {
     //----------------------coneccion API----------------------
     async function handleSubmit() {
         try {
+            setErrors({});
+            await validationSchema.validate({ name, lastName, age, phone }, { abortEarly: false });
             const response = await axios.post(endpoint.usuarios.updateDataUser, {
                 nombre: name,
                 apellidos: lastName,
@@ -95,9 +115,17 @@ function IngresaTusDatos() {
             if (response.data.status === 'success' && tokenExist === true) {
                 navigateToNextStep(2);
             }
-
         } catch (error) {
-            toast.error('Error al actualizar los datos del usuario, intente de nuevo');
+            if (error.name === 'ValidationError') {
+                // Mapea los errores de Yup al estado
+                const validationErrors = {};
+                error.inner.forEach(err => {
+                    validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
+            } else {
+                toast.error('Error al actualizar los datos del usuario, intente de nuevo');
+            }
         }
     }
 
@@ -105,89 +133,101 @@ function IngresaTusDatos() {
         <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
             <TitlePage title="Ingresa tus datos" />
             <div className='flex-col space-y-12'>
-                <TextField
-                    type='text'
-                    label='Nombre(s)'
-                    placeholder='Ejemplo: Juan'
-                    value={name}
-                    onValueChange={setName}
-                />
-                <TextField
-                    type='text'
-                    label='Apellido(s)'
-                    placeholder='Ejemplo: Perez Lopez'
-                    value={lastName}
-                    onValueChange={setLastName}
-                />
-                <TextField
-                    type='number'
-                    label='Edad'
-                    placeholder='Ej: 25'
-                    className='w-1/2'
-                    min={18}
-                    max={100}
-                    value={age}
-                    onValueChange={setAge}
-                />
-                <Input
-                    isRequired
-                    type='tel'
-                    label='Telefono'
-                    placeholder='Ej: 55 1234 5678'
-                    size='md'
-                    variant='bordered'
-                    classNames={styles_input}
-                    labelPlacement='outside'
-                    startContent={
-                        <div className='flex items-center'>
-                            <Select
-                                value={country.iso2}
-                                onChange={(e) => setCountry(e.target.value)}
-                                placeholder={<FlagImage iso2={country.iso2} />}
-                                renderValue={(value) => (
-                                    <FlagImage iso2={country.iso2} />
-                                )}
-                                className='w-[50px]'
-                                classNames={{
-                                    trigger: [
-                                        "shadow-none",
-                                        "bg-transparent",
-                                        "rounded-none",
-                                        "p-0",
-                                        "min-h-unit-5",
-                                        "h-6"
-                                    ],
-                                    innerWrapper: [
-                                        "group-data-[has-label=true]:pt-0",
-                                    ],
-                                }}
-                                popoverProps={{
-                                    classNames: {
-                                        base: "w-[200px]",
-                                    },
-                                }}
-                            >
-                                {defaultCountries.map((c) => {
-                                    const parsedCountry = parseCountry(c);
-                                    return (
-                                        <SelectItem key={parsedCountry.iso2} value={parsedCountry.iso2}>
-                                            <div className="flex gap-2 items-center">
-                                                <FlagImage iso2={parsedCountry.iso2} className='flex-shrink-0' style={{ width: '24px', height: '24px' }} />
-                                                <div className="flex flex-col">
-                                                    <span className="text-small">{parsedCountry.name}</span>
-                                                    <span className="text-tiny text-default-400">({parsedCountry.dialCode})</span>
+                <div>
+                    <TextField
+                        type='text'
+                        label='Nombre(s)'
+                        placeholder='Ejemplo: Juan'
+                        value={name}
+                        onValueChange={setName}
+                    />
+                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                </div>
+                <div>
+                    <TextField
+                        type='text'
+                        label='Apellido(s)'
+                        placeholder='Ejemplo: Perez Lopez'
+                        value={lastName}
+                        onValueChange={setLastName}
+                    />
+                    {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+                </div>
+                <div className='w-1/2'>
+                    <TextField
+                        type='number'
+                        label='Edad'
+                        placeholder='Ej: 25'
+                        className='w-1/2'
+                        min={18}
+                        max={100}
+                        value={age}
+                        onValueChange={setAge}
+                    />
+                    {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
+                </div>
+                <div>
+                    <Input
+                        isRequired
+                        type='tel'
+                        label='Telefono'
+                        placeholder='Ej: 55 1234 5678'
+                        size='md'
+                        variant='bordered'
+                        classNames={styles_input}
+                        labelPlacement='outside'
+                        startContent={
+                            <div className='flex items-center'>
+                                <Select
+                                    value={country.iso2}
+                                    onChange={(e) => setCountry(e.target.value)}
+                                    placeholder={<FlagImage iso2={country.iso2} />}
+                                    renderValue={(value) => (
+                                        <FlagImage iso2={country.iso2} />
+                                    )}
+                                    className='w-[50px]'
+                                    classNames={{
+                                        trigger: [
+                                            "shadow-none",
+                                            "bg-transparent",
+                                            "rounded-none",
+                                            "p-0",
+                                            "min-h-unit-5",
+                                            "h-6"
+                                        ],
+                                        innerWrapper: [
+                                            "group-data-[has-label=true]:pt-0",
+                                        ],
+                                    }}
+                                    popoverProps={{
+                                        classNames: {
+                                            base: "w-[200px]",
+                                        },
+                                    }}
+                                >
+                                    {defaultCountries.map((c) => {
+                                        const parsedCountry = parseCountry(c);
+                                        return (
+                                            <SelectItem key={parsedCountry.iso2} value={parsedCountry.iso2}>
+                                                <div className="flex gap-2 items-center">
+                                                    <FlagImage iso2={parsedCountry.iso2} className='flex-shrink-0' style={{ width: '24px', height: '24px' }} />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-small">{parsedCountry.name}</span>
+                                                        <span className="text-tiny text-default-400">({parsedCountry.dialCode})</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </SelectItem>
-                                    );
-                                })}
-                            </Select>
-                        </div>
-                    }
-                    value={inputValue}
-                    onChange={handlePhoneValueChange}
-                    inputRef={inputRef}
-                />
+                                            </SelectItem>
+                                        );
+                                    })}
+                                </Select>
+                            </div>
+                        }
+                        value={inputValue}
+                        onChange={handlePhoneValueChange}
+                        inputRef={inputRef}
+                    />
+                    {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                </div>
             </div>
 
             <Button1
