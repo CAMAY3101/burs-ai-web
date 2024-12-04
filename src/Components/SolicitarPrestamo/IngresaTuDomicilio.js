@@ -2,24 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
+import { address_form } from '../../Config/Schemas/yupSchemas.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import SelectField from '../CustomizeComponents/SelectField.jsx'
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx'
-import * as yup from 'yup';
 
-// Esquema de validación con Yup
-const validationSchema = yup.object().shape({
-    calle: yup.string().required('La calle es obligatoria'),
-    numExt: yup.string().required('El número exterior es obligatorio'),
-    numInt: yup.string().nullable(),
-    colonia: yup.string().required('La colonia es obligatoria'),
-    cp: yup.string().required('El código postal es obligatorio')
-        .matches(/^\d{5}$/, 'El código postal debe ser un número de 5 dígitos'),
-    municipio: yup.string().required('El municipio es obligatorio'),
-    estado: yup.string().required('El estado es obligatorio'),
-    tipoVivienda: yup.string().required('El tipo de vivienda es obligatorio'),
-});
 
 function IngresaTuDomicilio() {
     const { navigateToNextStep } = useAuthContext();
@@ -45,7 +33,7 @@ function IngresaTuDomicilio() {
             tipoVivienda,
         };
         try {
-            await validationSchema.validate(valuesToValidate, { abortEarly: false });
+            await address_form.validate(valuesToValidate, { abortEarly: false });
             const response = await axios.post(endpoint.direccion.createDireccion, {
                 calle: calle,
                 numero_exterior: numExt,
