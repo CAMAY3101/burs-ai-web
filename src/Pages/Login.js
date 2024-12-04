@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 import { Input, Button } from "@nextui-org/react"
-import toast, { Toaster } from 'react-hot-toast';
 
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
@@ -12,6 +11,9 @@ import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 import { useAuthContext } from '../Contexts/authContext';
 import { SIGNUP } from '../Config/Router/paths';
 import { endpoint } from '../Config/utils/urls';
+import { useLoginQuery } from '../hooks/useQueryHooks';
+import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside'
+
 
 axios.defaults.withCredentials = true;
 
@@ -69,36 +71,32 @@ function LogIn() {
   };
   const isLongEnough = password.length >= 8;
 
+  const onSuccess = async (response) => {
+    if (response.data.status === 'success') {
+      setMessageError(`verification step: ${verificationStep}`);
+      setTimeout(() => {
+        login(response.data.progress);
+      }, 2000);
+    }
+  };
+
+  const onError = (error) => {
+    if (error.response === undefined) {
+      setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+    } else {
+      setMessageError('Correo o contraseña incorrectos.');
+    }
+  };
+
+  const loginQuery = useLoginQuery(onSuccess, onError)
 
   // Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(endpoint.usuarios.login, {
-        correo: emailValue,
-        contrasena: password,
-      }, { withCredentials: true });
-
-      await checkToken();
-      console.log('Response:', response.data);
-
-      if (response.data.status === 'success') {
-        toast.success('Inicio de sesión exitoso');
-        setMessageError(`verification step: ${verificationStep}`);
-        setTimeout(() => {
-          login(response.data.progress);
-        }, 2000);
-      }
-
-    } catch (error) {
-      // si hay un error porque hay un error de conexión o un error en el servidor, asigna el error a messageError
-      if (error.response === undefined) {
-        setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
-      } else {
-        setMessageError('Correo o contraseña incorrectos.');
-      }
-    }
-
+    loginQuery.mutate({
+      correo: emailValue,
+      contrasena: password,
+    })
   };
   return (
     <div className=''>
@@ -156,10 +154,6 @@ function LogIn() {
             <a  className='text-dark-blue-700 font-normal' href={SIGNUP}> Registrate</a>
           </p>
         </div>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-        />
         <div className='text-[10px]'>{messageError}</div>
       </div>
     </div>

@@ -32,7 +32,6 @@ export default function AuthContextProvider({ children }) {
                 } else {
                     window.sessionStorage.removeItem(AUTHENTICATED);
                     setTokenExist(false);
-                    window.sessionStorage.removeItem(PROGRESS_INDEX);
                 }
 
                 if (response.data.accessTokenExist === true) {
@@ -41,7 +40,6 @@ export default function AuthContextProvider({ children }) {
                 } else {
                     window.sessionStorage.removeItem(ACCESS_TOKEN);
                     setAccessTokenExist(false);
-                    window.sessionStorage.removeItem(PROGRESS_INDEX);
                 }
             })
             .catch((error) => {
@@ -71,7 +69,6 @@ export default function AuthContextProvider({ children }) {
         console.log('Login');
         console.log('Step:', step);
         checkToken();
-        console.log('Step:', step);
         if (step === 'ingresar datos') {
             navigateToNextStep(1);
         } else if (step === 'ingresar historial') {

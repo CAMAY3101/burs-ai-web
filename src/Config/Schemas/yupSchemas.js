@@ -27,7 +27,7 @@ export const datos_form = yup.object().shape({
 });
 
 
-const historial_form = yup.object().shape({
+export const historial_form = yup.object().shape({
     salarioMensual: yup.number().required('El salario mensual es obligatorio')
       .min(1, 'El salario mensual debe ser mayor a 0')
       .typeError('El salario mensual debe ser un número válido'),
