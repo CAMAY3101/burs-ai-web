@@ -26,7 +26,7 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label,value, onValueChange, name, error, isRequired = true }) {
+function TextField({type, placeholder, label,value, onValueChange, name, errorMessage, isRequired = true }) {
   return (
     <div className="w-full">
           <Input
@@ -41,8 +41,8 @@ function TextField({type, placeholder, label,value, onValueChange, name, error, 
             value={value} 
             onChange={(e) => onValueChange(e.target.value)}
             name={name}
+            errorMessage={errorMessage}
             />
-            {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );
 }

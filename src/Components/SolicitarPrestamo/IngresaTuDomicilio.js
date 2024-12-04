@@ -82,9 +82,8 @@ function IngresaTuDomicilio() {
                     placeholder='Ejemplo: Av. Insurgentes Sur'
                     value={calle}
                     onValueChange={setCalle}
+                    errorMessage={errors.calle}
                 />
-
-                {errors.calle && <p className="text-red-500 text-sm">{errors.calle}</p>}
 
                 <div id='num ext e int' className='flex space-x-5' >
                     <TextField
@@ -93,8 +92,8 @@ function IngresaTuDomicilio() {
                         placeholder='Ejemplo: 25'
                         value={numExt}
                         onValueChange={setNumExt}
+                        errorMessage={errors.numExt}
                     />
-                    {errors.numExt && <p className="text-red-500 text-sm">{errors.numExt}</p>}
 
                     <TextField
                         type='text'
@@ -103,8 +102,8 @@ function IngresaTuDomicilio() {
                         value={numInt}
                         onValueChange={setNumInt}
                         isRequired={false}
+                        errorMessage={errors.numInt}
                     />
-                    {errors.numInt && <p className="text-red-500 text-sm">{errors.numInt}</p>}
                 </div>
                 <div className='flex space-x-5' >
                     <TextField
@@ -113,8 +112,8 @@ function IngresaTuDomicilio() {
                         placeholder='Ejemplo: Del Valle'
                         value={colonia}
                         onValueChange={setColonia}
+                        errorMessage={errors.colonia}
                     />
-                    {errors.colonia && <p className="text-red-500 text-sm">{errors.colonia}</p>}
                     <TextField
                         isRequired
                         type='text'
@@ -122,8 +121,8 @@ function IngresaTuDomicilio() {
                         placeholder='Ejemplo: 12345'
                         value={cp}
                         onValueChange={setCp}
+                        errorMessage={errors.cp}
                     />
-                    {errors.cp && <p className="text-red-500 text-sm">{errors.cp}</p>}
                 </div>
 
                 <TextField
@@ -133,8 +132,8 @@ function IngresaTuDomicilio() {
                     placeholder='Ejemplo: Nezahualcóyotl'
                     value={municipio}
                     onValueChange={setMunicipio}
+                    errorMessage={errors.municipio}
                 />
-                {errors.municipio && <p className="text-red-500 text-sm">{errors.municipio}</p>}
                 <TextField
                     isRequired
                     type='text'
@@ -142,8 +141,8 @@ function IngresaTuDomicilio() {
                     placeholder='Ejemplo: Estado de México'
                     value={estado}
                     onValueChange={setEstado}
+                    errorMessage={errors.estado}
                 />
-                {errors.estado && <p className="text-red-500 text-sm">{errors.estado}</p>}
 
                 <SelectField
                     label="Tipo de vivienda"
@@ -158,8 +157,8 @@ function IngresaTuDomicilio() {
                     placeholder="Selecciona una opción"
                     selectedKeys={tipoVivienda}
                     onSelectionChange={setTipoVivienda}
+                    errorMessage={errors.tipoVivienda}
                 />
-                {errors.tipoVivienda && <p className="text-red-500 text-sm">{errors.tipoVivienda}</p>}
             </div>
 
             <Button1

@@ -3,34 +3,11 @@ import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCred
 import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
 import { endpoint } from '../../Config/utils/urls';
-
+import {historial_form} from '../../Config/Schemas/yupSchemas'
 import TextField from "../CustomizeComponents/TextField";
 import SelectField from '../CustomizeComponents/SelectField';
 import TitlePage from '../CustomizeComponents/TitlePage';
 import Button1 from '../CustomizeComponents/Button1';
-import * as yup from 'yup';
-
-//Esquema de validación con yup
-const validationSchema = yup.object().shape({
-  salarioMensual: yup.number().required('El salario mensual es obligatorio')
-    .min(1, 'El salario mensual debe ser mayor a 0')
-    .typeError('El salario mensual debe ser un número válido'),
-  ocupacion: yup.array().min(1, 'Debes seleccionar al menos una ocupación')
-    .required('La ocupación es obligatoria'),
-  industria: yup.array().min(1, 'Debes seleccionar al menos una industria')
-    .required('La industria es obligatoria'),
-  subindustria: yup.array().min(1, 'Debes seleccionar al menos una subindustria')
-    .required('La subindustria es obligatoria'),
-  salarioFamiliar: yup.number().required('El salario familiar es obligatorio')
-    .min(1, 'El salario familiar debe ser mayor a 0')
-    .typeError('El salario familiar debe ser un número válido'),
-  calificacionCrediticia: yup.array().min(1, 'Debes seleccionar al menos una calificación crediticia')
-    .required('La calificación crediticia es obligatoria'),
-  usoPrestamo: yup.array().min(1, 'Debes seleccionar al menos un uso para el préstamo')
-    .required('El uso del préstamo es obligatorio'),
-  pagoAtravesBanco: yup.boolean().required('Es necesario indicar si el pago es a través de un banco'),
-});
-
 
 
 function TuHistorial() {
@@ -85,7 +62,7 @@ function TuHistorial() {
     };  
 
     try {
-      await validationSchema.validate(valuesToValidate, { abortEarly: false });
+      await historial_form.validate(valuesToValidate, { abortEarly: false });
       const response = await axios.post(endpoint.historial.updateDataHistorial, {
         salario_mensual: salarioMensual,
         ocupacion: ocupacion.anchorKey,
@@ -127,8 +104,8 @@ function TuHistorial() {
             placeholder='Ejemplo:$15000'
             value={salarioMensual}
             onValueChange={setSalarioMensual}
+            errorMessage={errors.salarioMensual}
           />
-          {errors.salarioMensual && <p className="text-red-500 text-sm">{errors.salarioMensual}</p>}
         </div>
 
         <div>
@@ -138,8 +115,8 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={ocupacion}
             onSelectionChange={setOcupacion}
+            errorMessage={errors.ocupacion}
           />
-          {errors.ocupacion && <p className="text-red-500 text-sm">{errors.ocupacion}</p>}
         </div>
 
         <div>
@@ -149,8 +126,8 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={industria}
             onSelectionChange={setIndustria}
+            errorMessage={errors.industria}
           />
-          {errors.industria && <p className="text-red-500 text-sm">{errors.industria}</p>}
         </div>
 
         <div>
@@ -160,8 +137,8 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={subindustria}
             onSelectionChange={setSubindustria}
+            errorMessage={errors.subindustria}
           />
-          {errors.subindustria && <p className="text-red-500 text-sm">{errors.subindustria}</p>}
         </div>
 
         <div className='w-2/3 mt-5'>
@@ -172,8 +149,8 @@ function TuHistorial() {
             value={salarioFamiliar}
             onValueChange={setSalarioFamiliar}
             className="mt-5"
+            errorMessage={errors.salarioFamiliar}
           />
-          {errors.salarioFamiliar && <p className="text-red-500 text-sm">{errors.salarioFamiliar}</p>}
         </div>
 
         <div>
@@ -183,8 +160,8 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={calificacionCrediticia}
             onSelectionChange={setCalificacionCrediticia}
+            errorMessage={errors.calificacionCrediticia}
           />
-          {errors.calificacionCrediticia && <p className="text-red-500 text-sm">{errors.calificacionCrediticia}</p>}
         </div>
 
         <div>
@@ -194,8 +171,8 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={usoPrestamo}
             onSelectionChange={setUsoPrestamo}
+            errorMessage={errors.usoPrestamo}
           />
-          {errors.usoPrestamo && <p className="text-red-500 text-sm">{errors.usoPrestamo}</p>}
         </div>
 
       </div>

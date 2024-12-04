@@ -6,13 +6,13 @@ import 'react-international-phone/style.css';
 
 import { Input, Select, SelectItem } from "@nextui-org/react"
 import toast from 'react-hot-toast';
+import {datos_form} from '../../Config/Schemas/yupSchemas.js';
 
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
-import * as yup from 'yup';
 
 axios.defaults.withCredentials = true;
 
@@ -38,20 +38,6 @@ const styles_input = {
         "!cursor-text",
     ]
 };
-
-// Esquema de validación con yup
-const validationSchema = yup.object().shape({
-    name: yup.string().required('El nombre es obligatorio').min(2, 'El nombre es obligatorio'),
-    lastName: yup.string().required('El apellido es obligatorio').min(2, 'El apellido es obligatorio'),
-    age: yup.number()
-        .required('La edad es obligatoria')
-        .integer('La edad debe ser un número entero')
-        .min(18, 'Debes tener al menos 18 años')
-        .max(100, 'La edad máxima es 100 años'),
-    phone: yup.string()
-        .required('El teléfono es obligatorio')
-        .matches(/^\+\d{1,3}\s?\(?\d{1,3}\)?\s?\d{4}\s?\d{6}$/, 'El número de teléfono no es válido')
-});
 
 function IngresaTusDatos() {
     //----------------------Variables----------------------
@@ -102,7 +88,7 @@ function IngresaTusDatos() {
     async function handleSubmit() {
         try {
             setErrors({});
-            await validationSchema.validate({ name, lastName, age, phone }, { abortEarly: false });
+            await datos_form.validate({ name, lastName, age, phone }, { abortEarly: false });
             const response = await axios.post(endpoint.usuarios.updateDataUser, {
                 nombre: name,
                 apellidos: lastName,
@@ -140,8 +126,8 @@ function IngresaTusDatos() {
                         placeholder='Ejemplo: Juan'
                         value={name}
                         onValueChange={setName}
+                        errorMessage={errors.name}
                     />
-                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                 </div>
                 <div>
                     <TextField
@@ -150,8 +136,8 @@ function IngresaTusDatos() {
                         placeholder='Ejemplo: Perez Lopez'
                         value={lastName}
                         onValueChange={setLastName}
+                        errorMessage={errors.lastName}
                     />
-                    {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
                 </div>
                 <div className='w-1/2'>
                     <TextField
@@ -163,8 +149,8 @@ function IngresaTusDatos() {
                         max={100}
                         value={age}
                         onValueChange={setAge}
+                        errorMessage={errors.age}
                     />
-                    {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
                 </div>
                 <div>
                     <Input
@@ -225,8 +211,8 @@ function IngresaTusDatos() {
                         value={inputValue}
                         onChange={handlePhoneValueChange}
                         inputRef={inputRef}
+                        errorMessage={errors.phone}
                     />
-                    {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
                 </div>
             </div>
 
