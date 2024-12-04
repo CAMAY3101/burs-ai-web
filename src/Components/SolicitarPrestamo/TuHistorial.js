@@ -3,7 +3,7 @@ import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCred
 import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
 import { endpoint } from '../../Config/utils/urls';
-
+import {historial_form} from '../../Config/Schemas/yupSchemas'
 import TextField from "../CustomizeComponents/TextField";
 import SelectField from '../CustomizeComponents/SelectField';
 import TitlePage from '../CustomizeComponents/TitlePage';
@@ -27,6 +27,9 @@ function TuHistorial() {
   const [calificacionCrediticia, setCalificacionCrediticia] = useState(new Set([]));
   const [usoPrestamo, setUsoPrestamo] = useState(new Set([]));
 
+      // Estado para manejar los errores de validación
+      const [errors, setErrors] = useState({});
+
   const handleCheckboxSiChange = () => {
     setIsCheckedSi(!isCheckedSi);
     setPagoAtravesBanco(true);
@@ -46,7 +49,20 @@ function TuHistorial() {
   };
 
   async function handleSubmit() {
+    // Convierte los valores de Set a Array para validarlos
+    const valuesToValidate = {
+      salarioMensual,
+      ocupacion: Array.from(ocupacion),
+      industria: Array.from(industria),
+      subindustria: Array.from(subindustria),
+      salarioFamiliar,
+      calificacionCrediticia: Array.from(calificacionCrediticia),
+      usoPrestamo: Array.from(usoPrestamo),
+      pagoAtravesBanco,
+    };  
+
     try {
+      await historial_form.validate(valuesToValidate, { abortEarly: false });
       const response = await axios.post(endpoint.historial.updateDataHistorial, {
         salario_mensual: salarioMensual,
         ocupacion: ocupacion.anchorKey,
@@ -65,14 +81,22 @@ function TuHistorial() {
       }
 
     } catch (error) {
-      console.error('Error:', error);
-    }
+      if (error.name === 'ValidationError') {
+          const validationErrors = {};
+          error.inner.forEach(err => {
+              validationErrors[err.path] = err.message;
+          });
+          setErrors(validationErrors);
+      } else {
+          toast.error('Error al actualizar los datos del usuario, intente de nuevo');
+      }
+  }
   }
 
   return (
     <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
       <TitlePage title="Tu historial" />
-      <div className='w-full flex flex-col space-y-10'>
+      <div className='flex-col space-y-12'>
         <div className='w-1/2'>
           <TextField
             type="number"
@@ -80,6 +104,7 @@ function TuHistorial() {
             placeholder='Ejemplo:$15000'
             value={salarioMensual}
             onValueChange={setSalarioMensual}
+            errorMessage={errors.salarioMensual}
           />
         </div>
 
@@ -90,6 +115,7 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={ocupacion}
             onSelectionChange={setOcupacion}
+            errorMessage={errors.ocupacion}
           />
         </div>
 
@@ -100,6 +126,7 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={industria}
             onSelectionChange={setIndustria}
+            errorMessage={errors.industria}
           />
         </div>
 
@@ -110,10 +137,11 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={subindustria}
             onSelectionChange={setSubindustria}
+            errorMessage={errors.subindustria}
           />
         </div>
 
-        <div className='w-1/2'>
+        <div className='w-2/3 mt-5'>
           <TextField
             type="number"
             label='Salario familiar total al mes'
@@ -121,6 +149,7 @@ function TuHistorial() {
             value={salarioFamiliar}
             onValueChange={setSalarioFamiliar}
             className="mt-5"
+            errorMessage={errors.salarioFamiliar}
           />
         </div>
 
@@ -131,6 +160,7 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={calificacionCrediticia}
             onSelectionChange={setCalificacionCrediticia}
+            errorMessage={errors.calificacionCrediticia}
           />
         </div>
 
@@ -141,6 +171,7 @@ function TuHistorial() {
             placeholder="Selecciona una opción"
             selectedKeys={usoPrestamo}
             onSelectionChange={setUsoPrestamo}
+            errorMessage={errors.usoPrestamo}
           />
         </div>
 

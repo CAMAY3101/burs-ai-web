@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
+import { address_form } from '../../Config/Schemas/yupSchemas.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import SelectField from '../CustomizeComponents/SelectField.jsx'
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
@@ -18,9 +19,21 @@ function IngresaTuDomicilio() {
     const [municipio, setMunicipio] = useState('');
     const [estado, setEstado] = useState('');
     const [tipoVivienda, setTipoVivienda] = useState('');
+    const [errors, setErrors] = useState({});
 
     async function handleSubmit() {
+        const valuesToValidate = {
+            calle,
+            numExt,
+            numInt,
+            colonia,
+            cp,
+            municipio,
+            estado,
+            tipoVivienda,
+        };
         try {
+            await address_form.validate(valuesToValidate, { abortEarly: false });
             const response = await axios.post(endpoint.direccion.createDireccion, {
                 calle: calle,
                 numero_exterior: numExt,
@@ -45,7 +58,16 @@ function IngresaTuDomicilio() {
                 }, 2000);
             }
         } catch (error) {
-            console.error(error);
+            if (error.name === 'ValidationError') {
+                // Mapeo de errores de Yup al estado
+                const validationErrors = {};
+                error.inner.forEach((err) => {
+                    validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
+            } else {
+                console.error(error);
+            }
         }
     }
 
@@ -60,6 +82,7 @@ function IngresaTuDomicilio() {
                     placeholder='Ejemplo: Av. Insurgentes Sur'
                     value={calle}
                     onValueChange={setCalle}
+                    errorMessage={errors.calle}
                 />
 
                 <div id='num ext e int' className='flex space-x-5' >
@@ -69,13 +92,17 @@ function IngresaTuDomicilio() {
                         placeholder='Ejemplo: 25'
                         value={numExt}
                         onValueChange={setNumExt}
+                        errorMessage={errors.numExt}
                     />
+
                     <TextField
                         type='text'
                         label='Numero Interior'
                         placeholder='Ej: 25'
                         value={numInt}
                         onValueChange={setNumInt}
+                        isRequired={false}
+                        errorMessage={errors.numInt}
                     />
                 </div>
                 <div className='flex space-x-5' >
@@ -85,6 +112,7 @@ function IngresaTuDomicilio() {
                         placeholder='Ejemplo: Del Valle'
                         value={colonia}
                         onValueChange={setColonia}
+                        errorMessage={errors.colonia}
                     />
                     <TextField
                         isRequired
@@ -93,6 +121,7 @@ function IngresaTuDomicilio() {
                         placeholder='Ejemplo: 12345'
                         value={cp}
                         onValueChange={setCp}
+                        errorMessage={errors.cp}
                     />
                 </div>
 
@@ -103,6 +132,7 @@ function IngresaTuDomicilio() {
                     placeholder='Ejemplo: Nezahualcóyotl'
                     value={municipio}
                     onValueChange={setMunicipio}
+                    errorMessage={errors.municipio}
                 />
                 <TextField
                     isRequired
@@ -111,7 +141,9 @@ function IngresaTuDomicilio() {
                     placeholder='Ejemplo: Estado de México'
                     value={estado}
                     onValueChange={setEstado}
+                    errorMessage={errors.estado}
                 />
+
                 <SelectField
                     label="Tipo de vivienda"
                     options={[
@@ -125,11 +157,12 @@ function IngresaTuDomicilio() {
                     placeholder="Selecciona una opción"
                     selectedKeys={tipoVivienda}
                     onSelectionChange={setTipoVivienda}
+                    errorMessage={errors.tipoVivienda}
                 />
             </div>
 
             <Button1
-                isDisabled={!calle || !numExt || !numInt || !colonia || !cp || !municipio || !estado || !tipoVivienda}
+                isDisabled={!calle || !numExt || !colonia || !cp || !municipio || !estado || !tipoVivienda}
                 handleSubmit={handleSubmit}
             />
         </div>

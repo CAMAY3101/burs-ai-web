@@ -26,10 +26,11 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label,value, onValueChange}) {
+function TextField({type, placeholder, label,value, onValueChange, name, errorMessage, isRequired = true }) {
   return (
-    <>
+    <div className="w-full">
           <Input
+            isRequired={isRequired}
             type={type}
             placeholder={placeholder}
             label={label}
@@ -39,14 +40,22 @@ function TextField({type, placeholder, label,value, onValueChange}) {
             labelPlacement={'outside'}
             value={value} 
             onChange={(e) => onValueChange(e.target.value)}
-          />
-    </>
-  )
+            name={name}
+            errorMessage={errorMessage}
+            />
+    </div>
+  );
 }
 
 TextField.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
     type: PropTypes.string,
+    value: PropTypes.string,
+    onValueChange: PropTypes.func,
+    name: PropTypes.string,
+    error: PropTypes.string,
+    isRequired: PropTypes.bool,
 }
+
 export default TextField

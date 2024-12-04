@@ -23,7 +23,8 @@
     "slick-carousel": "^1.8.1",
     "tailwindcss-font-inter": "^3.0.1",
     "vite": "^5.4.11",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "vite",

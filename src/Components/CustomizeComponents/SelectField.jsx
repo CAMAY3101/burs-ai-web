@@ -8,6 +8,10 @@ const styles_select = {
     "font-medium",
     "text-base",
   ],
+  requiredAsterisk: [
+    "text-red-500",
+    "ml-1",
+  ],
   trigger: [
     "rounded-xl",
     "border-dark-blue-400",
@@ -15,7 +19,7 @@ const styles_select = {
     "data-[open=true]:border-dark-blue-900",
     "data-[focus=true]:border-dark-blue-900",
     "!cursor-text",
-    "max-h-[40px]", 
+    "max-h-[40px]",
     "py-1",
   ],
   value: [
@@ -24,11 +28,12 @@ const styles_select = {
     "text-[15px]",
   ],
   placeholder: [
-    "text-dark-blue-300", // Color para el placeholder
+    "text-dark-blue-300",
   ],
 };
 
 const SelectField = ({
+  isRequired = true,
   label,
   options = [],
   placeholder,
@@ -52,8 +57,11 @@ const SelectField = ({
   const isPlaceholderSelected = selectedValue?.length === 0 || selectedValue === placeholder;
 
   return (
-    <div className="space-y-2">
-      <label className={styles_select.label.join(" ")}>{label}</label>
+    <div className="w-full">
+      <label className={`${styles_select.label.join(" ")} flex items-center`}>
+        {label}
+        {isRequired && <span className={styles_select.requiredAsterisk.join(" ")}>*</span>}
+      </label>
       <Select
         placeholder={placeholder}
         variant="bordered"
