@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
 import { address_form } from '../../Config/Schemas/yupSchemas.js';
+import { useCreateAddress, useSendOTPCode } from '../../hooks/useQueryHooks.js'; 
 import TextField from '../CustomizeComponents/TextField.jsx';
 import SelectField from '../CustomizeComponents/SelectField.jsx'
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
@@ -21,55 +22,61 @@ function IngresaTuDomicilio() {
     const [tipoVivienda, setTipoVivienda] = useState('');
     const [errors, setErrors] = useState({});
 
-    async function handleSubmit() {
+    const { mutate: createAddress, isLoading: isCreatingAddress } = useCreateAddress(
+        async () => {
+          await sendOTP(); // Llama al siguiente paso después de guardar el domicilio
+        },
+        (error) => {
+          console.error("Error al guardar el domicilio:", error);
+        }
+      );
+    
+      const { mutate: sendOTP, isLoading: isSendingOTP } = useSendOTPCode(
+        () => {
+          navigateToNextStep(4); // Avanza al siguiente paso
+        },
+        (error) => {
+          console.error("Error al enviar el código OTP:", error);
+        }
+      );
+    
+      // Validación y envío del formulario
+      async function handleSubmit() {
         const valuesToValidate = {
+          calle,
+          numExt,
+          numInt,
+          colonia,
+          cp,
+          municipio,
+          estado,
+          tipoVivienda,
+        };
+    
+        try {
+          await address_form.validate(valuesToValidate, { abortEarly: false });
+          createAddress({
             calle,
-            numExt,
-            numInt,
+            numero_exterior: numExt,
+            numero_interior: numInt,
             colonia,
             cp,
             municipio,
             estado,
-            tipoVivienda,
-        };
-        try {
-            await address_form.validate(valuesToValidate, { abortEarly: false });
-            const response = await axios.post(endpoint.direccion.createDireccion, {
-                calle: calle,
-                numero_exterior: numExt,
-                numero_interior: numInt,
-                colonia: colonia,
-                cp: cp,
-                municipio: municipio,
-                estado: estado,
-                tipo_vivienda: tipoVivienda.anchorKey
-            });
-
-            if (response.data.status === 'success') {
-                setTimeout(async () => {
-                    try {
-                        const responseOTP = await axios.post(endpoint.verificacion.sendOTPCodeEmail);
-                        if (responseOTP.data.status === 'success') {
-                            navigateToNextStep(4);
-                        }
-                    } catch (error) {
-                        console.error('Error enviando OTP:', error);
-                    }
-                }, 2000);
-            }
+            tipo_vivienda: tipoVivienda.anchorKey,
+          });
         } catch (error) {
-            if (error.name === 'ValidationError') {
-                // Mapeo de errores de Yup al estado
-                const validationErrors = {};
-                error.inner.forEach((err) => {
-                    validationErrors[err.path] = err.message;
-                });
-                setErrors(validationErrors);
-            } else {
-                console.error(error);
-            }
+          if (error.name === "ValidationError") {
+            const validationErrors = {};
+            error.inner.forEach((err) => {
+              validationErrors[err.path] = err.message;
+            });
+            setErrors(validationErrors);
+          } else {
+            console.error("Error al enviar el formulario:", error);
+          }
         }
-    }
+      }
 
     return (
         <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>

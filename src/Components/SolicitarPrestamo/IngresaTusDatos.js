@@ -10,6 +10,7 @@ import {datos_form} from '../../Config/Schemas/yupSchemas.js';
 
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
+import { useUpdateUserQuery } from '../../hooks/useQueryHooks.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
@@ -85,36 +86,40 @@ function IngresaTusDatos() {
     }, [country]);
 
     //----------------------coneccion API----------------------
-    async function handleSubmit() {
+    const { mutate, isLoading } = useUpdateUserQuery(
+        () => {
+            toast.success('Datos actualizados correctamente');
+            navigateToNextStep(2);
+        },
+        (error) => {
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Error al actualizar los datos del usuario');
+            }
+            console.error('Error API:', error);
+        }
+    );
+    const handleSubmit = async () => {
         try {
             setErrors({});
+            console.log('Datos antes de validación:', { name, lastName, age, phone });
             await datos_form.validate({ name, lastName, age, phone }, { abortEarly: false });
-            const response = await axios.post(endpoint.usuarios.updateDataUser, {
-                nombre: name,
-                apellidos: lastName,
-                edad: age,
-                telefono: phone,
-            });
-
-            await checkToken();
-
-            if (response.data.status === 'success' && tokenExist === true) {
-                navigateToNextStep(2);
-            }
+            console.log('Datos validados, llamando a mutate...');
+            mutate({ nombre: name, apellidos: lastName, edad: age, telefono: phone });
         } catch (error) {
             if (error.name === 'ValidationError') {
-                // Mapea los errores de Yup al estado
                 const validationErrors = {};
                 error.inner.forEach(err => {
                     validationErrors[err.path] = err.message;
                 });
                 setErrors(validationErrors);
             } else {
-                toast.error('Error al actualizar los datos del usuario, intente de nuevo');
+                toast.error('Error al enviar los datos');
+                console.error('Error en handleSubmit:', error);
             }
         }
-    }
-
+    };
     return (
         <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
             <TitlePage title="Ingresa tus datos" />
