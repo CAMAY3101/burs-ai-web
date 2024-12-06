@@ -10,40 +10,9 @@ import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
 import { SIGNUP } from '../Config/Router/paths';
-import { endpoint } from '../Config/utils/urls';
 import { useLoginQuery } from '../hooks/useQueryHooks';
 import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside'
 
-
-axios.defaults.withCredentials = true;
-
-const styles_input = {
-  base: [
-    "w-10/12",
-  ],
-  label: [
-    "group-data-[filled-within=true]:text-dark-blue-950",
-    "font-rubik",
-    "font-medium",
-    "text-base",
-  ],
-  input: [
-    "font-rubik",
-    "font-regular",
-    "text-[15px]",
-    "text-dark-blue-950",
-    "placeholder:text-dark-blue-300",
-  ],
-  inputWrapper: [
-    "rounded-xl",
-    "border-dark-blue-400",
-    "data-[hover=true]:border-dark-blue-700",
-    "group-data-[focus=true]:border-dark-blue-900",
-    "!cursor-text",
-    "space-y-8",
-    //"py-6",
-  ]
-};
 
 function LogIn() {
 
@@ -106,39 +75,25 @@ function LogIn() {
         </Link>
         <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
       </div>
-      <div className='flex flex-col items-center space-y-8 my-4'>
-        <Input
-          isRequired
+      <div className='max-w-xl mx-auto flex flex-col items-center space-y-8 my-4'>
+        <TextFieldWithLabelInside
           type='email'
           label='Correo Electrónico'
           placeholder='ejemplo@outlook.com'
-          size='lg'
-          variant='bordered'
-          classNames={styles_input}
           value={emailValue}
-          errorMessage={isInvalid && "Ingresa un correo válido."}
+          errorMessage={"Ingresa un correo válido."}
           onValueChange={setEmailValue}
         />
-        <Input
-          isRequired
+        <TextFieldWithLabelInside
+          type='password'
           label='Contraseña'
           placeholder='Ingresa contraseña'
-          size='lg'
-          variant='bordered'
-          classNames={styles_input}
-          endContent={
-            <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-              {isVisible ? (
-                <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
-              ) : (
-                <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
-              )}
-            </button>
-          }
-          type={isVisible ? "text" : "password"}
-
           value={password}
-          onChange={handleChange}
+          errorMessage={"Ingresa una contraseña valida"}
+          onValueChange={setPassword}
+          isPasswordField={true}
+          visibleEyeIcon={visibleEyeIcon}
+          invisibleEyeIcon={invisibleEyeIcon}
         />
         <Button
           size='md'

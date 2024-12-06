@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import PropTypes from 'prop-types'
 import { Input } from '@nextui-org/react'
 
@@ -26,12 +26,16 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label,value, onValueChange, name, errorMessage, isRequired = true }) {
+function TextField({type, placeholder, label,value, onValueChange, name, errorMessage, isRequired = true, isPasswordField = false, visibleEyeIcon, invisibleEyeIcon }) {
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
+
   return (
     <div className="w-full">
           <Input
             isRequired={isRequired}
-            type={type}
+            type={isPasswordField && !isPasswordVisible ? "password" : type}
             placeholder={placeholder}
             label={label}
             size='md'
@@ -42,6 +46,21 @@ function TextField({type, placeholder, label,value, onValueChange, name, errorMe
             onChange={(e) => onValueChange(e.target.value)}
             name={name}
             errorMessage={errorMessage}
+            endContent={
+              isPasswordField && (
+                  <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                  >
+                      <img
+                          src={isPasswordVisible ? invisibleEyeIcon : visibleEyeIcon}
+                          alt={isPasswordVisible ? 'Hide Password' : 'Show Password'}
+                          className="w-6"
+                      />
+                  </button>
+              )
+          }
             />
     </div>
   );
@@ -54,8 +73,11 @@ TextField.propTypes = {
     value: PropTypes.string,
     onValueChange: PropTypes.func,
     name: PropTypes.string,
-    error: PropTypes.string,
+    errorMessage: PropTypes.string,
     isRequired: PropTypes.bool,
+    isPasswordField: PropTypes.bool,
+    visibleEyeIcon: PropTypes.string,
+    invisibleEyeIcon: PropTypes.string,
 }
 
 export default TextField
