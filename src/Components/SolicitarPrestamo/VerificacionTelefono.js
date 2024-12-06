@@ -2,77 +2,70 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
-
 import { useAuthContext } from '../../Contexts/authContext';
 import { endpoint } from '../../Config/utils/urls';
-
-
+import { useSecurePhoneQuery, useVerifyPhone, useResendOtpPhone,useGenerateToken,useCreateValidation } from '../../hooks/useQueryHooks.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
 
 
-axios.defaults.withCredentials = true;
-
 function VerificacionTelefono() {
     const { navigateToNextStep, checkToken } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
-    const [phoneSecure, setPhoneSecure] = useState('')
+    const { data: securePhoneData, isLoading: isLoadingPhone } = useSecurePhoneQuery(
+        () => {},
+        () => toast.error("No se pudo obtener el teléfono seguro")
+    );
 
-    useEffect(() => {
-        const fetchSecurePhone = async () => {
-            try {
-                const response = await axios.get( endpoint.usuarios.getSecurePhoneUser);
-                if (response.data.status === 'success') {
-                    setPhoneSecure('al teléfono ' + response.data.phone);
-                }
-            } catch (error) {
-                setPhoneSecure('a tu teléfono');
-            }
-        };
+    const phoneSecure = securePhoneData?.phone
+        ? `al teléfono ${securePhoneData.phone}`
+        : "a tu teléfono";
 
-        fetchSecurePhone();
-    }, []);
-
-    const handleSubmit = async () => {
-        try {
-            const response = await axios.post(endpoint.verificacion.verifyPhoneNumber, {
-                code: otpCode
-            });
-            if (response.data.message === 'Teléfono verificado con éxito') {
-                toast.success('Teléfono verificado con éxito');
-                setTimeout(async () => {
-                    try {
-                        const response = await axios.post(endpoint.FAD.generateToken);
-                        if (response.data.status === 'success') {
-                            checkToken();
-                            await axios.post(endpoint.FAD.createValidation);
-                            navigateToNextStep(6);
-                        }
-                    } catch (error) {
-                        console.error('Error enviando OTP:', error);
-                    }
-                }, 2000);
-            }
-
-        } catch (error) {
-            if (error.response.status === 400) {
-                toast.error('Código incorrecto')
+    // Hook para verificar el teléfono
+    const { mutate: verifyPhone } = useVerifyPhone(
+        () => {
+            toast.success("Teléfono verificado con éxito");
+            setTimeout(() => {
+                generateToken(); // Generar token y continuar
+            }, 2000);
+        },
+        (error) => {
+            if (error?.status === 400) {
+                toast.error("Código incorrecto");
             } else {
-                toast.error('Error al verificar el teléfono, intentalo de nuevo')
+                toast.error("Error al verificar el teléfono, inténtalo de nuevo");
             }
         }
+    );
+
+    // Hook para reenviar el código OTP por teléfono
+    const { mutate: resendOtpPhone } = useResendOtpPhone(
+        () => toast.success("Código reenviado"),
+        () => toast.error("Error al reenviar el código")
+    );
+
+    // Hook para generar un token
+    const { mutate: generateToken } = useGenerateToken(
+        () => {
+            checkToken();
+            createValidation(); // Crear validación
+        },
+        (error) => console.error("Error al generar token:", error)
+    );
+
+    // Hook para crear validación
+    const { mutate: createValidation } = useCreateValidation(
+        () => navigateToNextStep(6),
+        (error) => console.error("Error al crear validación:", error)
+    );
+
+    const handleSubmit = () => {
+        verifyPhone({ code: otpCode });
     };
 
-    const handleResend = async () => {
-        try {
-            const response = await axios.post(endpoint.verificacion.resendOTPCodePhoneNumber);
-            if (response.data.status === 'success') {
-                toast('Código reenviado')
-            }
-        } catch (error) {
-            toast.error('Error al reenviar el código')
-        }
+    const handleResend = () => {
+        resendOtpPhone();
     };
 
     return (

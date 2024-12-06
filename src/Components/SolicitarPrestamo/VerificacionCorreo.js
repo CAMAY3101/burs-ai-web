@@ -1,76 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
-
 import { useAuthContext } from '../../Contexts/authContext';
-import { endpoint } from '../../Config/utils/urls';
-
+import { useSecureEmailQuery, useVerifyEmail, useResendOtpEmail, useSendOtpPhone } from "../../hooks/useQueryHooks";
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
 
-axios.defaults.withCredentials = true;
 
 function VerificacionCorreo() {
     const { navigateToNextStep } = useAuthContext();
     const [otpCode, setOtpCode] = useState('');
-    const [emailSecure, setEmailSecure] = useState('');
+    const { data: secureEmailData, isLoading: isLoadingEmail } = useSecureEmailQuery(
+        () => {},
+        () => toast.error("No se pudo obtener el correo seguro")
+    );
 
-    useEffect(() => {
-        const fetchSecureEmail = async () => {
-            try {
-                const response = await axios.get(endpoint.usuarios.getSecureEmailUser);
-                if (response.data.status === 'success') {
-                    setEmailSecure('al correo ' + response.data.email);
-                }
-            } catch (error) {
-                setEmailSecure('a tu correo');
-            }
-        };
+    const emailSecure = secureEmailData?.email
+        ? `al correo ${secureEmailData.email}`
+        : "a tu correo";
 
-        fetchSecureEmail();
-    }, []);
-
-    const handleSubmit = async () => {
-        //console.log( otpCode);
-        try {
-            const response = await axios.post(endpoint.verificacion.verifyEmail, {
-                code: otpCode
-            });
-            if (response.data.status === 'success') {
-                toast.success('Correo verificado con éxito');
-                setTimeout(async () => {
-                    try {
-                        const responseOTP = await axios.post(endpoint.verificacion.sendOTPCodePhoneNumber);
-                        if (responseOTP.data.status === 'success') {
-                            navigateToNextStep(5);
-                        }
-                    } catch (error) {
-                        console.error('Error enviando OTP:', error);
-                    }
-                }, 2000);
-            }
-        } catch (error) {
-            if (error.response.status === 400) {
-                toast.error('Codigo incorrecto')
-            }
-            else {
-                toast.error('Error al verificar el correo, intentalo de nuevo')
+    const { mutate: verifyEmail } = useVerifyEmail(
+        () => {
+            toast.success("Correo verificado con éxito");
+            setTimeout(() => {
+                sendOtpPhone();
+            }, 2000);
+        },
+        (error) => {
+            if (error?.status === 400) {
+                toast.error("Código incorrecto");
+            } else {
+                toast.error("Error al verificar el correo, inténtalo de nuevo");
             }
         }
+    );
+
+    const { mutate: resendOtpCode } = useResendOtpEmail(
+        () => toast.success("Código reenviado"),
+        () => toast.error("Error al reenviar el código")
+    );
+
+    const { mutate: sendOtpPhone } = useSendOtpPhone(
+        () => navigateToNextStep(5),
+        (error) => console.error("Error enviando OTP al teléfono:", error)
+    );
+
+    const handleSubmit = () => {
+        verifyEmail({ code: otpCode });
     };
 
-    const handleResend = async () => {
-        try {
-            const response = await axios.post(endpoint.verificacion.resendOTPCodeEmail);
-            if (response.data.status === 'success') {
-                toast('Código reenviado')
-            }
-        } catch (error) {
-            toast.error('Error al reenviar el codigo')
-        }
+    const handleResend = () => {
+        resendOtpCode();
     };
 
     return (
