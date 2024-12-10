@@ -35,7 +35,7 @@ function TextField({type, placeholder, label,value, onValueChange, name, errorMe
     <div className="w-full">
           <Input
             isRequired={isRequired}
-            type={isPasswordField && !isPasswordVisible ? "password" : type}
+            type={isPasswordField ? (isPasswordVisible ? 'text' : 'password') : type}
             placeholder={placeholder}
             label={label}
             size='md'

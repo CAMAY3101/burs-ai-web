@@ -2,8 +2,8 @@ import React from 'react'
 import axios from 'axios';
 
 import { Link } from 'react-router-dom';
-import { Input, Button } from "@nextui-org/react"
-
+import { Button } from "@nextui-org/react"
+import { login_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
@@ -17,28 +17,13 @@ import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFiel
 function LogIn() {
 
   const { checkToken, login, verificationStep} = useAuthContext();
-
   const [isVisible, setIsVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
-
-  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [errors, setErrors] = React.useState({});
 
   // Email validation
   const [emailValue, setEmailValue] = React.useState('');
-  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
-
-  const isInvalid = React.useMemo(() => {
-    if (emailValue === '') return false;
-    return validateEmail(emailValue) ? false : true;
-  }, [emailValue]);
-
-  // Password validation
   const [password, setPassword] = React.useState('');
-
-  const handleChange = (e) => {
-    setPassword(e.target.value);
-  };
-  const isLongEnough = password.length >= 8;
 
   const onSuccess = async (response) => {
     if (response.data.status === 'success') {
@@ -59,29 +44,44 @@ function LogIn() {
 
   const loginQuery = useLoginQuery(onSuccess, onError)
 
-  // Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    loginQuery.mutate({
+    const valuesToValidate = {
       correo: emailValue,
       contrasena: password,
-    })
+    };
+    try {
+      await login_form.validate(valuesToValidate, { abortEarly: false });
+      setErrors({}); 
+
+      loginQuery.mutate(valuesToValidate);
+    } catch (error) {
+      if (error.name === 'ValidationError') {
+        const validationErrors = {};
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
+      } else {
+        console.error("Error al enviar el formulario:", error);
+      }
+    }
   };
   return (
-    <div className=''>
+    <div className='flex flex-col items-center'>
       <div className='flex flex-col items-center space-y-2 my-9'>
         <Link to = '/'>
           <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
         </Link>
         <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
       </div>
-      <div className='max-w-xl mx-auto flex flex-col items-center space-y-8 my-4'>
+      <div className='w-10/12 space-y-8 my-4'>
         <TextFieldWithLabelInside
           type='email'
           label='Correo Electrónico'
           placeholder='ejemplo@outlook.com'
           value={emailValue}
-          errorMessage={"Ingresa un correo válido."}
+          errorMessage={errors.correo}
           onValueChange={setEmailValue}
         />
         <TextFieldWithLabelInside
@@ -89,20 +89,23 @@ function LogIn() {
           label='Contraseña'
           placeholder='Ingresa contraseña'
           value={password}
-          errorMessage={"Ingresa una contraseña valida"}
+          errorMessage={errors.contrasena}
           onValueChange={setPassword}
           isPasswordField={true}
           visibleEyeIcon={visibleEyeIcon}
           invisibleEyeIcon={invisibleEyeIcon}
+          isVisible={isVisible}
         />
+        <div className="flex justify-center">
         <Button
           size='md'
           className='w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl'
-          isDisabled={isInvalid || !isLongEnough || emailValue === '' || password === ''}
+          isDisabled={emailValue === '' || password === '' || Object.keys(errors).length > 0}
           onClick={handleSubmit}
         >
           Ingresar
         </Button>
+        </div>
         <div className='flex flex-col items-start w-10/12'>
           <p className='font-rubik font-light text-sm text-dark-blue-950'>
             ¿No tienes una cuenta?  

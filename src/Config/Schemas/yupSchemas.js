@@ -47,4 +47,15 @@ export const historial_form = yup.object().shape({
     pagoAtravesBanco: yup.boolean().required('Es necesario indicar si el pago es a través de un banco'),
   });
 
+  export const login_form = yup.object().shape({
+    correo: yup
+      .string()
+      .email('Ingresa un correo válido.')
+      .required('El correo es obligatorio.'),
+    contrasena: yup
+      .string()
+      .min(8, 'ingresa una contraseña válida.')
+      .required('La contraseña es obligatoria.'),
+  });
+
 

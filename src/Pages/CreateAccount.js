@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 
-import { Input, Button } from "@nextui-org/react"
+import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
-
+import { login_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import thickIcon from "../Assets/icons/tick-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
@@ -15,99 +15,77 @@ import { useAuthContext } from '../Contexts/authContext';
 import { LOGIN } from '../Config/Router/paths';
 import { Link } from 'react-router-dom';
 import { endpoint } from '../Config/utils/urls';
+import { useCreateUser } from '../hooks/useQueryHooks';
 
 axios.defaults.withCredentials = true;
-
-
-const styles_input = {
-    label: [
-        "group-data-[filled-within=true]:text-dark-blue-950",
-        "font-rubik",
-        "font-medium",
-        "text-base",
-    ],
-    input: [
-        "font-rubik",
-        "font-regular",
-        "text-[15px]",
-        "text-dark-blue-950",
-        "placeholder:text-dark-blue-300",
-    ],
-    inputWrapper: [
-        "rounded-xl",
-        "border-dark-blue-400",
-        "data-[hover=true]:border-dark-blue-700",
-        "group-data-[focus=true]:border-dark-blue-900",
-        "!cursor-text",
-        "space-y-8",
-        //"py-6",
-    ]
-};
 
 function SignUp() {
 
     const { checkToken, navigateToNextStep, verificationStep } = useAuthContext();
-
-    const [isVisible, setIsVisible] = React.useState(false);
-    const [messageError, setMessageError] = React.useState('');
-
-    const toggleVisibility = () => setIsVisible(!isVisible);
-
-    // Email validation
     const [emailValue, setEmailValue] = React.useState('');
-    const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+    const [password, setPassword] = useState('');
+    const [recaptchaValue, setRecaptchaValue] = useState(null);
+    const [errors, setErrors] = useState({});
+    const [passwordChecks, setPasswordChecks] = useState({
+        isLongEnough: false,
+        hasLowerCase: false,
+        hasUpperCase: false,
+        hasNumber: false,
+        hasSpecialChar: false,
+    });
 
-    const isInvalid = React.useMemo(() => {
-        if (emailValue === '') return false;
-        return validateEmail(emailValue) ? false : true;
-    }, [emailValue]);
+  const { mutate: createUser, isLoading } = useCreateUser();
+        // Validar contraseña dinámicamente
+        useEffect(() => {
+            setPasswordChecks({
+                isLongEnough: password.length >= 8,
+                hasLowerCase: /[a-z]/.test(password),
+                hasUpperCase: /[A-Z]/.test(password),
+                hasNumber: /[0-9]/.test(password),
+                hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+            });
+        }, [password]);
 
-    // Password validation
-    const [password, setPassword] = React.useState('');
-
-    const handleChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const isLongEnough = password.length >= 8;
-
-    // Captcha
-    const [recaptchaValue, setRecaptchaValue] = React.useState(null);
-
-    // Submit
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const formValues = {
+            correo: emailValue,
+            contrasena: password,
+        };
+
         try {
-            const response = await axios.post(endpoint.usuarios.createUser, {
-                correo: emailValue,
-                contrasena: password,
-            }, { withCredentials: true });
-
-            await checkToken();
-
-            if (response.data.status === 'success') {
-                toast.success('Creación de usuario exitosa');
-                setTimeout(() => {
-                    navigateToNextStep(1);
-                    toast.success(`verification step: ${verificationStep}`);
-                }, 2000);
-            }
+            await login_form.validate(formValues, { abortEarly: false });
+            setErrors({}); // Limpiar errores previos
+            createUser(formValues, {
+                onSuccess: async (response) => {
+                  toast.success('Creación de usuario exitosa');
+                  await checkToken();
+                  navigateToNextStep(1);
+                  toast.success(`Verification step: ${verificationStep}`);
+                },
+                onError: (error) => {
+                    if (error.response?.status === 400) {
+                      toast.error(error.response.data.message || 'Error al crear usuario');
+                    } else {
+                      toast.error('Error al crear usuario, intente de nuevo');
+                    }
+                  },
+                });
 
         } catch (error) {
-            if (error.response.status === 400) {
-                toast.error(error.response.data.message)
-                //toast.error(error.response.data.error)
+            if (error.name === 'ValidationError') {
+                const validationErrors = {};
+                error.inner.forEach((err) => {
+                    validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
+            } else if (error.response?.status === 400) {
+                toast.error(error.response.data.message || 'Error al crear usuario');
+            } else {
+                toast.error('Error al crear usuario, intente de nuevo');
             }
-            else {
-                toast.error('Error al crear usuario, intente de nuevo')
-            }
-            console.log(error)
+            console.error(error);
         }
-
     };
     return (
         <div className='flex flex-col items-center'>
@@ -123,7 +101,7 @@ function SignUp() {
                     label='Correo Electrónico'
                     placeholder='ejemplo@outlook.com'
                     value={emailValue}
-                    errorMessage={"Ingresa un correo válido."}
+                    errorMessage={errors.correo}
                     onValueChange={setEmailValue}
                 />
                 <div className='space-y-4'>
@@ -132,39 +110,39 @@ function SignUp() {
                         label='Contraseña'
                         placeholder='Ingresa contraseña'
                         value={password}
-                        errorMessage={"Ingresa una contraseña valida"}
+                        errorMessage={errors.contrasena}
                         onValueChange={setPassword}
                         isPasswordField={true}
                         visibleEyeIcon={visibleEyeIcon}
                         invisibleEyeIcon={invisibleEyeIcon}
                     />
                     <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
-                        <li className={`flex flex-row ${isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${isLongEnough ? 'block' : 'hidden'}`}>
+                        <li className={`flex flex-row ${passwordChecks.isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                            <div className={`w-3 h-3 mr-1 ${passwordChecks.isLongEnough ? 'block' : 'hidden'}`}>
                                 <img src={thickIcon} alt='icon' />
                             </div>
                             <p>Contraseña debe tener mínimo 8 caracteres.</p>
                         </li>
-                        <li className={`flex flex-row ${hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${hasLowerCase ? 'block' : 'hidden'}`}>
+                        <li className={`flex flex-row ${passwordChecks.hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasLowerCase ? 'block' : 'hidden'}`}>
                                 <img src={thickIcon} alt='icon' />
                             </div>
                             <p>Al menos una letra minúscula </p>
                         </li>
-                        <li className={`flex flex-row ${hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${hasUpperCase ? 'block' : 'hidden'}`}>
+                        <li className={`flex flex-row ${passwordChecks.hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasUpperCase ? 'block' : 'hidden'}`}>
                                 <img src={thickIcon} alt='icon' />
                             </div>
                             <p>Al menos una letra mayúscula.</p>
                         </li>
-                        <li className={`flex flex-row ${hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${hasNumber ? 'block' : 'hidden'}`}>
+                        <li className={`flex flex-row ${passwordChecks.hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasNumber ? 'block' : 'hidden'}`}>
                                 <img src={thickIcon} alt='icon' />
                             </div>
                             <p>Al menos un número </p>
                         </li>
-                        <li className={`flex flex-row ${hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${hasSpecialChar ? 'block' : 'hidden'}`}>
+                        <li className={`flex flex-row ${passwordChecks.hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasSpecialChar ? 'block' : 'hidden'}`}>
                                 <img src={thickIcon} alt='icon' />
                             </div>
                             <p>Al menos un caracter especial</p>
@@ -175,14 +153,16 @@ function SignUp() {
                     sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
                     onChange={(value) => setRecaptchaValue(value)}
                 />
-                <Button
-                    size='md'
-                    className='w-full bg-purple-heart-500 text-purple-50 rounded-3xl'
-                    isDisabled={isInvalid || !isLongEnough || !hasLowerCase || !hasUpperCase || !hasNumber || !hasSpecialChar || !recaptchaValue}
-                    onClick={handleSubmit}
-                >
-                    Crear Cuenta
-                </Button>
+                <div className="flex justify-center">
+                    <Button
+                        size='md'
+                        className='w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl'
+                        isDisabled={!recaptchaValue || Object.keys(errors).length > 0}
+                        onClick={handleSubmit}
+                    >
+                        Crear Cuenta
+                    </Button>
+                </div>
                 <Toaster
                     position="top-center"
                     reverseOrder={false}

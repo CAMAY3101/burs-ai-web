@@ -14,6 +14,7 @@ import {
   resendOtpCodePhoneNumber,
   generateToken,
   createValidation,
+  createUser,
 } from '../api/apiHelper';
 
 
@@ -151,6 +152,16 @@ export const useCreateValidation = (onSuccess, onError) => {
   const mutation = useMutation({
       mutationKey: ['createValidation'],
       mutationFn: createValidation,
+      onSuccess,
+      onError,
+  });
+  return mutation;
+};
+
+export const useCreateUser = (onSuccess, onError) => {
+  const mutation = useMutation({
+      mutationKey: ['createUseer'],
+      mutationFn: createUser,
       onSuccess,
       onError,
   });

@@ -58,4 +58,9 @@ export function generateToken() {
 export function createValidation() {
     return axios.post(endpoint.FAD.createValidation, {}, { withCredentials: true });
 }
+
+//Para crear un usuario
+export function createUser() {
+    return axios.post(endpoint.usuarios.createUser, {}, { withCredentials: true });
+}
  
