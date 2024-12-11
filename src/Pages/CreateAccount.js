@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 
 import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
@@ -10,11 +13,11 @@ import thickIcon from "../Assets/icons/tick-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside'
+import FormProvider from '../Components/CustomizeComponents/Form/FormProvider';
 
 import { useAuthContext } from '../Contexts/authContext';
 import { LOGIN } from '../Config/Router/paths';
 import { Link } from 'react-router-dom';
-import { endpoint } from '../Config/utils/urls';
 import { useCreateUser } from '../hooks/useQueryHooks';
 
 axios.defaults.withCredentials = true;
@@ -25,7 +28,7 @@ function SignUp() {
     const [emailValue, setEmailValue] = React.useState('');
     const [password, setPassword] = useState('');
     const [recaptchaValue, setRecaptchaValue] = useState(null);
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
     const [passwordChecks, setPasswordChecks] = useState({
         isLongEnough: false,
         hasLowerCase: false,
@@ -33,6 +36,22 @@ function SignUp() {
         hasNumber: false,
         hasSpecialChar: false,
     });
+
+    const defaultValues = {
+        correo: '',
+        contrasena: '',
+    };
+    
+    const methods = useForm({
+    resolver: yupResolver(login_form),
+    defaultValues,
+    });
+
+    const {
+    handleSubmit,
+    watch,
+    formState: { isSubmitting, errors },
+    } = methods;
 
   const { mutate: createUser, isLoading } = useCreateUser();
         // Validar contraseña dinámicamente
@@ -46,7 +65,7 @@ function SignUp() {
             });
         }, [password]);
 
-    const handleSubmit = async (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         const formValues = {
             correo: emailValue,
@@ -96,63 +115,69 @@ function SignUp() {
                 <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Crea tu cuenta</h1>
             </div>
             <div className='w-10/12 space-y-8 py-4'>
-                <TextFieldWithLabelInside
-                    type='email'
-                    label='Correo Electrónico'
-                    placeholder='ejemplo@outlook.com'
-                    value={emailValue}
-                    errorMessage={errors.correo}
-                    onValueChange={setEmailValue}
-                />
-                <div className='space-y-4'>
+            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                <div>
                     <TextFieldWithLabelInside
-                        type='password'
-                        label='Contraseña'
-                        placeholder='Ingresa contraseña'
-                        value={password}
-                        errorMessage={errors.contrasena}
-                        onValueChange={setPassword}
-                        isPasswordField={true}
-                        visibleEyeIcon={visibleEyeIcon}
-                        invisibleEyeIcon={invisibleEyeIcon}
+                        type='email'
+                        name='correo'
+                        label='Correo Electrónico'
+                        placeholder='ejemplo@outlook.com'
+                        value={emailValue}
+                        errorMessage={errors.correo}
+                        onValueChange={setEmailValue}
                     />
-                    <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
-                        <li className={`flex flex-row ${passwordChecks.isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${passwordChecks.isLongEnough ? 'block' : 'hidden'}`}>
-                                <img src={thickIcon} alt='icon' />
-                            </div>
-                            <p>Contraseña debe tener mínimo 8 caracteres.</p>
-                        </li>
-                        <li className={`flex flex-row ${passwordChecks.hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasLowerCase ? 'block' : 'hidden'}`}>
-                                <img src={thickIcon} alt='icon' />
-                            </div>
-                            <p>Al menos una letra minúscula </p>
-                        </li>
-                        <li className={`flex flex-row ${passwordChecks.hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasUpperCase ? 'block' : 'hidden'}`}>
-                                <img src={thickIcon} alt='icon' />
-                            </div>
-                            <p>Al menos una letra mayúscula.</p>
-                        </li>
-                        <li className={`flex flex-row ${passwordChecks.hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasNumber ? 'block' : 'hidden'}`}>
-                                <img src={thickIcon} alt='icon' />
-                            </div>
-                            <p>Al menos un número </p>
-                        </li>
-                        <li className={`flex flex-row ${passwordChecks.hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                            <div className={`w-3 h-3 mr-1 ${passwordChecks.hasSpecialChar ? 'block' : 'hidden'}`}>
-                                <img src={thickIcon} alt='icon' />
-                            </div>
-                            <p>Al menos un caracter especial</p>
-                        </li>
-                    </ul>
+                    <div className='space-y-4'>
+                        <TextFieldWithLabelInside
+                            type='password'
+                            label='Contraseña'
+                            name='contrasena'
+                            placeholder='Ingresa contraseña'
+                            value={password}
+                            errorMessage={errors.contrasena}
+                            onValueChange={setPassword}
+                            isPasswordField={true}
+                            visibleEyeIcon={visibleEyeIcon}
+                            invisibleEyeIcon={invisibleEyeIcon}
+                        />
+                        <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
+                            <li className={`flex flex-row ${passwordChecks.isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                                <div className={`w-3 h-3 mr-1 ${passwordChecks.isLongEnough ? 'block' : 'hidden'}`}>
+                                    <img src={thickIcon} alt='icon' />
+                                </div>
+                                <p>Contraseña debe tener mínimo 8 caracteres.</p>
+                            </li>
+                            <li className={`flex flex-row ${passwordChecks.hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                                <div className={`w-3 h-3 mr-1 ${passwordChecks.hasLowerCase ? 'block' : 'hidden'}`}>
+                                    <img src={thickIcon} alt='icon' />
+                                </div>
+                                <p>Al menos una letra minúscula </p>
+                            </li>
+                            <li className={`flex flex-row ${passwordChecks.hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                                <div className={`w-3 h-3 mr-1 ${passwordChecks.hasUpperCase ? 'block' : 'hidden'}`}>
+                                    <img src={thickIcon} alt='icon' />
+                                </div>
+                                <p>Al menos una letra mayúscula.</p>
+                            </li>
+                            <li className={`flex flex-row ${passwordChecks.hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                                <div className={`w-3 h-3 mr-1 ${passwordChecks.hasNumber ? 'block' : 'hidden'}`}>
+                                    <img src={thickIcon} alt='icon' />
+                                </div>
+                                <p>Al menos un número </p>
+                            </li>
+                            <li className={`flex flex-row ${passwordChecks.hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                                <div className={`w-3 h-3 mr-1 ${passwordChecks.hasSpecialChar ? 'block' : 'hidden'}`}>
+                                    <img src={thickIcon} alt='icon' />
+                                </div>
+                                <p>Al menos un caracter especial</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <ReCAPTCHA
+                        sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
+                        onChange={(value) => setRecaptchaValue(value)}
+                    />
                 </div>
-                <ReCAPTCHA
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
-                    onChange={(value) => setRecaptchaValue(value)}
-                />
+            </FormProvider>
                 <div className="flex justify-center">
                     <Button
                         size='md'

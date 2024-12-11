@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 import { Button } from "@nextui-org/react"
@@ -15,8 +14,7 @@ import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFiel
 
 
 function LogIn() {
-
-  const { checkToken, login, verificationStep} = useAuthContext();
+  const { login, verificationStep} = useAuthContext(); // eliminar checktoken si ya no se ocupa
   const [isVisible, setIsVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
   const [errors, setErrors] = React.useState({});
@@ -56,6 +54,7 @@ function LogIn() {
 
       loginQuery.mutate(valuesToValidate);
     } catch (error) {
+      console.log(error)
       if (error.name === 'ValidationError') {
         const validationErrors = {};
         error.inner.forEach((err) => {
