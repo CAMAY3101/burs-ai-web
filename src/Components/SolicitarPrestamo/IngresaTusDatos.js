@@ -3,13 +3,14 @@ import axios from 'axios';
 
 import { usePhoneInput, FlagImage, defaultCountries, parseCountry, } from "react-international-phone";
 import 'react-international-phone/style.css';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import FormProvider from '../CustomizeComponents/Form/FormProvider';
 import { Input, Select, SelectItem } from "@nextui-org/react"
 import toast from 'react-hot-toast';
-import {datos_form} from '../../Config/Schemas/yupSchemas.js';
+import { datos_form } from '../../Config/Schemas/yupSchemas.js';
 
 import { useAuthContext } from '../../Contexts/authContext';
-import { endpoint } from '../../Config/utils/urls';
 import { useUpdateUserQuery } from '../../hooks/useQueryHooks.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
@@ -42,14 +43,27 @@ const styles_input = {
 
 function IngresaTusDatos() {
     //----------------------Variables----------------------
-    const { tokenExist, checkToken, navigateToNextStep } = useAuthContext();
-    const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [age, setAge] = useState('');
-    const [phone, setPhone] = useState('');
+    const { navigateToNextStep } = useAuthContext();
+    const defaultValues = {
+        name: '',
+        lastName: '',
+        age: '',
+        phone: ''
+    };
+    const methods = useForm({
+        resolver: yupResolver(datos_form),
+        mode: 'onChange',
+        defaultValues,
+    });
 
-    // Estado para manejar los errores de validación
-    const [errors, setErrors] = useState({});
+    const {
+        handleSubmit,
+        watch,
+        formState: { errors, isSubmitting, isValid },
+        setValue,
+    } = methods;
+
+    const phone = watch('phone');
 
     //----------------------Cambiar formato de telefono----------------------
 
@@ -77,7 +91,8 @@ function IngresaTusDatos() {
             countries: defaultCountries,
             value: phone,
             onChange: (data) => {
-                setPhone(data.phone);
+
+                setValue('phone', data.phone, { shouldValidate: true });
             },
         });
 
@@ -100,133 +115,130 @@ function IngresaTusDatos() {
             console.error('Error API:', error);
         }
     );
-    const handleSubmit = async () => {
+    const onSubmit = async (data) => {
         try {
-            setErrors({});
-            console.log('Datos antes de validación:', { name, lastName, age, phone });
-            await datos_form.validate({ name, lastName, age, phone }, { abortEarly: false });
             console.log('Datos validados, llamando a mutate...');
-            mutate({ nombre: name, apellidos: lastName, edad: age, telefono: phone });
+            mutate({ nombre: data.name, apellidos: data.lastName, edad: data.age, telefono: data.phone });
         } catch (error) {
-            if (error.name === 'ValidationError') {
-                const validationErrors = {};
-                error.inner.forEach(err => {
-                    validationErrors[err.path] = err.message;
-                });
-                setErrors(validationErrors);
-            } else {
-                toast.error('Error al enviar los datos');
-                console.error('Error en handleSubmit:', error);
-            }
+            toast.error('Error al enviar los datos');
+            console.error('Error en handleSubmit:', error);
         }
     };
     return (
         <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
             <TitlePage title="Ingresa tus datos" />
-            <div className='flex-col space-y-12'>
-                <div>
-                    <TextField
-                        type='text'
-                        label='Nombre(s)'
-                        placeholder='Ejemplo: Juan'
-                        value={name}
-                        onValueChange={setName}
-                        errorMessage={errors.name}
-                    />
-                </div>
-                <div>
-                    <TextField
-                        type='text'
-                        label='Apellido(s)'
-                        placeholder='Ejemplo: Perez Lopez'
-                        value={lastName}
-                        onValueChange={setLastName}
-                        errorMessage={errors.lastName}
-                    />
-                </div>
-                <div className='w-1/2'>
-                    <TextField
-                        type='number'
-                        label='Edad'
-                        placeholder='Ej: 25'
-                        className='w-1/2'
-                        min={18}
-                        max={100}
-                        value={age}
-                        onValueChange={setAge}
-                        errorMessage={errors.age}
-                    />
-                </div>
-                <div>
-                    <Input
-                        isRequired
-                        type='tel'
-                        label='Telefono'
-                        placeholder='Ej: 55 1234 5678'
-                        size='md'
-                        variant='bordered'
-                        classNames={styles_input}
-                        labelPlacement='outside'
-                        startContent={
-                            <div className='flex items-center'>
-                                <Select
-                                    value={country.iso2}
-                                    onChange={(e) => setCountry(e.target.value)}
-                                    placeholder={<FlagImage iso2={country.iso2} />}
-                                    renderValue={(value) => (
-                                        <FlagImage iso2={country.iso2} />
-                                    )}
-                                    className='w-[50px]'
-                                    classNames={{
-                                        trigger: [
-                                            "shadow-none",
-                                            "bg-transparent",
-                                            "rounded-none",
-                                            "p-0",
-                                            "min-h-unit-5",
-                                            "h-6"
-                                        ],
-                                        innerWrapper: [
-                                            "group-data-[has-label=true]:pt-0",
-                                        ],
-                                    }}
-                                    popoverProps={{
-                                        classNames: {
-                                            base: "w-[200px]",
-                                        },
-                                    }}
-                                >
-                                    {defaultCountries.map((c) => {
-                                        const parsedCountry = parseCountry(c);
-                                        return (
-                                            <SelectItem key={parsedCountry.iso2} value={parsedCountry.iso2}>
-                                                <div className="flex gap-2 items-center">
-                                                    <FlagImage iso2={parsedCountry.iso2} className='flex-shrink-0' style={{ width: '24px', height: '24px' }} />
-                                                    <div className="flex flex-col">
-                                                        <span className="text-small">{parsedCountry.name}</span>
-                                                        <span className="text-tiny text-default-400">({parsedCountry.dialCode})</span>
+            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                <div className='flex-col space-y-12'>
+                    <div>
+                        <TextField
+                            type='text'
+                            name='name'
+                            label='Nombre(s)'
+                            placeholder='Ejemplo: Juan'
+                            errorMessage={errors.name?.message}
+
+                            value={watch('name')}
+                            onValueChange={(value) => setValue('name', value, { shouldValidate: true })}
+                        />
+                    </div>
+                    <div>
+                        <TextField
+                            type='text'
+                            name='lastName'
+                            label='Apellido(s)'
+                            placeholder='Ejemplo: Perez Lopez'
+                            errorMessage={errors.lastName?.message}
+                            value={watch('lastName')}
+                            onValueChange={(value) => setValue('lastName', value, { shouldValidate: true })}
+                        />
+                    </div>
+                    <div className='w-1/2'>
+                        <TextField
+                            type='number'
+                            name='age'
+                            label='Edad'
+                            placeholder='Ej: 25'
+                            className='w-1/2'
+                            min={18}
+                            max={100}
+                            errorMessage={errors.age?.message}
+
+                            value={watch('age')}
+                            onValueChange={(value) => setValue('age', value, { shouldValidate: true })}
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            isRequired
+                            type='tel'
+                            name='phone'
+                            label='Telefono'
+                            placeholder='Ej: 55 1234 5678'
+                            size='md'
+                            variant='bordered'
+                            classNames={styles_input}
+                            labelPlacement='outside'
+                            startContent={
+                                <div className='flex items-center'>
+                                    <Select
+                                        value={country.iso2}
+                                        onChange={(e) => setCountry(e.target.value)}
+                                        placeholder={<FlagImage iso2={country.iso2} />}
+                                        renderValue={(value) => (
+                                            <FlagImage iso2={country.iso2} />
+                                        )}
+                                        className='w-[50px]'
+                                        classNames={{
+                                            trigger: [
+                                                "shadow-none",
+                                                "bg-transparent",
+                                                "rounded-none",
+                                                "p-0",
+                                                "min-h-unit-5",
+                                                "h-6"
+                                            ],
+                                            innerWrapper: [
+                                                "group-data-[has-label=true]:pt-0",
+                                            ],
+                                        }}
+                                        popoverProps={{
+                                            classNames: {
+                                                base: "w-[200px]",
+                                            },
+                                        }}
+                                    >
+                                        {defaultCountries.map((c) => {
+                                            const parsedCountry = parseCountry(c);
+                                            return (
+                                                <SelectItem key={parsedCountry.iso2} value={parsedCountry.iso2}>
+                                                    <div className="flex gap-2 items-center">
+                                                        <FlagImage iso2={parsedCountry.iso2} className='flex-shrink-0' style={{ width: '24px', height: '24px' }} />
+                                                        <div className="flex flex-col">
+                                                            <span className="text-small">{parsedCountry.name}</span>
+                                                            <span className="text-tiny text-default-400">({parsedCountry.dialCode})</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </SelectItem>
-                                        );
-                                    })}
-                                </Select>
-                            </div>
-                        }
-                        value={inputValue}
-                        onChange={handlePhoneValueChange}
-                        inputRef={inputRef}
-                        errorMessage={errors.phone}
+                                                </SelectItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </div>
+                            }
+
+                            value={inputValue}
+                            onChange={(e) => {setValue('phone', e.target.value, { shouldValidate: true });}}
+                            inputRef={inputRef}
+                            error={!!errors.phone}
+                            errorMessage={errors.phone?.message}
+                        />
+                    </div>
+                    <Button1
+                        isDisabled={isSubmitting || isLoading}
+                        handleSubmit={handleSubmit(onSubmit)}
                     />
                 </div>
-            </div>
-
-            <Button1
-                isDisabled={!name || !lastName || !age || !phone}
-                handleSubmit={handleSubmit}
-            />
-
-        </div>
+            </FormProvider >
+        </div >
     )
 }
 

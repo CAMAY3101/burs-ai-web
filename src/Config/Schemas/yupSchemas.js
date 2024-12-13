@@ -17,6 +17,9 @@ export const datos_form = yup.object().shape({
     name: yup.string().required('El nombre es obligatorio').min(2, 'El nombre es obligatorio'),
     lastName: yup.string().required('El apellido es obligatorio').min(2, 'El apellido es obligatorio'),
     age: yup.number()
+
+    .typeError('La edad debe ser un número')
+    .transform((value, originalValue) => (originalValue.trim() === '' ? undefined : value))
         .required('La edad es obligatoria')
         .integer('La edad debe ser un número entero')
         .min(18, 'Debes tener al menos 18 años')
