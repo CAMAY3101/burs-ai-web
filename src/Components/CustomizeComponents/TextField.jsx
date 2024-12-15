@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useFormContext, Controller } from 'react-hook-form';
 import { Input } from '@nextui-org/react'
 
 const styles_input = {
@@ -26,10 +27,18 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label,value, onValueChange, name, errorMessage, isRequired = true }) {
+function TextField({type, placeholder, label, name, errorMessage, isRequired = true }) {
+  const { control } = useFormContext();
+  console.log('control: ', control)
+  
   return (
-    <div className="w-full">
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error }}) => (
+        <div className="w-full">
           <Input
+            {...field}
             isRequired={isRequired}
             type={type}
             placeholder={placeholder}
@@ -38,12 +47,12 @@ function TextField({type, placeholder, label,value, onValueChange, name, errorMe
             variant='bordered'
             classNames={styles_input}
             labelPlacement={'outside'}
-            value={value} 
-            onChange={(e) => onValueChange(e.target.value)}
             name={name}
             errorMessage={errorMessage}
             />
-    </div>
+        </div>
+      )}
+    />
   );
 }
 

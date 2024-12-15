@@ -61,4 +61,15 @@ export const historial_form = yup.object().shape({
       .required('La contraseña es obligatoria.'),
   });
 
+  export const create_form = yup.object().shape({
+    correo: yup
+      .string()
+      .email('Ingresa un correo válido.')
+      .required('El correo es obligatorio.'),
+    contrasena: yup
+      .string()
+      .min(8, 'ingresa una contraseña válida.')
+      .required('La contraseña es obligatoria.'),
+  });
+
 

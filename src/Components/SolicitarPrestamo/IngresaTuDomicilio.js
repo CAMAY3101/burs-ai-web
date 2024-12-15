@@ -8,7 +8,7 @@ import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import FormProvider from '../CustomizeComponents/Form/FormProvider';
+import CustomFormProvider from '../CustomizeComponents/Form/CustomFormProvider.js';
 
 
 function IngresaTuDomicilio() {
@@ -71,7 +71,7 @@ function IngresaTuDomicilio() {
   return (
     <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
       <TitlePage title="Ingresa tu domicilio" />
-      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <div className='flex-col space-y-12'>
 
           <TextField
@@ -167,7 +167,7 @@ function IngresaTuDomicilio() {
                     isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
                     handleSubmit={handleSubmit(onSubmit)}
         />
-        </FormProvider>
+        </CustomFormProvider>
     </div>
   )
 }

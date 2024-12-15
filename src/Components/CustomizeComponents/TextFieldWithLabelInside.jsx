@@ -42,12 +42,13 @@ function TextFieldWithLabelInside({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
   const { control } = useFormContext();
+  console.log('control: ', control)
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field, fieldState: { error }}) => (
         <div className="w-full">
           <Input
             {...field}

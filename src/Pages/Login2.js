@@ -13,7 +13,7 @@ import { useAuthContext } from '../Contexts/authContext';
 import { SIGNUP } from '../Config/Router/paths';
 import { useLoginQuery } from '../hooks/useQueryHooks';
 
-import FormProvider from '../Components/CustomizeComponents/Form/FormProvider';
+import CustomFormProvider from '../Components/CustomizeComponents/Form/CustomFormProvider';
 import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside';
 
 function LogIn2() {
@@ -38,7 +38,6 @@ function LogIn2() {
   } = methods;
 
   const values = watch();
-  console.log('values: ', values)
 
   const onSuccess = async (response) => {
     if (response.data.status === 'success') {
@@ -60,6 +59,7 @@ function LogIn2() {
   const loginQuery = useLoginQuery(onSuccess, onError);
 
   const onSubmit = (data) => {
+    console.log('data: ', data)
     loginQuery.mutate(data);
   };
 
@@ -72,7 +72,7 @@ function LogIn2() {
         <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Iniciar Sesión</h1>
       </div>
       <div className="w-10/12 space-y-8 my-4">
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside
               type="email"
@@ -93,7 +93,7 @@ function LogIn2() {
               isVisible={isVisible}
             />
           </div>
-        </FormProvider>
+        </CustomFormProvider>
         <div className="flex justify-center">
             <Button
               type='submit'

@@ -6,6 +6,7 @@ export function login(data){
 } 
 
 export function updateUserData(data) {
+    console.log('data on apiHelper: ', data)
     return  axios.post(endpoint.usuarios.updateDataUser, data, {withCredentials:true});
   }
 
@@ -60,7 +61,7 @@ export function createValidation() {
 }
 
 //Para crear un usuario
-export function createUser() {
-    return axios.post(endpoint.usuarios.createUser, {}, { withCredentials: true });
+export function createUser(data) {
+    return axios.post(endpoint.usuarios.createUser, data, { withCredentials: true });
 }
  

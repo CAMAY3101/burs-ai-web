@@ -31,7 +31,7 @@ export const useLoginQuery = (onSuccess, onError) => {
 export const useUpdateUserQuery = (onSuccess, onError) => {
   const mutation = useMutation({
     mutationKey: ['updateUserData'], 
-    mutationFn: updateUserData, 
+    mutationFn: (data) => updateUserData(data), 
     onSuccess, 
     onError,   
   });
@@ -161,7 +161,7 @@ export const useCreateValidation = (onSuccess, onError) => {
 export const useCreateUser = (onSuccess, onError) => {
   const mutation = useMutation({
       mutationKey: ['createUseer'],
-      mutationFn: createUser,
+      mutationFn: (data) => createUser(data),
       onSuccess,
       onError,
   });
