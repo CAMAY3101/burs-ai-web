@@ -25,8 +25,13 @@ export const datos_form = yup.object().shape({
         .min(18, 'Debes tener al menos 18 años')
         .max(100, 'La edad máxima es 100 años'),
     phone: yup.string()
-        .required('El teléfono es obligatorio')
-        .matches(/^\+\d{1,3}\s?\(?\d{1,3}\)?\s?\d{4}\s?\d{6}$/, 'El número de teléfono no es válido')
+    .matches(/^\+?\d+$/, 'El número de teléfono solo debe contener números y un prefijo opcional (+)')
+      .transform((value) => {
+          const cleanPhone = value.replace(/[^+\d]/g, ''); // Limpia caracteres extra
+          const hasCountryCode = /^\+\d{1,3}/.test(cleanPhone);
+          return hasCountryCode ? cleanPhone : `+52${cleanPhone}`;
+      })
+      .required('El número de teléfono es obligatorio'),
 });
 
 

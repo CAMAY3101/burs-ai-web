@@ -28,8 +28,8 @@ const styles_input = {
 
 
 function TextField({type, placeholder, label, name, errorMessage, isRequired = true }) {
-  const { control } = useFormContext();
-  console.log('control: ', control)
+  const context = useFormContext();
+  const { control } = context;
   
   return (
     <Controller

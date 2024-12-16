@@ -87,6 +87,7 @@ function IngresaTusDatos() {
     
       const onSubmit = (data) => {
         console.log('data: ', data)
+
         const payload = {
             nombre: data.name,
             apellidos: data.lastName,
