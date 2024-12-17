@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
 import { Select, SelectItem } from "@nextui-org/react";
 
 const styles_select = {
   label: [
-    "text-dark-blue-950",
+    "group-data-[filled-within=true]:text-dark-blue-950",
     "font-rubik",
     "font-medium",
     "text-base",
@@ -35,6 +36,7 @@ const styles_select = {
 const SelectField = ({
   isRequired = true,
   label,
+  name,
   options = [],
   placeholder,
   selectedKeys,
@@ -56,33 +58,42 @@ const SelectField = ({
   // Verificar si el valor seleccionado corresponde al placeholder
   const isPlaceholderSelected = selectedValue?.length === 0 || selectedValue === placeholder;
 
+  const context = useFormContext();
+
+  if (!context) {
+    console.error("useFormContext no está disponible. Asegúrate de que el componente esté dentro de un FormProvider.");
+    return null;
+  }
+
+  const { control } = context;
+
   return (
-    <div className="w-full">
-      <label className={`${styles_select.label.join(" ")} flex items-center`}>
-        {label}
-        {isRequired && <span className={styles_select.requiredAsterisk.join(" ")}>*</span>}
-      </label>
-      <Select
-        placeholder={placeholder}
-        variant="bordered"
-        size="md"
-        classNames={{
-          trigger: styles_select.trigger.join(" "),
-          value: isPlaceholderSelected
-            ? "text-dark-blue-300"  // Si es el placeholder, usamos dark-blue-300
-            : "text-dark-blue-950", // Si hay una opción seleccionada, usamos dark-blue-950
-        }}
-        selectedKeys={selectedValue}
-        onSelectionChange={handleSelectionChange}
-        isDisabled={isDisabled}
-      >
-        {options.map((option) => (
-          <SelectItem value={option.value} key={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error }}) => (
+        <div className="w-full">
+          <Select
+            placeholder={placeholder}
+            label={label}
+            isRequired={isRequired}
+            labelPlacement='outside'
+            variant="bordered"
+            size="md"
+            classNames={styles_select}
+            selectedKeys={selectedValue}
+            onSelectionChange={handleSelectionChange}
+            isDisabled={isDisabled}
+          >
+            {options.map((option) => (
+              <SelectItem value={option.value} key={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+      )}
+    />
   );
 };
 

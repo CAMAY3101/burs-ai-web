@@ -61,9 +61,9 @@ export const useSendOTPCode = (onSuccess, onError) => {
 export const useUpdateHistorial = (onSuccess, onError) => {
   const mutation = useMutation({
     mutationKey: ['dataHistorial'], 
-    mutationFn: dataHistorial, 
+    mutationFn: (data) => dataHistorial(data),
     onSuccess, 
-    onError,   
+    onError,  
   });
   return mutation;
 };

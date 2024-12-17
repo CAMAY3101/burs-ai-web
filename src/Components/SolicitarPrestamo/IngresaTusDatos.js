@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-import { usePhoneInput, FlagImage, defaultCountries, parseCountry, } from "react-international-phone";
 import 'react-international-phone/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import CustomFormProvider from '../CustomizeComponents/Form/CustomFormProvider.js';
-import { Input, Select, SelectItem } from "@nextui-org/react"
 import toast from 'react-hot-toast';
 import { datos_form } from '../../Config/Schemas/yupSchemas.js';
 
@@ -17,30 +13,7 @@ import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
 import Loading from '../CustomizeComponents/Loading.jsx';
 
-axios.defaults.withCredentials = true;
 
-const styles_input = {
-    label: [
-        "group-data-[filled-within=true]:text-dark-blue-950",
-        "font-rubik",
-        "font-medium",
-        "text-base",
-    ],
-    input: [
-        "font-rubik",
-        "font-regular",
-        "text-[15px]",
-        "text-dark-blue-950",
-        "placeholder:text-dark-blue-300",
-    ],
-    inputWrapper: [
-        "rounded-xl",
-        "border-dark-blue-400",
-        "data-[hover=true]:border-dark-blue-700",
-        "group-data-[focus=true]:border-dark-blue-900",
-        "!cursor-text",
-    ]
-};
 
 function IngresaTusDatos() {
     //----------------------Variables----------------------

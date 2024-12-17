@@ -6,7 +6,6 @@ export function login(data){
 } 
 
 export function updateUserData(data) {
-    console.log('data on apiHelper: ', data)
     return  axios.post(endpoint.usuarios.updateDataUser, data, {withCredentials:true});
   }
 
