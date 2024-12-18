@@ -16,7 +16,6 @@ import Loading from '../CustomizeComponents/Loading.jsx';
 
 
 function IngresaTusDatos() {
-    //----------------------Variables----------------------
     const { navigateToNextStep } = useAuthContext();
 
     const defaultValues = {
@@ -36,9 +35,6 @@ function IngresaTusDatos() {
         watch,
         formState: { errors, isSubmitting },
     } = methods;
-
-    const values = watch();
-    console.log('values: ', values)
 
     //----------------------coneccion API----------------------
 

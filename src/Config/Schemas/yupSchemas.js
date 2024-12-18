@@ -39,20 +39,25 @@ export const historial_form = yup.object().shape({
     salarioMensual: yup.number().required('El salario mensual es obligatorio')
       .min(1, 'El salario mensual debe ser mayor a 0')
       .typeError('El salario mensual debe ser un número válido'),
-    ocupacion: yup.array().min(1, 'Debes seleccionar al menos una ocupación')
+    ocupacion: yup.string().min(1, 'Debes seleccionar al menos una ocupación')
       .required('La ocupación es obligatoria'),
-    industria: yup.array().min(1, 'Debes seleccionar al menos una industria')
+    industria: yup.string().min(1, 'Debes seleccionar al menos una industria')
       .required('La industria es obligatoria'),
-    subindustria: yup.array().min(1, 'Debes seleccionar al menos una subindustria')
+    subindustria: yup.string().min(1, 'Debes seleccionar al menos una subindustria')
       .required('La subindustria es obligatoria'),
     salarioFamiliar: yup.number().required('El salario familiar es obligatorio')
       .min(1, 'El salario familiar debe ser mayor a 0')
       .typeError('El salario familiar debe ser un número válido'),
-    calificacionCrediticia: yup.array().min(1, 'Debes seleccionar al menos una calificación crediticia')
+    calificacionCrediticia: yup.string().min(1, 'Debes seleccionar al menos una calificación crediticia')
       .required('La calificación crediticia es obligatoria'),
-    usoPrestamo: yup.array().min(1, 'Debes seleccionar al menos un uso para el préstamo')
+    usoPrestamo: yup.string().min(1, 'Debes seleccionar al menos un uso para el préstamo')
       .required('El uso del préstamo es obligatorio'),
-    pagoAtravesBanco: yup.boolean().required('Es necesario indicar si el pago es a través de un banco'),
+    pagoAtravesBanco: yup.bool()
+    .transform((value) => {
+      const res = value === "Sí" ? true : false
+      return res
+    })
+    .required('Es necesario indicar si el pago es a través de un banco'),
   });
 
   export const login_form = yup.object().shape({

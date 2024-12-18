@@ -53,6 +53,9 @@ function TuHistorial() {
       formState: { errors, isSubmitting },
   } = methods;
 
+  const values = watch();
+  console.log('values: ', values)
+
   const onSuccess = async (response) => {
     setTimeout(() => {
       navigateToNextStep(3); // Navegar al siguiente paso si es exitoso
@@ -66,7 +69,20 @@ function TuHistorial() {
   const updateDataHistorial = useUpdateHistorial(onSuccess, onError);
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log('data: ',data)
+
+    const payload = {
+      salario_mensual: data.salarioMensual,
+      ocupacion: data.ocupacion,
+      industria: data.industria,
+      subindustria: data.subindustria,
+      pago_a_traves_de_banco: data.pagoAtravesBanco,
+      salario_familiar: data.salarioFamiliar,
+      calificacion_crediticia: data.calificacionCrediticia,
+      uso_prestamo: data.usoPrestamo
+    }
+
+    updateDataHistorial.mutate(payload)
   };
 
   return (
@@ -107,7 +123,7 @@ function TuHistorial() {
           <div>
             <SelectField
               label="Subindustria"
-              options={industria.anchorKey && subIndustriasValues[industria.anchorKey] ? subIndustriasValues[industria.anchorKey] : []}
+              options={values.industria && subIndustriasValues[values.industria] ? subIndustriasValues[values.industria] : []}
               placeholder="Selecciona una opción"
               name='subindustria'
               selectedKeys={subindustria}
