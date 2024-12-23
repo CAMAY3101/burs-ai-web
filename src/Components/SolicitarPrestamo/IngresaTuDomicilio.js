@@ -25,35 +25,32 @@ function IngresaTuDomicilio() {
   };
   const methods = useForm({
     resolver: yupResolver(address_form),
-    mode: 'onChange',
     defaultValues,
   });
 
   const {
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
-    setValue,
   } = methods;
+  const onError = (error) => {
+    console.error("Error al actualizar el historial:", error);
+  };
 
   const { mutate: createAddress, isLoading: isCreatingAddress } = useCreateAddress(
-    async () => {
-      await sendOTP(); // Llama al siguiente paso después de guardar el domicilio
+    () => { 
+      sendOTP();
     },
-    (error) => {
-      console.error("Error al guardar el domicilio:", error);
-    }
+    onError
   );
 
   const { mutate: sendOTP, isLoading: isSendingOTP } = useSendOTPCode(
     () => {
-      navigateToNextStep(4); // Avanza al siguiente paso
+      console.log("Código OTP enviado con éxito");
+      navigateToNextStep(4); // Navega solo si el OTP fue enviado correctamente
     },
-    (error) => {
-      console.error("Error al enviar el código OTP:", error);
-    }
+    onError
   );
-
+  
   // Envío del formulario
   const onSubmit = async (data) => {
     createAddress({
@@ -80,8 +77,6 @@ function IngresaTuDomicilio() {
             label='Calle'
             placeholder='Ejemplo: Av. Insurgentes Sur'
             errorMessage={errors.calle?.message}
-            value={watch('calle')}
-            onValueChange={(value) => setValue('calle', value, { shouldValidate: true })}
           />
 
           <div id='num ext e int' className='flex space-x-5' >
@@ -91,18 +86,15 @@ function IngresaTuDomicilio() {
               label='Número Exterior'
               placeholder='Ejemplo: 25'
               errorMessage={errors.numExt?.message}
-              value={watch('numExt')}
-              onValueChange={(value) => setValue('numExt', value, { shouldValidate: true })}
             />
 
             <TextField
               type='text'
               name='numInt'
+              isRequired={false}
               label='Número Interior'
               placeholder='Ejemplo: 25'
               errorMessage={errors.numInt?.message}
-              value={watch('numInt')}
-              onValueChange={(value) => setValue('numInt', value, { shouldValidate: true })}
             />
           </div>
           <div className='flex space-x-5' >
@@ -112,8 +104,6 @@ function IngresaTuDomicilio() {
               label='Colonia'
               placeholder='Ejemplo: Del Valle'
               errorMessage={errors.colonia?.message}
-              value={watch('colonia')}
-              onValueChange={(value) => setValue('colonia', value, { shouldValidate: true })}
             />
             <TextField
               isRequired
@@ -122,8 +112,6 @@ function IngresaTuDomicilio() {
               label='C.P.'
               placeholder='Ejemplo: 12345'
               errorMessage={errors.cp?.message}
-              value={watch('cp')}
-              onValueChange={(value) => setValue('cp', value, { shouldValidate: true })}
             />
           </div>
 
@@ -133,8 +121,6 @@ function IngresaTuDomicilio() {
                         label='Municipio'
                         placeholder='Ejemplo: Nezahualcóyotl'
                         errorMessage={errors.municipio?.message}
-                        value={watch('municipio')}
-                        onValueChange={(value) => setValue('municipio', value, { shouldValidate: true })}
           />
           <TextField
                         type='text'
@@ -142,12 +128,11 @@ function IngresaTuDomicilio() {
                         label='Estado'
                         placeholder='Ejemplo: Estado de México'
                         errorMessage={errors.estado?.message}
-                        value={watch('estado')}
-                        onValueChange={(value) => setValue('estado', value, { shouldValidate: true })}
           />
 
           <SelectField
             label="Tipo de vivienda"
+            name="tipoVivienda"
             options={[
               { value: 'propia', label: 'Propia' },
               { value: 'pagando', label: 'Pagando' },
@@ -157,8 +142,6 @@ function IngresaTuDomicilio() {
               { value: 'huesped', label: 'Huésped' },
             ]}
             placeholder="Selecciona una opción"
-            selectedKeys={watch('tipoVivienda')}
-            onSelectionChange={(value) => setValue('tipoVivienda', value, { shouldValidate: true })}
             errorMessage={errors.tipoVivienda?.message}
           />
         </div>

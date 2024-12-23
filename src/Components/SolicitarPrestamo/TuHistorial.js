@@ -96,7 +96,7 @@ function TuHistorial() {
               label="Salario mensual"
               placeholder='Ejemplo:$15000'
               name='salarioMensual'
-              errorMessage={errors.salarioMensual}
+              errorMessage={errors.salarioMensual?.message}
             />
           </div>
 
@@ -106,7 +106,7 @@ function TuHistorial() {
               options={ocupacionValues}
               placeholder="Selecciona una opción"
               name='ocupacion'
-              errorMessage={errors.ocupacion}
+              errorMessage={errors.ocupacion?.message}
             />
           </div>
 
@@ -116,7 +116,7 @@ function TuHistorial() {
               options={industriaValues}
               placeholder="Selecciona una opción"
               name='industria'
-              errorMessage={errors.industria}
+              errorMessage={errors.industria?.message}
             />
           </div>
 
@@ -128,7 +128,7 @@ function TuHistorial() {
               name='subindustria'
               selectedKeys={subindustria}
               onSelectionChange={setSubindustria}
-              errorMessage={errors.subindustria}
+              errorMessage={errors.subindustria?.message}
             />
           </div>
 
@@ -138,7 +138,7 @@ function TuHistorial() {
               options={[{ label: "Sí", value: "Si" }, { label: "No", value: "No" },]}
               placeholder="Selecciona una opción"
               name='pagoAtravesBanco'
-              errorMessage={errors.pagoAtravesBanco}
+              errorMessage={errors.pagoAtravesBanco?.message}
             />
           </div>
 
@@ -149,7 +149,7 @@ function TuHistorial() {
               placeholder='Ejemplo: $15000'
               name='salarioFamiliar'
               className="mt-5"
-              errorMessage={errors.salarioFamiliar}
+              errorMessage={errors.salarioFamiliar?.message}
             />
           </div>
 
@@ -159,7 +159,7 @@ function TuHistorial() {
               options={calificacionCrediticiaValues}
               placeholder="Selecciona una opción"
               name='calificacionCrediticia'
-              errorMessage={errors.calificacionCrediticia}
+              errorMessage={errors.calificacionCrediticia?.message}
             />
           </div>
 
@@ -169,7 +169,7 @@ function TuHistorial() {
               options={usoPrestamoValues}
               placeholder="Selecciona una opción"
               name='usoPrestamo'
-              errorMessage={errors.usoPrestamo}
+              errorMessage={errors.usoPrestamo?.message}
             />
           </div>
 

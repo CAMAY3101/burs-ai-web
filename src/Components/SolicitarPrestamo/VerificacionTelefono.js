@@ -1,23 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthContext } from '../../Contexts/authContext';
-import { endpoint } from '../../Config/utils/urls';
-import { useSecurePhoneQuery, useVerifyPhone, useResendOtpPhone,useGenerateToken,useCreateValidation } from '../../hooks/useQueryHooks.js';
+import { useSecurePhoneQuery, useVerifyPhone, useResendOtpPhone, useGenerateToken, useCreateValidation } from '../../hooks/useQueryHooks.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
+import CustomFormProvider from '../CustomizeComponents/Form/CustomFormProvider.js';
+import { phone_Verification } from '../../Config/Schemas/yupSchemas.js';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
 
 function VerificacionTelefono() {
     const { navigateToNextStep, checkToken } = useAuthContext();
-    const [otpCode, setOtpCode] = useState('');
+
+    const defaultValues = {
+        otpCode: '',
+    };
+
+    const methods = useForm({
+        resolver: yupResolver(phone_Verification),
+        defaultValues,
+    });
+
+    const {
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = methods;
+
+    const onError = (error) => {
+        console.error("Error al verificar el telefono:", error);
+    };
+
+
     const { data: securePhoneData, isLoading: isLoadingPhone } = useSecurePhoneQuery(
-        () => {},
+        () => { },
         () => toast.error("No se pudo obtener el teléfono seguro")
     );
-
     const phoneSecure = securePhoneData?.phone
         ? `al teléfono ${securePhoneData.phone}`
         : "a tu teléfono";
@@ -25,54 +45,50 @@ function VerificacionTelefono() {
     // Hook para verificar el teléfono
     const { mutate: verifyPhone } = useVerifyPhone(
         () => {
-            toast.success("Teléfono verificado con éxito");
-            setTimeout(() => {
-                generateToken(); // Generar token y continuar
-            }, 2000);
+            toast.success("Telefono verificado");
+            generateToken();
         },
-        (error) => {
-            if (error?.status === 400) {
-                toast.error("Código incorrecto");
-            } else {
-                toast.error("Error al verificar el teléfono, inténtalo de nuevo");
-            }
-        }
+        onError
     );
 
-    // Hook para reenviar el código OTP por teléfono
-    const { mutate: resendOtpPhone } = useResendOtpPhone(
-        () => toast.success("Código reenviado"),
-        () => toast.error("Error al reenviar el código")
-    );
+// Hook para reenviar el código OTP por teléfono
+const { mutate: resendOtpPhone } = useResendOtpPhone(
+    () => toast.success("Código reenviado"),
+    () => toast.error("Error al reenviar el código")
+);
 
-    // Hook para generar un token
-    const { mutate: generateToken } = useGenerateToken(
-        () => {
-            checkToken();
-            createValidation(); // Crear validación
-        },
-        (error) => console.error("Error al generar token:", error)
-    );
+// Hook para generar un token FAD
+const { mutate: generateToken } = useGenerateToken(
+    () => {
+        checkToken();
+        createValidation(); // Crear validación
+    },
+    (error) => console.error("Error al generar token:", error)
+);
 
-    // Hook para crear validación
-    const { mutate: createValidation } = useCreateValidation(
-        () => navigateToNextStep(6),
-        (error) => console.error("Error al crear validación:", error)
-    );
+// Hook para crear validación FAD
+const { mutate: createValidation } = useCreateValidation(
+    () => {
+        toast.success("Validación completada");
+        navigateToNextStep(6); // Avanza al siguiente paso solo si la validación es exitosa
+    },
+    (error) => console.error("Error al crear validación:", error)
+);
 
-    const handleSubmit = () => {
-        verifyPhone({ code: otpCode });
-    };
+const onSubmit = (data) => {
+    verifyPhone({ code: data.otpCode });
+};
 
-    const handleResend = () => {
-        resendOtpPhone();
-    };
+const handleResend = () => {
+    resendOtpPhone();
+};
 
-    return (
-        <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
+return (
+    <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
+        <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-col space-y-12'>
                 <div className='flex flex-col space-y-5'>
-                <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
+                    <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
                     <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
                 </div>
                 <div className='flex-col space-y-3'>
@@ -80,8 +96,8 @@ function VerificacionTelefono() {
                         type='text'
                         label='Codigo OTP'
                         placeholder='Ingresa el codigo'
-                        value={otpCode}
-                        onValueChange={setOtpCode}
+                        name='otpCode'
+                        errorMessage={errors.otpCode?.message}
                     />
                     <Button
                         variant='light'
@@ -92,7 +108,7 @@ function VerificacionTelefono() {
                     </Button>
                 </div>
                 <Button1
-                    handleSubmit={handleSubmit}
+                    handleSubmit={handleSubmit(onSubmit)}
                     label="Verificar Teléfono"
                 />
                 <Toaster
@@ -100,8 +116,9 @@ function VerificacionTelefono() {
                     reverseOrder={false}
                 />
             </div>
-        </div>
-    )
+        </CustomFormProvider>
+    </div>
+);
 }
 
 export default VerificacionTelefono

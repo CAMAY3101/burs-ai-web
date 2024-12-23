@@ -19,10 +19,10 @@ function IngresaTusDatos() {
     const { navigateToNextStep } = useAuthContext();
 
     const defaultValues = {
-        name: '',
-        lastName: '',
-        age: '',
-        phone: ''
+        nombre: '',
+        aoellidos: '',
+        edad: '',
+        telefono: ''
     };
 
     const methods = useForm({
@@ -35,6 +35,9 @@ function IngresaTusDatos() {
         watch,
         formState: { errors, isSubmitting },
     } = methods;
+
+    const values = watch();
+    console.log('values: ', values)
 
     //----------------------coneccion API----------------------
 
@@ -58,10 +61,10 @@ function IngresaTusDatos() {
         console.log('data: ', data)
 
         const payload = {
-            nombre: data.name,
-            apellidos: data.lastName,
-            edad: data.age,
-            telefono: data.phone
+            nombre: data.nombre,
+            apellidos: data.apellidos,
+            edad: data.edad,
+            telefono: data.telefono
         }
         updateDataUserQuery.mutate(payload);
       };
@@ -76,40 +79,40 @@ function IngresaTusDatos() {
                             <div>
                                 <TextField
                                     type='text'
-                                    name='name'
+                                    name='nombre'
                                     label='Nombre(s)'
                                     placeholder='Ejemplo: Juan'
-                                    errorMessage={errors.name?.message}
+                                    errorMessage={errors.nombre?.message}
                                 />
                             </div>
                             <div>
                                 <TextField
                                     type='text'
-                                    name='lastName'
+                                    name='apellidos'
                                     label='Apellido(s)'
                                     placeholder='Ejemplo: Perez Lopez'
-                                    errorMessage={errors.lastName?.message}
+                                    errorMessage={errors.apellidos?.message}
                                 />
                             </div>
                             <div className='w-1/2'>
                                 <TextField
                                     type='number'
-                                    name='age'
+                                    name='edad'
                                     label='Edad'
                                     placeholder='Ej: 25'
                                     className='w-1/2'
                                     min={18}
                                     max={100}
-                                    errorMessage={errors.age?.message}
+                                    errorMessage={errors.edad?.message}
                                 />
                             </div>
                             <div>
                                 <TextField
                                     type='text'
-                                    name='phone'
-                                    label='Telefono'
+                                    name='telefono'
+                                    label='Teléfono'
                                     placeholder='Ej: 5560607070'
-                                    errorMessage={errors.phone?.message}
+                                    errorMessage={errors.telefono?.message}
                                 />
                             </div>
                             <Button1
