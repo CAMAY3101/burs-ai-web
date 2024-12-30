@@ -58,7 +58,6 @@ function IngresaTusDatos() {
       const updateDataUserQuery = useUpdateUserQuery(onSuccess, onError);
     
       const onSubmit = (data) => {
-        console.log('data: ', data)
 
         const payload = {
             nombre: data.nombre,
