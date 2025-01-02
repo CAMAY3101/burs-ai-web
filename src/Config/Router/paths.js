@@ -3,6 +3,7 @@ export const SIGNUP = '/signup';
 export const PRIVATE = '/private';
 
 export const LOGOUT = '/private/logout';
+export const RECOVERPASSWORD = '/recoverpassword'
 
 export const PRESTAMO = '/prestamo';
 export const PRESTAMO_SOLICITUD = '/prestamo/solicitud';

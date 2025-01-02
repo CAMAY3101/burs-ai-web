@@ -10,20 +10,20 @@ import visibleEyeIcon from "../Assets/icons/visible-eye.png";
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png";
 
 import { useAuthContext } from '../Contexts/authContext';
-import { SIGNUP, RECOVERPASSWORD } from '../Config/Router/paths';
 import { useLoginQuery } from '../hooks/useQueryHooks';
 
 import CustomFormProvider from '../Components/CustomizeComponents/Form/CustomFormProvider';
 import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside';
 
-function LogIn2() {
+function NewPassword() {
   const { login, verificationStep } = useAuthContext();
   const [isVisible, setIsVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
 
   const defaultValues = {
-    correo: '',
     contrasena: '',
+    newcontrasena: '',
   };
 
   const methods = useForm({
@@ -38,6 +38,11 @@ function LogIn2() {
   } = methods;
 
   const values = watch();
+
+  React.useEffect(() => {
+    const passwordsMatch = values.newcontrasena === values.contrasena;
+    setIsButtonDisabled(!passwordsMatch);
+  }, [values.newcontrasena, values.contrasena]);
 
   const onSuccess = async (response) => {
     if (response.data.status === 'success') {
@@ -59,7 +64,7 @@ function LogIn2() {
   const loginQuery = useLoginQuery(onSuccess, onError);
 
   const onSubmit = (data) => {
-    console.log('data: ', data)
+    console.log('data: ', data);
     loginQuery.mutate(data);
   };
 
@@ -69,25 +74,28 @@ function LogIn2() {
         <Link to="/">
           <img className="w-20" alt="icon-color-burs" src={bursColorIcon} />
         </Link>
-        <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Iniciar Sesión</h1>
+        <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Restablece tu contraseña</h1>
       </div>
       <div className="w-10/12 space-y-8 my-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside
-              type="email"
-              name="correo"
-              label="Correo Electrónico"
-              placeholder="ejemplo@outlook.com"
-              errorMessage={errors.correo?.message}
+              type="password"
+              name="newcontrasena"
+              label="Contraseña"
+              placeholder="Nueva contraseña"
+              errorMessage={errors.newcontrasena?.message || messageError}
+              isPasswordField={true}
+              visibleEyeIcon={visibleEyeIcon}
+              invisibleEyeIcon={invisibleEyeIcon}
+              isVisible={isVisible}
             />
             <TextFieldWithLabelInside
               type="password"
               name="contrasena"
               label="Contraseña"
-              placeholder="Ingresa contraseña"
+              placeholder="Vuelve a escribir la contraseña"
               errorMessage={errors.contrasena?.message || messageError}
-              isPasswordField={true}
               visibleEyeIcon={visibleEyeIcon}
               invisibleEyeIcon={invisibleEyeIcon}
               isVisible={isVisible}
@@ -95,24 +103,15 @@ function LogIn2() {
           </div>
         </CustomFormProvider>
         <div className="flex justify-center">
-            <Button
-              type='submit'
-              size="md"
-              className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
-              isDisabled={isSubmitting}
-              onClick={handleSubmit(onSubmit)} // Manejo manual del clic
-            >
-              Ingresar
-            </Button>
-          </div>
-        <div className="flex flex-col items-start w-10/12">
-          <p className="font-rubik font-light text-sm text-dark-blue-950">
-            ¿No tienes una cuenta?
-            <a className="text-dark-blue-700 font-normal" href={SIGNUP}> Regístrate</a>
-          </p>
-          <p>
-            <a className="text-dark-blue-700 font-normal" href={RECOVERPASSWORD}>¿Olvidaste tu Contraseña?</a>
-          </p>
+          <Button
+            type='submit'
+            size="md"
+            className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
+            isDisabled={isButtonDisabled || isSubmitting}
+            onClick={handleSubmit(onSubmit)}
+          >
+            Siguiente
+          </Button>
         </div>
         <div className="text-[10px]">{messageError}</div>
       </div>
@@ -120,4 +119,4 @@ function LogIn2() {
   );
 }
 
-export default LogIn2;
+export default NewPassword;
