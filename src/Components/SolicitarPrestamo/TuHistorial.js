@@ -11,6 +11,7 @@ import TextField from "../CustomizeComponents/TextField";
 import SelectField from '../CustomizeComponents/SelectField';
 import TitlePage from '../CustomizeComponents/TitlePage';
 import Button1 from '../CustomizeComponents/Button1';
+import Loading from '../CustomizeComponents/Loading.jsx'
 
 
 function TuHistorial() {
@@ -55,8 +56,10 @@ function TuHistorial() {
 
   const values = watch();
   console.log('values: ', values)
+  console.log('isSubmitting:', isSubmitting);
 
-  const onSuccess = async (response) => {
+
+  const onSuccess = async () => {
     setTimeout(() => {
       navigateToNextStep(3); // Navegar al siguiente paso si es exitoso
     }, 2000);
@@ -68,7 +71,7 @@ function TuHistorial() {
 
   const updateDataHistorial = useUpdateHistorial(onSuccess, onError);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log('data: ',data)
 
     const payload = {
@@ -81,9 +84,13 @@ function TuHistorial() {
       calificacion_crediticia: data.calificacionCrediticia,
       uso_prestamo: data.usoPrestamo
     }
-
-    updateDataHistorial.mutate(payload)
+    await new Promise((resolve) => setTimeout(resolve, 1000)); 
+    updateDataHistorial.mutate(payload);
   };
+
+     if (isSubmitting) {
+      return <Loading />;
+    }
 
   return (
     <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>

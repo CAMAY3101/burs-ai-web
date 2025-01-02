@@ -20,7 +20,7 @@ function IngresaTusDatos() {
 
     const defaultValues = {
         nombre: '',
-        aoellidos: '',
+        apellidos: '',
         edad: '',
         telefono: ''
     };
@@ -38,27 +38,28 @@ function IngresaTusDatos() {
 
     const values = watch();
     console.log('values: ', values)
+    console.log('isSubmitting:', isSubmitting);
+
 
     //----------------------coneccion API----------------------
 
-    const onSuccess = async (response) => {
+    const onSuccess = async () => {
         toast.success('Datos actualizados correctamente');
         navigateToNextStep(2);
-      };
-    
-      const onError = (error) => {
+    };
+
+    const onError = (error) => {
         if (error.response?.data?.message) {
             toast.error(error.response.data.message);
         } else {
             toast.error('Error al actualizar los datos del usuario');
         }
         console.error('Error API:', error);
-      };
-    
-      const updateDataUserQuery = useUpdateUserQuery(onSuccess, onError);
-    
-      const onSubmit = (data) => {
+    };
 
+    const updateDataUserQuery = useUpdateUserQuery(onSuccess, onError);
+
+    const onSubmit = async (data) => {
         const payload = {
             nombre: data.nombre,
             apellidos: data.apellidos,
@@ -66,62 +67,64 @@ function IngresaTusDatos() {
             telefono: data.telefono
         }
         updateDataUserQuery.mutate(payload);
-      };
+    };
+
+    if (isSubmitting) {
+        return <Loading />;
+    }
 
     return (
         <>
-            {isSubmitting ? <Loading/> : 
-                <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
-                    <TitlePage title="Ingresa tus datos" />
-                    <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                        <div className='flex-col space-y-12'>
-                            <div>
-                                <TextField
-                                    type='text'
-                                    name='nombre'
-                                    label='Nombre(s)'
-                                    placeholder='Ejemplo: Juan'
-                                    errorMessage={errors.nombre?.message}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    type='text'
-                                    name='apellidos'
-                                    label='Apellido(s)'
-                                    placeholder='Ejemplo: Perez Lopez'
-                                    errorMessage={errors.apellidos?.message}
-                                />
-                            </div>
-                            <div className='w-1/2'>
-                                <TextField
-                                    type='number'
-                                    name='edad'
-                                    label='Edad'
-                                    placeholder='Ej: 25'
-                                    className='w-1/2'
-                                    min={18}
-                                    max={100}
-                                    errorMessage={errors.edad?.message}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    type='text'
-                                    name='telefono'
-                                    label='Teléfono'
-                                    placeholder='Ej: 5560607070'
-                                    errorMessage={errors.telefono?.message}
-                                />
-                            </div>
-                            <Button1
-                                isDisabled={isSubmitting}
-                                handleSubmit={handleSubmit(onSubmit)}
+            <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
+                <TitlePage title="Ingresa tus datos" />
+                <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                    <div className='flex-col space-y-12'>
+                        <div>
+                            <TextField
+                                type='text'
+                                name='nombre'
+                                label='Nombre(s)'
+                                placeholder='Ejemplo: Juan'
+                                errorMessage={errors.nombre?.message}
                             />
                         </div>
-                    </CustomFormProvider >
-                </div >
-            }
+                        <div>
+                            <TextField
+                                type='text'
+                                name='apellidos'
+                                label='Apellido(s)'
+                                placeholder='Ejemplo: Perez Lopez'
+                                errorMessage={errors.apellidos?.message}
+                            />
+                        </div>
+                        <div className='w-1/2'>
+                            <TextField
+                                type='number'
+                                name='edad'
+                                label='Edad'
+                                placeholder='Ej: 25'
+                                className='w-1/2'
+                                min={18}
+                                max={100}
+                                errorMessage={errors.edad?.message}
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                type='text'
+                                name='telefono'
+                                label='Teléfono'
+                                placeholder='Ej: 5560607070'
+                                errorMessage={errors.telefono?.message}
+                            />
+                        </div>
+                        <Button1
+                            isDisabled={isSubmitting}
+                            handleSubmit={handleSubmit(onSubmit)}
+                        />
+                    </div>
+                </CustomFormProvider >
+            </div >
         </>
     )
 }

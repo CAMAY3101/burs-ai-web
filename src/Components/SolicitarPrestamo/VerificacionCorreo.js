@@ -10,6 +10,7 @@ import CustomFormProvider from '../CustomizeComponents/Form/CustomFormProvider.j
 import { email_Verification } from '../../Config/Schemas/yupSchemas.js';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import Loading from '../CustomizeComponents/Loading.jsx'
 
 function VerificacionCorreo() {
   const { navigateToNextStep } = useAuthContext();
@@ -71,6 +72,10 @@ function VerificacionCorreo() {
   const handleResend = () => {
     resendOtpCode();
   };
+
+       if (isSubmitting || isVerifyEmail || isLoadingEmail) {
+        return <Loading />;
+      }
 
   return (
     <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
