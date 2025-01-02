@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCrediticiaValues, usoPrestamoValues } from '../../Config/SolicitarPrestamo/historialValues';
 import { useAuthContext } from '../../Contexts/authContext';
@@ -49,9 +49,9 @@ function TuHistorial() {
   });
 
   const {
-      handleSubmit,
-      watch,
-      formState: { errors, isSubmitting },
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
   } = methods;
 
   const values = watch();
@@ -72,7 +72,7 @@ function TuHistorial() {
   const updateDataHistorial = useUpdateHistorial(onSuccess, onError);
 
   const onSubmit = async (data) => {
-    console.log('data: ',data)
+    console.log('data: ', data)
 
     const payload = {
       salario_mensual: data.salarioMensual,
@@ -84,13 +84,25 @@ function TuHistorial() {
       calificacion_crediticia: data.calificacionCrediticia,
       uso_prestamo: data.usoPrestamo
     }
-    await new Promise((resolve) => setTimeout(resolve, 1000)); 
     updateDataHistorial.mutate(payload);
   };
 
-     if (isSubmitting) {
-      return <Loading />;
-    }
+  if (isSubmitting) {
+    return <Loading />;
+  }
+
+  const formatCurrency = (value) => {
+    if (!value) return '';
+    return `$${parseFloat(value).toLocaleString('es-MX', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })}`;
+  };
+
+  const parseCurrency = (value) => {
+    if (!value) return '';
+    return value.replace(/[^\d.-]/g, ''); // Elimina caracteres no numéricos
+  };
 
   return (
     <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
@@ -99,10 +111,12 @@ function TuHistorial() {
         <div className='flex-col space-y-12'>
           <div className='w-1/2'>
             <TextField
-              type="number"
+              type="text"
               label="Salario mensual"
               placeholder='Ejemplo:$15000'
               name='salarioMensual'
+              formatValue={formatCurrency} 
+              parseValue={parseCurrency}
               errorMessage={errors.salarioMensual?.message}
             />
           </div>
@@ -151,11 +165,13 @@ function TuHistorial() {
 
           <div className='w-2/3 mt-5'>
             <TextField
-              type="number"
+              type="text"
               label='Salario familiar total al mes'
               placeholder='Ejemplo: $15000'
               name='salarioFamiliar'
               className="mt-5"
+              formatValue={formatCurrency} 
+              parseValue={parseCurrency}
               errorMessage={errors.salarioFamiliar?.message}
             />
           </div>

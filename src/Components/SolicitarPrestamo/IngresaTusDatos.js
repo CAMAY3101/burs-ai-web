@@ -66,6 +66,7 @@ function IngresaTusDatos() {
             edad: data.edad,
             telefono: data.telefono
         }
+        await new Promise((resolve) => setTimeout(resolve, 500)); 
         updateDataUserQuery.mutate(payload);
     };
 

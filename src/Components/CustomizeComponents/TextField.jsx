@@ -27,7 +27,7 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label, name, errorMessage, isRequired = true }) {
+function TextField({type, placeholder, label, name, errorMessage, isRequired = true, formatValue, parseValue }) {
   const context = useFormContext();
   const { control } = context;
   
@@ -48,6 +48,11 @@ function TextField({type, placeholder, label, name, errorMessage, isRequired = t
             classNames={styles_input}
             labelPlacement={'outside'}
             name={name}
+            value={formatValue ? formatValue(field.value) : field.value} // Formatear el valor si se proporciona una función
+            onChange={(e) => {
+              const rawValue = parseValue ? parseValue(e.target.value) : e.target.value; // Parsear el valor si se proporciona una función
+              field.onChange(rawValue); // Actualizar el valor del campo con el valor sin formato
+            }}
             errorMessage={errorMessage}
             />
         </div>
@@ -65,6 +70,8 @@ TextField.propTypes = {
     name: PropTypes.string,
     error: PropTypes.string,
     isRequired: PropTypes.bool,
+    formatValue: PropTypes.func, // Función para formatear el valor mostrado
+    parseValue: PropTypes.func,
 }
 
 export default TextField

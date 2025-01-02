@@ -153,11 +153,11 @@ function IngresaTuDomicilio() {
             />
           </div>
 
+          </CustomFormProvider>
           <Button1
             isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
             handleSubmit={handleSubmit(onSubmit)}
           />
-          </CustomFormProvider>
       </div>
     </>
   )
