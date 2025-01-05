@@ -10,10 +10,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import CustomFormProvider from '../CustomizeComponents/Form/CustomFormProvider.js';
 import Loading from '../CustomizeComponents/Loading.jsx'
+import codigosPostales from '../../../src/data/codigos_postales.json'
 
 
 function IngresaTuDomicilio() {
   const { navigateToNextStep } = useAuthContext();
+  const [colonias, setColonias] = useState([])
+
   const defaultValues = {
     calle: '',
     numExt: '',
@@ -31,15 +34,19 @@ function IngresaTuDomicilio() {
 
   const {
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = methods;
 
+  const cpValue = watch('cp');
+  
   const onError = (error) => {
     console.error("Error al actualizar el historial:", error);
   };
 
   const { mutate: createAddress, isLoading: isCreatingAddress } = useCreateAddress(
-    () => { 
+    () => {
       sendOTP();
     },
     onError
@@ -52,6 +59,30 @@ function IngresaTuDomicilio() {
     },
     onError
   );
+
+  // Buscar información del CP
+  const fetchCPData = (cp) => {
+    if (!cp || cp.length !== 5) return;
+
+    const data = codigosPostales.find(item => item.codigo_postal === cp);
+
+    if (data) {
+      const { municipio, estado, colonias } = data;
+      setValue('municipio', municipio || '');
+      setValue('estado', estado || '');
+      setColonias(colonias || []);
+    } else {
+      console.error('Código postal no encontrado');
+      setColonias([]);
+      setValue('municipio', '');
+      setValue('estado', '');
+    }
+  };
+
+  // Ejecutar búsqueda de CP al cambiar el valor
+  React.useEffect(() => {
+    fetchCPData(cpValue);
+  }, [cpValue]);
 
   const onSubmit = async (data) => {
     createAddress({
@@ -66,8 +97,8 @@ function IngresaTuDomicilio() {
     });
   };
 
-   // Muestra el componente Loading si hay alguna operación en progreso
-   if (isCreatingAddress || isSendingOTP) {
+  // Muestra el componente Loading si hay alguna operación en progreso
+  if (isCreatingAddress || isSendingOTP) {
     return <Loading />;
   }
 
@@ -106,13 +137,6 @@ function IngresaTuDomicilio() {
             </div>
             <div className='flex space-x-5' >
               <TextField
-                type='text'
-                name='colonia'
-                label='Colonia'
-                placeholder='Ejemplo: Del Valle'
-                errorMessage={errors.colonia?.message}
-              />
-              <TextField
                 isRequired
                 type='text'
                 name='cp'
@@ -120,21 +144,29 @@ function IngresaTuDomicilio() {
                 placeholder='Ejemplo: 12345'
                 errorMessage={errors.cp?.message}
               />
+              <SelectField
+                type='text'
+                name='colonia'
+                label='Colonia'
+                options={colonias.map((col) => ({ value: col, label: col }))}
+                placeholder='Selecciona tu Colonia'
+                errorMessage={errors.colonia?.message}
+              />
             </div>
 
             <TextField
-                          type='text'
-                          name='municipio'
-                          label='Municipio'
-                          placeholder='Ejemplo: Nezahualcóyotl'
-                          errorMessage={errors.municipio?.message}
+              type='text'
+              name='municipio'
+              label='Municipio'
+              placeholder='Ejemplo: Nezahualcóyotl'
+              errorMessage={errors.municipio?.message}
             />
             <TextField
-                          type='text'
-                          name='estado'
-                          label='Estado'
-                          placeholder='Ejemplo: Estado de México'
-                          errorMessage={errors.estado?.message}
+              type='text'
+              name='estado'
+              label='Estado'
+              placeholder='Ejemplo: Estado de México'
+              errorMessage={errors.estado?.message}
             />
 
             <SelectField
@@ -153,11 +185,11 @@ function IngresaTuDomicilio() {
             />
           </div>
 
-          </CustomFormProvider>
-          <Button1
-            isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
-            handleSubmit={handleSubmit(onSubmit)}
-          />
+        </CustomFormProvider>
+        <Button1
+          isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
+          handleSubmit={handleSubmit(onSubmit)}
+        />
       </div>
     </>
   )
