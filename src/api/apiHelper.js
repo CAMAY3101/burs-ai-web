@@ -3,7 +3,7 @@ import { endpoint } from '../Config/utils/urls';
 
 export function login(data){
     return axios.post(endpoint.usuarios.login, data, { withCredentials: true });
-} 
+}
 
 export function updateUserData(data) {
     return  axios.post(endpoint.usuarios.updateDataUser, data, {withCredentials:true});
@@ -59,8 +59,12 @@ export function createValidation() {
     return axios.post(endpoint.FAD.createValidation, {}, { withCredentials: true });
 }
 
+//Funciones para verificar FAD
+export function validationStepFAD(){
+    return axios.get(endpoint.FAD.getValidationStep, { withCredentials: true });
+}
+
 //Para crear un usuario
 export function createUser(data) {
     return axios.post(endpoint.usuarios.createUser, data, { withCredentials: true });
 }
- 

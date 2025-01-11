@@ -15,13 +15,14 @@ import {
   generateToken,
   createValidation,
   createUser,
+  validationStepFAD
 } from '../api/apiHelper';
 
 
 export const useLoginQuery = (onSuccess, onError) => {
     const mutation = useMutation({
       mutationKey: ['loginKey'],
-      mutationFn: (data) => login(data), 
+      mutationFn: (data) => login(data),
       onSuccess,
       onError,
     })
@@ -30,40 +31,40 @@ export const useLoginQuery = (onSuccess, onError) => {
 
 export const useUpdateUserQuery = (onSuccess, onError) => {
   const mutation = useMutation({
-    mutationKey: ['updateUserData'], 
-    mutationFn: (data) => updateUserData(data), 
-    onSuccess, 
-    onError,   
+    mutationKey: ['updateUserData'],
+    mutationFn: (data) => updateUserData(data),
+    onSuccess,
+    onError,
   });
   return mutation;
 };
 
 export const useCreateAddress = (onSuccess, onError) => {
   const mutation = useMutation({
-    mutationKey: ['addressData'], 
-    mutationFn: addressData, 
-    onSuccess, 
-    onError,   
+    mutationKey: ['addressData'],
+    mutationFn: addressData,
+    onSuccess,
+    onError,
   });
   return mutation;
 };
 
 export const useSendOTPCode = (onSuccess, onError) => {
   const mutation = useMutation({
-    mutationKey: ['sendOtpCode'], 
-    mutationFn: sendOtpCode, 
-    onSuccess, 
-    onError,   
+    mutationKey: ['sendOtpCode'],
+    mutationFn: sendOtpCode,
+    onSuccess,
+    onError,
   });
   return mutation;
 };
 
 export const useUpdateHistorial = (onSuccess, onError) => {
   const mutation = useMutation({
-    mutationKey: ['dataHistorial'], 
+    mutationKey: ['dataHistorial'],
     mutationFn: (data) => dataHistorial(data),
-    onSuccess, 
-    onError,  
+    onSuccess,
+    onError,
   });
   return mutation;
 };
@@ -167,3 +168,17 @@ export const useCreateUser = (onSuccess, onError) => {
   });
   return mutation;
 };
+
+export const useValidationStepFAD = (onSuccess, onError, isEnabled = true) => {
+  return useQuery({
+    queryKey: ['validationStepFAD'],
+    queryFn: validationStepFAD,
+    retry: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    enabled: isEnabled,
+    onSuccess,
+    onError,
+  });
+};
+

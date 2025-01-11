@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }) {
     const [verificationStep, setVerificationStep] = useState(() => {
         return parseInt(window.sessionStorage.getItem(PROGRESS_INDEX)) // Convertir de string a entero
     });
-    
+
     const [tokenExist, setTokenExist] = useState(() => {
         return window.sessionStorage.getItem(AUTHENTICATED)
     });
