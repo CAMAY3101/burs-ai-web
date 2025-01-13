@@ -40,7 +40,7 @@ function IngresaTuDomicilio() {
   } = methods;
 
   const cpValue = watch('cp');
-  
+
   const onError = (error) => {
     console.error("Error al actualizar el historial:", error);
   };
@@ -103,21 +103,22 @@ function IngresaTuDomicilio() {
   }
 
   return (
-    <>
-      <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
-        <TitlePage title="Ingresa tu domicilio" />
-        <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex-col space-y-12'>
+    <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
+      <TitlePage title="Ingresa tu domicilio" />
+      <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex-col space-y-12'>
 
-            <TextField
-              type='text'
-              name='calle'
-              label='Calle'
-              placeholder='Ejemplo: Av. Insurgentes Sur'
-              errorMessage={errors.calle?.message}
-            />
+          <TextField
+            type='text'
+            name='calle'
+            label='Calle'
+            placeholder='Ejemplo: Av. Insurgentes Sur'
+            errorMessage={errors.calle?.message}
+          />
 
-            <div id='num ext e int' className='flex space-x-5' >
+          <div id='num_int' className="flex" style={{ marginTop: window.innerWidth < 768 ? '3rem' : '1.5rem' }}>
+
+            <div style={{ display: 'inline-block', width: '48%', marginRight: '4%' }}>
               <TextField
                 type='text'
                 name='numExt'
@@ -125,7 +126,9 @@ function IngresaTuDomicilio() {
                 placeholder='Ejemplo: 25'
                 errorMessage={errors.numExt?.message}
               />
+            </div>
 
+            <div style={{ display: 'inline-block', width: '48%' }}>
               <TextField
                 type='text'
                 name='numInt'
@@ -135,7 +138,9 @@ function IngresaTuDomicilio() {
                 errorMessage={errors.numInt?.message}
               />
             </div>
-            <div className='flex space-x-5' >
+          </div>
+          <div id='cp' style={{ marginTop: '15px', lineHeight: '1' }} >
+            <div style={{ display: 'inline-block', width: '43%', marginRight: '4%', marginTop: '-6px' }}>
               <TextField
                 isRequired
                 type='text'
@@ -144,6 +149,8 @@ function IngresaTuDomicilio() {
                 placeholder='Ejemplo: 12345'
                 errorMessage={errors.cp?.message}
               />
+            </div>
+            <div style={{ display: 'inline-block', width: '53%' }}>
               <SelectField
                 type='text'
                 name='colonia'
@@ -153,45 +160,45 @@ function IngresaTuDomicilio() {
                 errorMessage={errors.colonia?.message}
               />
             </div>
-
-            <TextField
-              type='text'
-              name='municipio'
-              label='Municipio'
-              placeholder='Ejemplo: Nezahualcóyotl'
-              errorMessage={errors.municipio?.message}
-            />
-            <TextField
-              type='text'
-              name='estado'
-              label='Estado'
-              placeholder='Ejemplo: Estado de México'
-              errorMessage={errors.estado?.message}
-            />
-
-            <SelectField
-              label="Tipo de vivienda"
-              name="tipoVivienda"
-              options={[
-                { value: 'propia', label: 'Propia' },
-                { value: 'pagando', label: 'Pagando' },
-                { value: 'alquilada con contrato formal', label: 'Alquilada con contrato formal' },
-                { value: 'alquilada sin contrato formal', label: 'Alquilada sin contrato formal' },
-                { value: 'vivienda familiar', label: 'Vivienda familiar' },
-                { value: 'huesped', label: 'Huésped' },
-              ]}
-              placeholder="Selecciona una opción"
-              errorMessage={errors.tipoVivienda?.message}
-            />
           </div>
 
-        </CustomFormProvider>
-        <Button1
-          isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
-          handleSubmit={handleSubmit(onSubmit)}
-        />
-      </div>
-    </>
+          <TextField
+            type='text'
+            name='municipio'
+            label='Municipio'
+            placeholder='Ejemplo: Nezahualcóyotl'
+            errorMessage={errors.municipio?.message}
+          />
+          <TextField
+            type='text'
+            name='estado'
+            label='Estado'
+            placeholder='Ejemplo: Estado de México'
+            errorMessage={errors.estado?.message}
+          />
+
+          <SelectField
+            label="Tipo de vivienda"
+            name="tipoVivienda"
+            options={[
+              { value: 'propia', label: 'Propia' },
+              { value: 'pagando', label: 'Pagando' },
+              { value: 'alquilada con contrato formal', label: 'Alquilada con contrato formal' },
+              { value: 'alquilada sin contrato formal', label: 'Alquilada sin contrato formal' },
+              { value: 'vivienda familiar', label: 'Vivienda familiar' },
+              { value: 'huesped', label: 'Huésped' },
+            ]}
+            placeholder="Selecciona una opción"
+            errorMessage={errors.tipoVivienda?.message}
+          />
+        </div>
+
+      </CustomFormProvider>
+      <Button1
+        isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
+        handleSubmit={handleSubmit(onSubmit)}
+      />
+    </div>
   )
 }
 

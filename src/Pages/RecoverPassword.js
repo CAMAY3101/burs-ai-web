@@ -21,7 +21,7 @@ function RecoverPassword() {
   const defaultValues = {
     correo: '',
   };
-// hacer unQuerryHoook para recoverpassword
+  // hacer unQuerryHoook para recoverpassword
   const methods = useForm({
     resolver: yupResolver(login_form),
     defaultValues,
@@ -34,10 +34,11 @@ function RecoverPassword() {
   } = methods;
 
   const values = watch();
-//Cambiar onSucces
+  //Cambiar onSucces
   const onSuccess = async (response) => {
     if (response.data.status === 'success') {
-    <VerificacionCorreo /> }
+      <VerificacionCorreo />
+    }
   };
 
   const onError = (error) => {
@@ -49,12 +50,12 @@ function RecoverPassword() {
   };
 
   //Cambiar el useLoginQuerry
-const RecoverPasswordQuery = useLoginQuery(onSuccess, onError);
+  const RecoverPasswordQuery = useLoginQuery(onSuccess, onError);
 
-const onSubmit = (data) => {
-  console.log('data: ', data)
-  RecoverPassword.mutate(data);
-};
+  const onSubmit = (data) => {
+    console.log('data: ', data)
+    RecoverPassword.mutate(data);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -65,7 +66,7 @@ const onSubmit = (data) => {
         <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Recupera tu Contraseña</h1>
         <p>Ingresa tu correo electrónico para buscar tu cuenta.</p>
       </div>
-      <div className="w-10/12 space-y-8 my-4">
+      <div className="w-full sm:w-1/2 md:w-3/5 lg:w-5/12 flex flex-col space-y-10 mx-auto px-6 py-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside
@@ -78,16 +79,16 @@ const onSubmit = (data) => {
           </div>
         </CustomFormProvider>
         <div className="flex justify-center">
-            <Button
-              type='submit'
-              size="md"
-              className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
-              isDisabled={isSubmitting}
-              onClick={handleSubmit(onSubmit)} 
-            >
-              Buscar
-            </Button>
-          </div>
+          <Button
+            type='submit'
+            size="md"
+            className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
+            isDisabled={isSubmitting}
+            onClick={handleSubmit(onSubmit)}
+          >
+            Buscar
+          </Button>
+        </div>
         <div className="text-[10px]">{messageError}</div>
       </div>
     </div>

@@ -105,78 +105,67 @@ function TuHistorial() {
   };
 
   return (
-    <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
+    <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
       <TitlePage title="Tu historial" />
       <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <div className='flex-col space-y-12'>
-          <div className='w-1/2'>
+          <div className='w-2/3'>
             <TextField
               type="text"
               label="Salario mensual"
               placeholder='Ejemplo:$15000'
               name='salarioMensual'
-              formatValue={formatCurrency} 
+              formatValue={formatCurrency}
               parseValue={parseCurrency}
               errorMessage={errors.salarioMensual?.message}
             />
           </div>
 
-          <div>
-            <SelectField
-              label="Ocupación"
-              options={ocupacionValues}
-              placeholder="Selecciona una opción"
-              name='ocupacion'
-              errorMessage={errors.ocupacion?.message}
-            />
-          </div>
+          <SelectField
+            label="Ocupación"
+            options={ocupacionValues}
+            placeholder="Selecciona una opción"
+            name='ocupacion'
+            errorMessage={errors.ocupacion?.message}
+          />
 
-          <div>
-            <SelectField
-              label="Industria"
-              options={industriaValues}
-              placeholder="Selecciona una opción"
-              name='industria'
-              errorMessage={errors.industria?.message}
-            />
-          </div>
+          <SelectField
+            label="Industria"
+            options={industriaValues}
+            placeholder="Selecciona una opción"
+            name='industria'
+            errorMessage={errors.industria?.message}
+          />
 
-          <div>
-            <SelectField
-              label="Subindustria"
-              options={values.industria && subIndustriasValues[values.industria] ? subIndustriasValues[values.industria] : []}
-              placeholder="Selecciona una opción"
-              name='subindustria'
-              selectedKeys={subindustria}
-              onSelectionChange={setSubindustria}
-              errorMessage={errors.subindustria?.message}
-            />
-          </div>
+          <SelectField
+            label="Subindustria"
+            options={values.industria && subIndustriasValues[values.industria] ? subIndustriasValues[values.industria] : []}
+            placeholder="Selecciona una opción"
+            name='subindustria'
+            selectedKeys={subindustria}
+            onSelectionChange={setSubindustria}
+            errorMessage={errors.subindustria?.message}
+          />
 
-          <div>
-            <SelectField
-              label="¿Te pagan a través de un banco?"
-              options={[{ label: "Sí", value: "Si" }, { label: "No", value: "No" },]}
-              placeholder="Selecciona una opción"
-              name='pagoAtravesBanco'
-              errorMessage={errors.pagoAtravesBanco?.message}
-            />
-          </div>
+          <SelectField
+            label="¿Te pagan a través de un banco?"
+            options={[{ label: "Sí", value: "Si" }, { label: "No", value: "No" },]}
+            placeholder="Selecciona una opción"
+            name='pagoAtravesBanco'
+            errorMessage={errors.pagoAtravesBanco?.message}
+          />
 
-          <div className='w-2/3 mt-5'>
-            <TextField
-              type="text"
-              label='Salario familiar total al mes'
-              placeholder='Ejemplo: $15000'
-              name='salarioFamiliar'
-              className="mt-5"
-              formatValue={formatCurrency} 
-              parseValue={parseCurrency}
-              errorMessage={errors.salarioFamiliar?.message}
-            />
-          </div>
+          <TextField
+            type="text"
+            label='Salario familiar total al mes'
+            placeholder='Ejemplo: $15000'
+            name='salarioFamiliar'
+            formatValue={formatCurrency}
+            parseValue={parseCurrency}
+            errorMessage={errors.salarioFamiliar?.message}
+          />
 
-          <div>
+          <div id='calificacion_crediticia' className='flex md:flex lg:block' >
             <SelectField
               label="¿Cómo consideras tu calificación crediticia?"
               options={calificacionCrediticiaValues}
@@ -185,24 +174,20 @@ function TuHistorial() {
               errorMessage={errors.calificacionCrediticia?.message}
             />
           </div>
-
-          <div>
-            <SelectField
-              label="¿Cómo usarías el préstamo?"
-              options={usoPrestamoValues}
-              placeholder="Selecciona una opción"
-              name='usoPrestamo'
-              errorMessage={errors.usoPrestamo?.message}
-            />
-          </div>
-
+          <SelectField
+            label="¿Cómo usarías el préstamo?"
+            options={usoPrestamoValues}
+            placeholder="Selecciona una opción"
+            name='usoPrestamo'
+            errorMessage={errors.usoPrestamo?.message}
+          />
         </div>
-      </CustomFormProvider>
+      </CustomFormProvider >
       <Button1
         handleSubmit={handleSubmit(onSubmit)}
       />
 
-    </div>
+    </div >
   )
 }
 

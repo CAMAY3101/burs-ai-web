@@ -44,7 +44,7 @@ function VerificacionCorreo() {
   };
 
   const { data: secureEmailData, isLoading: isLoadingEmail } = useSecureEmailQuery(
-    () => {},
+    () => { },
     () => toast.error("No se pudo obtener el correo seguro")
   );
 
@@ -73,12 +73,12 @@ function VerificacionCorreo() {
     resendOtpCode();
   };
 
-       if (isSubmitting || isVerifyEmail || isLoadingEmail) {
-        return <Loading />;
-      }
+  if (isSubmitting || isVerifyEmail || isLoadingEmail) {
+    return <Loading />;
+  }
 
   return (
-    <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
+    <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
       <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col space-y-12'>
           <div className='flex flex-col space-y-5'>

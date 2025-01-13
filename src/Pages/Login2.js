@@ -71,7 +71,7 @@ function LogIn2() {
         </Link>
         <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Iniciar Sesión</h1>
       </div>
-      <div className="w-10/12 space-y-8 my-4">
+      <div className="w-full sm:w-1/2 md:w-3/5 lg:w-5/12 flex flex-col space-y-10 mx-auto px-6 py-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside
@@ -95,16 +95,16 @@ function LogIn2() {
           </div>
         </CustomFormProvider>
         <div className="flex justify-center">
-            <Button
-              type='submit'
-              size="md"
-              className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
-              isDisabled={isSubmitting}
-              onClick={handleSubmit(onSubmit)} // Manejo manual del clic
-            >
-              Ingresar
-            </Button>
-          </div>
+          <Button
+            type='submit'
+            size="md"
+            className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
+            isDisabled={isSubmitting}
+            onClick={handleSubmit(onSubmit)} // Manejo manual del clic
+          >
+            Ingresar
+          </Button>
+        </div>
         <div className="flex flex-col items-start w-10/12">
           <p className="font-rubik font-light text-sm text-dark-blue-950">
             ¿No tienes una cuenta?

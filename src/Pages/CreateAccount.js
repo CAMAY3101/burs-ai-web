@@ -39,10 +39,10 @@ function SignUp() {
         correo: '',
         contrasena: '',
     };
-    
+
     const methods = useForm({
-    resolver: yupResolver(create_form),
-    defaultValues,
+        resolver: yupResolver(create_form),
+        defaultValues,
     });
 
     const {
@@ -74,9 +74,9 @@ function SignUp() {
 
     const onError = (error) => {
         if (error.response === undefined) {
-          setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+            setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
         } else {
-          setMessageError('Correo o contraseña incorrectos.');
+            setMessageError('Correo o contraseña incorrectos.');
         }
     };
 
@@ -87,7 +87,7 @@ function SignUp() {
         console.log('data: ', data)
         createUserQuery.mutate(data);
     }
-            
+
     return (
         <div className='flex flex-col items-center'>
             <div className='flex flex-col items-center space-y-2 my-9'>
@@ -96,67 +96,67 @@ function SignUp() {
                 </Link>
                 <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Crea tu cuenta</h1>
             </div>
-            <div className='w-10/12 space-y-8 py-4'>
-            <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <div className="space-y-8">
-                    <TextFieldWithLabelInside
-                        type="email"
-                        name="correo"
-                        label="Correo Electrónico"
-                        placeholder="ejemplo@outlook.com"
-                        errorMessage={errors.correo?.message}
-                    />
-                    <TextFieldWithLabelInside
-                        type="password"
-                        name="contrasena"
-                        label="Contraseña"
-                        placeholder="Ingresa contraseña"
-                        errorMessage={errors.contrasena?.message}
-                        isPasswordField={true}
-                        visibleEyeIcon={visibleEyeIcon}
-                        invisibleEyeIcon={invisibleEyeIcon}
-                        isVisible={isVisible}
-                    />
-                </div>
-            </CustomFormProvider>
+            <div className='w-full sm:w-1/2 md:w-3/5 lg:w-5/12 flex flex-col space-y-10 mx-auto px-6 py-4'>
+                <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                    <div className="space-y-8">
+                        <TextFieldWithLabelInside
+                            type="email"
+                            name="correo"
+                            label="Correo Electrónico"
+                            placeholder="ejemplo@outlook.com"
+                            errorMessage={errors.correo?.message}
+                        />
+                        <TextFieldWithLabelInside
+                            type="password"
+                            name="contrasena"
+                            label="Contraseña"
+                            placeholder="Ingresa contraseña"
+                            errorMessage={errors.contrasena?.message}
+                            isPasswordField={true}
+                            visibleEyeIcon={visibleEyeIcon}
+                            invisibleEyeIcon={invisibleEyeIcon}
+                            isVisible={isVisible}
+                        />
+                    </div>
+                </CustomFormProvider>
 
-            <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
-                <li className={`flex flex-row ${passwordChecks.isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                    <div className={`w-3 h-3 mr-1 ${passwordChecks.isLongEnough ? 'block' : 'hidden'}`}>
-                        <img src={thickIcon} alt='icon' />
-                    </div>
-                    <p>Contraseña debe tener mínimo 8 caracteres.</p>
-                </li>
-                <li className={`flex flex-row ${passwordChecks.hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                    <div className={`w-3 h-3 mr-1 ${passwordChecks.hasLowerCase ? 'block' : 'hidden'}`}>
-                        <img src={thickIcon} alt='icon' />
-                    </div>
-                    <p>Al menos una letra minúscula </p>
-                </li>
-                <li className={`flex flex-row ${passwordChecks.hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                    <div className={`w-3 h-3 mr-1 ${passwordChecks.hasUpperCase ? 'block' : 'hidden'}`}>
-                        <img src={thickIcon} alt='icon' />
-                    </div>
-                    <p>Al menos una letra mayúscula.</p>
-                </li>
-                <li className={`flex flex-row ${passwordChecks.hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                    <div className={`w-3 h-3 mr-1 ${passwordChecks.hasNumber ? 'block' : 'hidden'}`}>
-                        <img src={thickIcon} alt='icon' />
-                    </div>
-                    <p>Al menos un número </p>
-                </li>
-                <li className={`flex flex-row ${passwordChecks.hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                    <div className={`w-3 h-3 mr-1 ${passwordChecks.hasSpecialChar ? 'block' : 'hidden'}`}>
-                        <img src={thickIcon} alt='icon' />
-                    </div>
-                    <p>Al menos un caracter especial</p>
-                </li>
-            </ul>
-            <ReCAPTCHA
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
-                onChange={(value) => setRecaptchaValue(value)}
-            />
-            <div className="flex justify-center">
+                <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
+                    <li className={`flex flex-row ${passwordChecks.isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.isLongEnough ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Contraseña debe tener mínimo 8 caracteres.</p>
+                    </li>
+                    <li className={`flex flex-row ${passwordChecks.hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasLowerCase ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos una letra minúscula </p>
+                    </li>
+                    <li className={`flex flex-row ${passwordChecks.hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasUpperCase ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos una letra mayúscula.</p>
+                    </li>
+                    <li className={`flex flex-row ${passwordChecks.hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasNumber ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos un número </p>
+                    </li>
+                    <li className={`flex flex-row ${passwordChecks.hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasSpecialChar ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
+                        </div>
+                        <p>Al menos un caracter especial</p>
+                    </li>
+                </ul>
+                <ReCAPTCHA
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
+                    onChange={(value) => setRecaptchaValue(value)}
+                />
+                <div className="flex justify-center">
                     <Button
                         size='md'
                         type='submit'
@@ -171,12 +171,12 @@ function SignUp() {
                     position="top-center"
                     reverseOrder={false}
                 />
-            </div>
-            <div className='flex flex-col items-start w-10/12 mt-4'>
-                <p className='font-rubik font-light text-sm text-dark-blue-950'>
-                    ¿Ya tienes una cuenta?
-                    <a className='text-dark-blue-700 font-normal' href={LOGIN}> Inicia Sesión</a>
-                </p>
+                <div className='flex flex-col items-start w-10/12'>
+                    <p className='font-rubik font-light text-sm text-dark-blue-950'>
+                        ¿Ya tienes una cuenta?
+                        <a className='text-dark-blue-700 font-normal' href={LOGIN}> Inicia Sesión</a>
+                    </p>
+                </div>
             </div>
         </div>
     )

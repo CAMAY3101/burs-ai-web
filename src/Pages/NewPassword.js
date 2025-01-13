@@ -76,7 +76,7 @@ function NewPassword() {
         </Link>
         <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Restablece tu contraseña</h1>
       </div>
-      <div className="w-10/12 space-y-8 my-4">
+      <div className="w-full sm:w-1/2 md:w-3/5 lg:w-5/12 flex flex-col space-y-10 mx-auto px-6 py-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside

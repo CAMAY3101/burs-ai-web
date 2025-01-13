@@ -34,7 +34,7 @@ function VerificacionID() {
     );
 
   return (
-    <div className="w-1/3 flex flex-col items-center space-y-10">
+    <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8 items-center text-center'>
       <Toaster></Toaster>
       <TitlePage title="Verificación de INE e Identidad" />
       <img src={pendingIcon} alt="Under Construction" className="w-2/4" />

@@ -66,7 +66,7 @@ function IngresaTusDatos() {
             edad: data.edad,
             telefono: data.telefono
         }
-        await new Promise((resolve) => setTimeout(resolve, 500)); 
+        await new Promise((resolve) => setTimeout(resolve, 500));
         updateDataUserQuery.mutate(payload);
     };
 
@@ -76,56 +76,49 @@ function IngresaTusDatos() {
 
     return (
         <>
-            <div className='sm:w-11/12 lg:w-1/3 flex flex-col space-y-10'>
+            <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
                 <TitlePage title="Ingresa tus datos" />
                 <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                    <div className='flex-col space-y-12'>
-                        <div>
-                            <TextField
-                                type='text'
-                                name='nombre'
-                                label='Nombre(s)'
-                                placeholder='Ejemplo: Juan'
-                                errorMessage={errors.nombre?.message}
-                            />
-                        </div>
-                        <div>
-                            <TextField
-                                type='text'
-                                name='apellidos'
-                                label='Apellido(s)'
-                                placeholder='Ejemplo: Perez Lopez'
-                                errorMessage={errors.apellidos?.message}
-                            />
-                        </div>
-                        <div className='w-1/2'>
+                    <div className='w-full flex-col space-y-12'>
+                        <TextField
+                            type='text'
+                            name='nombre'
+                            label='Nombre(s)'
+                            placeholder='Ejemplo: Juan'
+                            errorMessage={errors.nombre?.message}
+                        />
+                        <TextField
+                            type='text'
+                            name='apellidos'
+                            label='Apellido(s)'
+                            placeholder='Ejemplo: Perez Lopez'
+                            errorMessage={errors.apellidos?.message}
+                        />
+                        <div id='edad' className='w-1/2'>
                             <TextField
                                 type='number'
                                 name='edad'
                                 label='Edad'
                                 placeholder='Ej: 25'
-                                className='w-1/2'
                                 min={18}
                                 max={100}
                                 errorMessage={errors.edad?.message}
                             />
                         </div>
-                        <div>
-                            <TextField
-                                type='text'
-                                name='telefono'
-                                label='Teléfono'
-                                placeholder='Ej: 5560607070'
-                                errorMessage={errors.telefono?.message}
-                            />
-                        </div>
-                        <Button1
-                            isDisabled={isSubmitting}
-                            handleSubmit={handleSubmit(onSubmit)}
+                        <TextField
+                            type='text'
+                            name='telefono'
+                            label='Teléfono'
+                            placeholder='Ej: 5560607070'
+                            errorMessage={errors.telefono?.message}
                         />
-                    </div>
+                    </div >
                 </CustomFormProvider >
-            </div >
+                <Button1
+                    isDisabled={isSubmitting}
+                    handleSubmit={handleSubmit(onSubmit)}
+                />
+            </div>
         </>
     )
 }

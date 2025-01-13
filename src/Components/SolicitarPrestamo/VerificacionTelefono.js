@@ -52,78 +52,78 @@ function VerificacionTelefono() {
         onError
     );
 
-// Hook para reenviar el código OTP por teléfono
-const { mutate: resendOtpPhone } = useResendOtpPhone(
-    () => toast.success("Código reenviado"),
-    () => toast.error("Error al reenviar el código")
-);
+    // Hook para reenviar el código OTP por teléfono
+    const { mutate: resendOtpPhone } = useResendOtpPhone(
+        () => toast.success("Código reenviado"),
+        () => toast.error("Error al reenviar el código")
+    );
 
-// Hook para generar un token FAD
-const { mutate: generateToken } = useGenerateToken(
-    () => {
-        checkToken();
-        createValidation(); // Crear validación
-    },
-    (error) => console.error("Error al generar token:", error)
-);
+    // Hook para generar un token FAD
+    const { mutate: generateToken } = useGenerateToken(
+        () => {
+            checkToken();
+            createValidation(); // Crear validación
+        },
+        (error) => console.error("Error al generar token:", error)
+    );
 
-// Hook para crear validación FAD
-const { mutate: createValidation } = useCreateValidation(
-    () => {
-        toast.success("Validación completada");
-        navigateToNextStep(6); // Avanza al siguiente paso solo si la validación es exitosa
-    },
-    (error) => console.error("Error al crear validación:", error)
-);
+    // Hook para crear validación FAD
+    const { mutate: createValidation } = useCreateValidation(
+        () => {
+            toast.success("Validación completada");
+            navigateToNextStep(6); // Avanza al siguiente paso solo si la validación es exitosa
+        },
+        (error) => console.error("Error al crear validación:", error)
+    );
 
-const onSubmit = (data) => {
-    verifyPhone({ code: data.otpCode });
-};
+    const onSubmit = (data) => {
+        verifyPhone({ code: data.otpCode });
+    };
 
-const handleResend = () => {
-    resendOtpPhone();
-};
+    const handleResend = () => {
+        resendOtpPhone();
+    };
 
-       if (isLoadingPhone) {
+    if (isLoadingPhone) {
         return <Loading />;
-      }
+    }
 
-return (
-    <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
-        <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex flex-col space-y-12'>
-                <div className='flex flex-col space-y-5'>
-                    <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
-                    <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
-                </div>
-                <div className='flex-col space-y-3'>
-                    <TextField
-                        type='text'
-                        label='Codigo OTP'
-                        placeholder='Ingresa el codigo'
-                        name='otpCode'
-                        errorMessage={errors.otpCode?.message}
+    return (
+        <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
+            <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                <div className='flex flex-col space-y-12'>
+                    <div className='flex flex-col space-y-5'>
+                        <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
+                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
+                    </div>
+                    <div className='flex-col space-y-3'>
+                        <TextField
+                            type='text'
+                            label='Codigo OTP'
+                            placeholder='Ingresa el codigo'
+                            name='otpCode'
+                            errorMessage={errors.otpCode?.message}
+                        />
+                        <Button
+                            variant='light'
+                            className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
+                            onClick={handleResend}
+                        >
+                            Reenviar codigo
+                        </Button>
+                    </div>
+                    <Button1
+                        handleSubmit={handleSubmit(onSubmit)}
+                        label="Verificar Teléfono"
                     />
-                    <Button
-                        variant='light'
-                        className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
-                        onClick={handleResend}
-                    >
-                        Reenviar codigo
-                    </Button>
+                    <Toaster
+                        position="top-center"
+                        reverseOrder={false}
+                    />
                 </div>
-                <Button1
-                    handleSubmit={handleSubmit(onSubmit)}
-                    label="Verificar Teléfono"
-                />
-                <Toaster
-                    position="top-center"
-                    reverseOrder={false}
-                />
-            </div>
-        </CustomFormProvider>
-    </div>
-);
+            </CustomFormProvider>
+        </div>
+    );
 }
 
 export default VerificacionTelefono
