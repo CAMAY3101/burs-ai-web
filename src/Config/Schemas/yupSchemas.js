@@ -95,10 +95,16 @@ export const create_form = yup.object().shape({
 });
 
 export const email_Verification = yup.object({
-  otpCode: yup.string().required('El código OTP es obligatorio'),
-});
+    otpCode: yup
+      .string()
+      .required('El código OTP es obligatorio')
+      .matches(/^\d{6}$/, 'El código OTP debe contener exactamente 6 números'),
+  });
 
 export const phone_Verification = yup.object({
-  otpCode: yup.string().required('El código OTP es obligatorio'),
+  otpCode: yup
+  .string()
+  .required('El código OTP es obligatorio')
+  .matches(/^\d{6}$/, 'El código OTP debe contener exactamente 6 números'),
 });
 

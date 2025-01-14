@@ -32,7 +32,7 @@ function Verificacion() {
                             <span className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 me-2 sm:me-3 font-rubik font-medium text-xs sm:text-sm lg:text-base text-dark-blue-950/30 border-dark-blue-950/50 bg-dark-blue-100 rounded-full border-1">
                                 2
                             </span>
-                            Verificacion <span className="hidden lg:inline-flex lg:ms-2">de Datos</span>
+                            Verificación <span className="hidden lg:inline-flex lg:ms-2">de Datos</span>
                             <svg className="w-3 h-3 sm:w-4 sm:h-4 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m7 9 4-4-4-4M1 9l4-4-4-4" />
                             </svg>

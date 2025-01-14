@@ -32,6 +32,7 @@ function VerificacionTelefono() {
 
     const onError = (error) => {
         console.error("Error al verificar el telefono:", error);
+        toast.error("Código incorrecto");
     };
 
 
@@ -39,14 +40,14 @@ function VerificacionTelefono() {
         () => { },
         () => toast.error("No se pudo obtener el teléfono seguro")
     );
-    const phoneSecure = securePhoneData?.phone
-        ? `al teléfono ${securePhoneData.phone}`
+    const phoneSecure = securePhoneData?.data?.phone
+        ? `al teléfono ${securePhoneData.data.phone}`
         : "a tu teléfono";
 
     // Hook para verificar el teléfono
     const { mutate: verifyPhone } = useVerifyPhone(
         () => {
-            toast.success("Telefono verificado");
+            toast.success("Teléfono verificado");
             generateToken();
         },
         onError
@@ -84,7 +85,7 @@ function VerificacionTelefono() {
         resendOtpPhone();
     };
 
-    if (isLoadingPhone) {
+    if (isSubmitting || isLoadingPhone) {
         return <Loading />;
     }
 
@@ -94,13 +95,13 @@ function VerificacionTelefono() {
                 <div className='flex flex-col space-y-12'>
                     <div className='flex flex-col space-y-5'>
                         <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
-                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por mensaje</p>
+                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el código OTP que te enviamos por mensaje</p>
                     </div>
                     <div className='flex-col space-y-3'>
                         <TextField
                             type='text'
-                            label='Codigo OTP'
-                            placeholder='Ingresa el codigo'
+                            label='Código OTP'
+                            placeholder='Ingresa el código'
                             name='otpCode'
                             errorMessage={errors.otpCode?.message}
                         />
@@ -109,7 +110,7 @@ function VerificacionTelefono() {
                             className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
                             onClick={handleResend}
                         >
-                            Reenviar codigo
+                            Reenviar código
                         </Button>
                     </div>
                     <Button1

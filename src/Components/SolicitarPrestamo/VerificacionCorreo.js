@@ -48,9 +48,9 @@ function VerificacionCorreo() {
     () => toast.error("No se pudo obtener el correo seguro")
   );
 
-  const emailSecure = secureEmailData?.email
-    ? `al correo ${secureEmailData.email}`
-    : "a tu correo";
+  const emailSecure = secureEmailData?.data?.email
+  ? `al correo ${secureEmailData.data.email}`
+  : "a tu correo";
 
   const { mutate: verifyEmail, isLoading: isVerifyEmail } = useVerifyEmail(onSuccess, onError);
 
