@@ -4,6 +4,7 @@ import { Select, SelectItem } from '@nextui-org/react';
 
 const styles_select = {
   label: [
+    '!text-dark-blue-950',
     'group-data-[filled-within=true]:text-dark-blue-950',
     'font-rubik',
     'font-medium',

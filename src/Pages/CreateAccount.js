@@ -27,13 +27,7 @@ function SignUp() {
     const [isVisible, setIsVisible] = React.useState(false);
     const [password, setPassword] = useState('');
     const [recaptchaValue, setRecaptchaValue] = useState(null);
-    const [passwordChecks, setPasswordChecks] = useState({
-        isLongEnough: false,
-        hasLowerCase: false,
-        hasUpperCase: false,
-        hasNumber: false,
-        hasSpecialChar: false,
-    });
+    const [passwordChecks, setPasswordChecks] = useState({});
 
     const defaultValues = {
         correo: '',
@@ -56,14 +50,15 @@ function SignUp() {
 
     // Validar contraseña dinámicamente
     useEffect(() => {
+        const currentPassword = watch('contrasena') || '';
         setPasswordChecks({
-            isLongEnough: password.length >= 8,
-            hasLowerCase: /[a-z]/.test(password),
-            hasUpperCase: /[A-Z]/.test(password),
-            hasNumber: /[0-9]/.test(password),
-            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+            isLongEnough: currentPassword.length >= 8,
+            hasLowerCase: /[a-z]/.test(currentPassword),
+            hasUpperCase: /[A-Z]/.test(currentPassword),
+            hasNumber: /[0-9]/.test(currentPassword),
+            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(currentPassword),
         });
-    }, [password]);
+    }, [watch('contrasena')]);
 
     const onSuccess = async (response) => {
         toast.success('Creación de usuario exitosa');
