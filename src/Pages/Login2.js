@@ -71,7 +71,7 @@ function LogIn2() {
         </Link>
         <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Iniciar Sesión</h1>
       </div>
-      <div className="w-full sm:w-1/2 md:w-3/5 lg:w-5/12 flex flex-col space-y-10 mx-auto px-6 py-4">
+      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex flex-col space-y-10 mx-auto px-6 py-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside
@@ -111,7 +111,7 @@ function LogIn2() {
             <a className="text-dark-blue-700 font-normal" href={SIGNUP}> Regístrate</a>
           </p>
           <p>
-            <a className="text-dark-blue-700 font-normal" href={RECOVERPASSWORD}>¿Olvidaste tu Contraseña?</a>
+            <a className="text-dark-blue-700 font-normal text-[14px]" href={RECOVERPASSWORD}>¿Olvidaste tu Contraseña?</a>
           </p>
         </div>
         <div className="text-[10px]">{messageError}</div>

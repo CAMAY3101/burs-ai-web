@@ -66,7 +66,7 @@ function RecoverPassword() {
         <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Recupera tu Contraseña</h1>
         <p>Ingresa tu correo electrónico para buscar tu cuenta.</p>
       </div>
-      <div className="w-full sm:w-1/2 md:w-3/5 lg:w-5/12 flex flex-col space-y-10 mx-auto px-6 py-4">
+      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex flex-col space-y-10 mx-auto px-6 py-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <TextFieldWithLabelInside
