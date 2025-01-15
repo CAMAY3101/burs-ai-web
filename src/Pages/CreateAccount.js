@@ -56,7 +56,7 @@ function SignUp() {
             hasLowerCase: /[a-z]/.test(currentPassword),
             hasUpperCase: /[A-Z]/.test(currentPassword),
             hasNumber: /[0-9]/.test(currentPassword),
-            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(currentPassword),
+            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>+--]/.test(currentPassword),
         });
     }, [watch('contrasena')]);
 
@@ -67,14 +67,13 @@ function SignUp() {
         toast.success(`Verification step: ${verificationStep}`);
     };
 
-    // el setMessage no funciona ya que no existe el useState y no muestra el mensaje cuando el correo esta duplicado
     const onError = (error) => {
-        if (error.response === undefined) {
-            setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
-        } else {
-            setMessageError('Correo o contraseña incorrectos.');
+        if (!error.response) {
+            toast.error('Error de conexión. Inténtalo de nuevo más tarde.');
+        } else if (error.response.data?.message === 'El correo electrónico ya esta registrado') {
+            toast.error('El correo electrónico ya está registrado. Intenta con otro.');
         }
-    };
+    }
 
     const createUserQuery = useCreateUser(onSuccess, onError);
 

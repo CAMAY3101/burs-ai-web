@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Select, SelectItem } from '@nextui-org/react';
 
@@ -20,9 +20,7 @@ const styles_select = {
     '!cursor-text',
     'max-h-[40px]',
     'py-1',
-  ],
-  value: ['font-rubik', 'font-regular', 'text-[15px]'],
-  placeholder: ['text-dark-blue-300'],
+  ]
 };
 
 const SelectField = ({
@@ -34,6 +32,7 @@ const SelectField = ({
   isDisabled = false,
 }) => {
   const { control } = useFormContext();
+  const [isValueSelected, setIsValueSelected] = useState(false);
 
   if (!control) {
     console.error(
@@ -55,10 +54,19 @@ const SelectField = ({
             labelPlacement="outside"
             variant="bordered"
             size="md"
-            classNames={styles_select}
+            classNames={{
+              ...styles_select,
+              value: [
+                'font-rubik',
+                'font-regular',
+                'text-[15px]',
+                isValueSelected ? 'text-dark-blue-950' : 'text-dark-blue-300', // Clase dinámica basada en el estado
+              ],
+            }}
             selectedKeys={field.value ? new Set([field.value]) : new Set()} // Asegura la compatibilidad con NextUI
             onSelectionChange={(keys) => {
               const value = Array.from(keys).join(''); // Convierte el Set en un valor
+              setIsValueSelected(!!value);
               field.onChange(value); // Actualiza el valor en react-hook-form
             }}
             isDisabled={isDisabled}
