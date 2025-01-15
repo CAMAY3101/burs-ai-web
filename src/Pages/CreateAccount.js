@@ -67,6 +67,7 @@ function SignUp() {
         toast.success(`Verification step: ${verificationStep}`);
     };
 
+    // el setMessage no funciona ya que no existe el useState y no muestra el mensaje cuando el correo esta duplicado
     const onError = (error) => {
         if (error.response === undefined) {
             setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
