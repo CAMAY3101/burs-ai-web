@@ -1,213 +1,180 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import {Input, Button} from "@nextui-org/react"
+import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
-
+import { create_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import thickIcon from "../Assets/icons/tick-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
+import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside'
+import CustomFormProvider from '../Components/CustomizeComponents/Form/CustomFormProvider';
 
 import { useAuthContext } from '../Contexts/authContext';
 import { LOGIN } from '../Config/Router/paths';
 import { Link } from 'react-router-dom';
-import { endpoint } from '../Config/utils/urls';
+import { useCreateUser } from '../hooks/useQueryHooks';
 
-axios.defaults.withCredentials = true;
 
-const styles_input = {
-    label: [
-        "group-data-[filled-within=true]:text-dark-blue-950",
-        "font-rubik",
-        "font-medium",
-        "text-base",
-    ],
-    input: [
-        "font-rubik",
-        "font-regular",
-        "text-[15px]",
-        "text-dark-blue-950",
-        "placeholder:text-dark-blue-300",
-    ],
-    inputWrapper: [
-        "rounded-xl",
-        "border-dark-blue-400",
-        "data-[hover=true]:border-dark-blue-700",
-        "group-data-[focus=true]:border-dark-blue-900",
-        "!cursor-text",
-        "space-y-8",
-        //"py-6",
-    ]
-};
 
 function SignUp() {
 
     const { checkToken, navigateToNextStep, verificationStep } = useAuthContext();
-
     const [isVisible, setIsVisible] = React.useState(false);
-    const [messageError, setMessageError] = React.useState('');
+    const [password, setPassword] = useState('');
+    const [recaptchaValue, setRecaptchaValue] = useState(null);
+    const [passwordChecks, setPasswordChecks] = useState({});
 
-    const toggleVisibility = () => setIsVisible(!isVisible);
-
-    // Email validation
-    const [emailValue, setEmailValue] = React.useState('');
-    const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
-
-    const isInvalid = React.useMemo(() => {
-        if (emailValue === '') return false;
-        return validateEmail(emailValue) ? false : true;
-    }, [emailValue]);
-
-    // Password validation
-    const [password, setPassword] = React.useState('');
-
-    const handleChange = (e) => {
-        setPassword(e.target.value);
+    const defaultValues = {
+        correo: '',
+        contrasena: '',
     };
 
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const isLongEnough = password.length >= 8;
+    const methods = useForm({
+        resolver: yupResolver(create_form),
+        defaultValues,
+    });
 
-    // Captcha
-    const [recaptchaValue, setRecaptchaValue] = React.useState(null);
+    const {
+        handleSubmit,
+        watch,
+        formState: { isSubmitting, errors },
+    } = methods;
 
-    // Submit
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try{
-            const response = await axios.post(endpoint.usuarios.createUser, {
-                correo: emailValue,
-                contrasena: password,
-            }, { withCredentials: true });
+    const values = watch()
+    console.log('values: ', values)
 
-            await checkToken();
+    // Validar contraseña dinámicamente
+    useEffect(() => {
+        const currentPassword = watch('contrasena') || '';
+        setPasswordChecks({
+            isLongEnough: currentPassword.length >= 8,
+            hasLowerCase: /[a-z]/.test(currentPassword),
+            hasUpperCase: /[A-Z]/.test(currentPassword),
+            hasNumber: /[0-9]/.test(currentPassword),
+            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>+--]/.test(currentPassword),
+        });
+    }, [watch('contrasena')]);
 
-            if (response.data.status === 'success') {
-                toast.success('Creación de usuario exitosa');
-                setTimeout(() => {
-                    navigateToNextStep(1);
-                    toast.success(`verification step: ${verificationStep}`);
-                }, 2000);
-            }
+    const onSuccess = async (response) => {
+        toast.success('Creación de usuario exitosa');
+        await checkToken();
+        navigateToNextStep(1);
+        toast.success(`Verification step: ${verificationStep}`);
+    };
 
-        } catch (error) {
-            if(error.response.status === 400){
-                toast.error(error.response.data.message)
-                //toast.error(error.response.data.error)
-            }
-            else{
-                toast.error('Error al crear usuario, intente de nuevo')
-            }
-            console.log(error)
+    const onError = (error) => {
+        if (!error.response) {
+            toast.error('Error de conexión. Inténtalo de nuevo más tarde.');
+        } else if (error.response.data?.message === 'El correo electrónico ya esta registrado') {
+            toast.error('El correo electrónico ya está registrado. Intenta con otro.');
         }
-        
-    };
-  return (
-    <div className='flex flex-col items-center'>
-        <div className='flex flex-col items-center space-y-2 my-9'>
-            <Link to = '/'>
-                <img className='w-20' alt='icon-color-burs' src={bursColorIcon}/>
-            </Link>
-            <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Crea tu cuenta</h1>
-        </div>
-        <div className='w-10/12 space-y-8 py-4'>
-            <Input
-                isRequired
-                type='email'
-                label = 'Correo Electrónico'
-                placeholder='ejemplo@outlook.com'
-                size='lg'
-                variant='bordered'
-                classNames={styles_input}
-                value={emailValue}
-                errorMessage={isInvalid && "Ingresa un correo válido."}
-                onValueChange={setEmailValue}
-            />
-            <div className='space-y-4'>
-                <Input
-                    isRequired
-                    label='Contraseña'
-                    placeholder='Ingresa contraseña'
-                    size='lg'
-                    variant='bordered'
-                    classNames={styles_input}
-                    endContent={
-                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                            {isVisible ? (
-                                <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
-                            ) : (
-                                <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
-                            )}
-                        </button>
-                    }
-                    type={isVisible ? "text" : "password"}
+    }
 
-                    value={password}
-                    onChange={handleChange}
-                />
+    const createUserQuery = useCreateUser(onSuccess, onError);
+
+    const onSubmit = (data) => {
+        console.log('values 2: ', values)
+        console.log('data: ', data)
+        createUserQuery.mutate(data);
+    }
+
+    return (
+        <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center space-y-2 my-9'>
+                <Link to='/'>
+                    <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
+                </Link>
+                <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Crea tu cuenta</h1>
+            </div>
+            <div className='w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex flex-col space-y-10 mx-auto px-6 py-4'>
+                <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                    <div className="space-y-8">
+                        <TextFieldWithLabelInside
+                            type="email"
+                            name="correo"
+                            label="Correo Electrónico"
+                            placeholder="ejemplo@outlook.com"
+                            errorMessage={errors.correo?.message}
+                        />
+                        <TextFieldWithLabelInside
+                            type="password"
+                            name="contrasena"
+                            label="Contraseña"
+                            placeholder="Ingresa contraseña"
+                            errorMessage={errors.contrasena?.message}
+                            isPasswordField={true}
+                            visibleEyeIcon={visibleEyeIcon}
+                            invisibleEyeIcon={invisibleEyeIcon}
+                            isVisible={isVisible}
+                        />
+                    </div>
+                </CustomFormProvider>
+
                 <ul className="space-y-1 pl-2 font-rubik font-regular text-[10px]">
-                    <li className={`flex flex-row ${isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}` }>
-                        <div className={`w-3 h-3 mr-1 ${isLongEnough ? 'block' : 'hidden'}`}>
-                            <img src={thickIcon} alt='icon'/>
+                    <li className={`flex flex-row ${passwordChecks.isLongEnough ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.isLongEnough ? 'block' : 'hidden'}`}>
+                            <img src={thickIcon} alt='icon' />
                         </div>
                         <p>Contraseña debe tener mínimo 8 caracteres.</p>
                     </li>
-                    <li className={`flex flex-row ${hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                        <div className={`w-3 h-3 mr-1 ${hasLowerCase ? 'block' : 'hidden'}`}>
+                    <li className={`flex flex-row ${passwordChecks.hasLowerCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasLowerCase ? 'block' : 'hidden'}`}>
                             <img src={thickIcon} alt='icon' />
                         </div>
                         <p>Al menos una letra minúscula </p>
                     </li>
-                    <li className={`flex flex-row ${hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                        <div className={`w-3 h-3 mr-1 ${hasUpperCase ? 'block' : 'hidden'}`}>
+                    <li className={`flex flex-row ${passwordChecks.hasUpperCase ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasUpperCase ? 'block' : 'hidden'}`}>
                             <img src={thickIcon} alt='icon' />
                         </div>
                         <p>Al menos una letra mayúscula.</p>
                     </li>
-                    <li className={`flex flex-row ${hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                        <div className={`w-3 h-3 mr-1 ${hasNumber ? 'block' : 'hidden'}`}>
+                    <li className={`flex flex-row ${passwordChecks.hasNumber ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasNumber ? 'block' : 'hidden'}`}>
                             <img src={thickIcon} alt='icon' />
                         </div>
                         <p>Al menos un número </p>
                     </li>
-                    <li className={`flex flex-row ${hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
-                        <div className={`w-3 h-3 mr-1 ${hasSpecialChar ? 'block' : 'hidden'}`}>
+                    <li className={`flex flex-row ${passwordChecks.hasSpecialChar ? 'text-purple-heart-950' : 'text-purple-heart-950/50'}`}>
+                        <div className={`w-3 h-3 mr-1 ${passwordChecks.hasSpecialChar ? 'block' : 'hidden'}`}>
                             <img src={thickIcon} alt='icon' />
                         </div>
                         <p>Al menos un caracter especial</p>
                     </li>
                 </ul>
+                <ReCAPTCHA
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
+                    onChange={(value) => setRecaptchaValue(value)}
+                />
+                <div className="flex justify-center">
+                    <Button
+                        size='md'
+                        type='submit'
+                        className='w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl'
+                        isDisabled={!recaptchaValue || Object.keys(errors).length > 0 || isSubmitting}
+                        onClick={handleSubmit(onSubmit)}
+                    >
+                        Crear Cuenta
+                    </Button>
+                </div>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+                />
+                <div className='flex flex-col items-start w-10/12'>
+                    <p className='font-rubik font-light text-sm text-dark-blue-950'>
+                        ¿Ya tienes una cuenta?
+                        <a className='text-dark-blue-700 font-normal' href={LOGIN}> Inicia Sesión</a>
+                    </p>
+                </div>
             </div>
-            <ReCAPTCHA
-                  sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
-                onChange={(value) => setRecaptchaValue(value)}
-            />
-            <Button
-                size='md'
-                className='w-full bg-purple-heart-500 text-purple-50 rounded-3xl'
-                isDisabled={isInvalid || !isLongEnough || !hasLowerCase || !hasUpperCase || !hasNumber || !hasSpecialChar || !recaptchaValue}
-                onClick={handleSubmit}
-            >
-                Crear Cuenta
-            </Button>
-            <Toaster
-                position="top-center"
-                reverseOrder={false}
-            />
         </div>
-        <div className='flex flex-col items-start w-10/12 mt-4'>
-            <p className='font-rubik font-light text-sm text-dark-blue-950'>
-                ¿Ya tienes una cuenta?
-                <a className='text-dark-blue-700 font-normal' href={LOGIN}> Inicia Sesión</a>
-            </p>
-        </div>
-    </div>
-  )
+    )
 }
 
 export default SignUp

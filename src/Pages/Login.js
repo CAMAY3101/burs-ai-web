@@ -1,165 +1,116 @@
 import React from 'react'
-import axios from 'axios';
 
 import { Link } from 'react-router-dom';
-import { Input, Button } from "@nextui-org/react"
-import toast, { Toaster } from 'react-hot-toast';
-
+import { Button } from "@nextui-org/react"
+import { login_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
 
 import { useAuthContext } from '../Contexts/authContext';
 import { SIGNUP } from '../Config/Router/paths';
-import { endpoint } from '../Config/utils/urls';
+import { useLoginQuery } from '../hooks/useQueryHooks';
+import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside'
 
-axios.defaults.withCredentials = true;
-
-const styles_input = {
-  base: [
-    "w-10/12",
-  ],
-  label: [
-    "group-data-[filled-within=true]:text-dark-blue-950",
-    "font-rubik",
-    "font-medium",
-    "text-base",
-  ],
-  input: [
-    "font-rubik",
-    "font-regular",
-    "text-[15px]",
-    "text-dark-blue-950",
-    "placeholder:text-dark-blue-300",
-  ],
-  inputWrapper: [
-    "rounded-xl",
-    "border-dark-blue-400",
-    "data-[hover=true]:border-dark-blue-700",
-    "group-data-[focus=true]:border-dark-blue-900",
-    "!cursor-text",
-    "space-y-8",
-    //"py-6",
-  ]
-};
 
 function LogIn() {
-
-  const { checkToken, login, verificationStep} = useAuthContext();
-
+  const { login, verificationStep} = useAuthContext(); // eliminar checktoken si ya no se ocupa
   const [isVisible, setIsVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
-
-  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [errors, setErrors] = React.useState({});
 
   // Email validation
   const [emailValue, setEmailValue] = React.useState('');
-  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
-
-  const isInvalid = React.useMemo(() => {
-    if (emailValue === '') return false;
-    return validateEmail(emailValue) ? false : true;
-  }, [emailValue]);
-
-  // Password validation
   const [password, setPassword] = React.useState('');
 
-  const handleChange = (e) => {
-    setPassword(e.target.value);
+  const onSuccess = async (response) => {
+    if (response.data.status === 'success') {
+      setMessageError(`verification step: ${verificationStep}`);
+      setTimeout(() => {
+        login(response.data.progress);
+      }, 2000);
+    }
   };
-  const isLongEnough = password.length >= 8;
 
+  const onError = (error) => {
+    if (error.response === undefined) {
+      setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+    } else {
+      setMessageError('Correo o contraseña incorrectos.');
+    }
+  };
 
-  // Submit
+  const loginQuery = useLoginQuery(onSuccess, onError)
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const valuesToValidate = {
+      correo: emailValue,
+      contrasena: password,
+    };
     try {
-      const response = await axios.post(endpoint.usuarios.login, {
-        correo: emailValue,
-        contrasena: password,
-      }, { withCredentials: true });
+      await login_form.validate(valuesToValidate, { abortEarly: false });
+      setErrors({}); 
 
-      await checkToken();
-      console.log('Response:', response.data);
-
-      if (response.data.status === 'success') {
-        toast.success('Inicio de sesión exitoso');
-        setMessageError(`verification step: ${verificationStep}`);
-        setTimeout(() => {
-          login(response.data.progress);
-        }, 2000);
-      }
-
+      loginQuery.mutate(valuesToValidate);
     } catch (error) {
-      // si hay un error porque hay un error de conexión o un error en el servidor, asigna el error a messageError
-      if (error.response === undefined) {
-        setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+      console.log(error)
+      if (error.name === 'ValidationError') {
+        const validationErrors = {};
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
       } else {
-        setMessageError('Correo o contraseña incorrectos.');
+        console.error("Error al enviar el formulario:", error);
       }
     }
-
   };
   return (
-    <div className=''>
+    <div className='flex flex-col items-center'>
       <div className='flex flex-col items-center space-y-2 my-9'>
         <Link to = '/'>
           <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
         </Link>
         <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
       </div>
-      <div className='flex flex-col items-center space-y-8 my-4'>
-        <Input
-          isRequired
+      <div className='w-10/12 space-y-8 my-4'>
+        <TextFieldWithLabelInside
           type='email'
           label='Correo Electrónico'
           placeholder='ejemplo@outlook.com'
-          size='lg'
-          variant='bordered'
-          classNames={styles_input}
           value={emailValue}
-          errorMessage={isInvalid && "Ingresa un correo válido."}
+          errorMessage={errors.correo}
           onValueChange={setEmailValue}
         />
-        <Input
-          isRequired
+        <TextFieldWithLabelInside
+          type='password'
           label='Contraseña'
           placeholder='Ingresa contraseña'
-          size='lg'
-          variant='bordered'
-          classNames={styles_input}
-          endContent={
-            <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-              {isVisible ? (
-                <img src={invisibleEyeIcon} alt='Hide Password' className=' w-6' />
-              ) : (
-                <img src={visibleEyeIcon} alt='Show Password' className='w-6' />
-              )}
-            </button>
-          }
-          type={isVisible ? "text" : "password"}
-
           value={password}
-          onChange={handleChange}
+          errorMessage={errors.contrasena}
+          onValueChange={setPassword}
+          isPasswordField={true}
+          visibleEyeIcon={visibleEyeIcon}
+          invisibleEyeIcon={invisibleEyeIcon}
+          isVisible={isVisible}
         />
+        <div className="flex justify-center">
         <Button
           size='md'
           className='w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl'
-          isDisabled={isInvalid || !isLongEnough || emailValue === '' || password === ''}
+          isDisabled={emailValue === '' || password === '' || Object.keys(errors).length > 0}
           onClick={handleSubmit}
         >
           Ingresar
         </Button>
+        </div>
         <div className='flex flex-col items-start w-10/12'>
           <p className='font-rubik font-light text-sm text-dark-blue-950'>
             ¿No tienes una cuenta?  
             <a  className='text-dark-blue-700 font-normal' href={SIGNUP}> Registrate</a>
           </p>
         </div>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-        />
         <div className='text-[10px]'>{messageError}</div>
       </div>
     </div>

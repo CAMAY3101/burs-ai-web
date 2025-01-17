@@ -1,88 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { Select, SelectItem } from "@nextui-org/react";
+import React, {useState} from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import { Select, SelectItem } from '@nextui-org/react';
 
 const styles_select = {
   label: [
-    "text-dark-blue-950",
-    "font-rubik",
-    "font-medium",
-    "text-base",
+    '!text-dark-blue-950',
+    'group-data-[filled-within=true]:text-dark-blue-950',
+    'font-rubik',
+    'font-medium',
+    'text-base',
   ],
-  requiredAsterisk: [
-    "text-red-500",
-    "ml-1",
-  ],
+  requiredAsterisk: ['text-red-500', 'ml-1'],
   trigger: [
-    "rounded-xl",
-    "border-dark-blue-400",
-    "data-[hover=true]:border-dark-blue-700",
-    "data-[open=true]:border-dark-blue-900",
-    "data-[focus=true]:border-dark-blue-900",
-    "!cursor-text",
-    "max-h-[40px]",
-    "py-1",
-  ],
-  value: [
-    "font-rubik",
-    "font-regular",
-    "text-[15px]",
-  ],
-  placeholder: [
-    "text-dark-blue-300",
-  ],
+    'rounded-xl',
+    'border-dark-blue-400',
+    'data-[hover=true]:border-dark-blue-700',
+    'data-[open=true]:border-dark-blue-900',
+    'data-[focus=true]:border-dark-blue-900',
+    '!cursor-text',
+    'max-h-[40px]',
+    'py-1',
+  ]
 };
 
 const SelectField = ({
   isRequired = true,
   label,
+  name,
   options = [],
   placeholder,
-  selectedKeys,
-  onSelectionChange,
   isDisabled = false,
 }) => {
-  const [selectedValue, setSelectedValue] = useState(selectedKeys);
+  const { control } = useFormContext();
+  const [isValueSelected, setIsValueSelected] = useState(false);
 
-  // Cuando el valor seleccionado cambia
-  useEffect(() => {
-    setSelectedValue(selectedKeys);
-  }, [selectedKeys]);
-
-  const handleSelectionChange = (value) => {
-    onSelectionChange(value);
-    setSelectedValue(value); // Actualizamos el estado de la selección
-  };
-
-  // Verificar si el valor seleccionado corresponde al placeholder
-  const isPlaceholderSelected = selectedValue?.length === 0 || selectedValue === placeholder;
+  if (!control) {
+    console.error(
+      'useFormContext no está disponible. Asegúrate de que el componente esté dentro de un FormProvider.'
+    );
+    return null;
+  }
 
   return (
-    <div className="w-full">
-      <label className={`${styles_select.label.join(" ")} flex items-center`}>
-        {label}
-        {isRequired && <span className={styles_select.requiredAsterisk.join(" ")}>*</span>}
-      </label>
-      <Select
-        placeholder={placeholder}
-        variant="bordered"
-        size="md"
-        classNames={{
-          trigger: styles_select.trigger.join(" "),
-          value: isPlaceholderSelected
-            ? "text-dark-blue-300"  // Si es el placeholder, usamos dark-blue-300
-            : "text-dark-blue-950", // Si hay una opción seleccionada, usamos dark-blue-950
-        }}
-        selectedKeys={selectedValue}
-        onSelectionChange={handleSelectionChange}
-        isDisabled={isDisabled}
-      >
-        {options.map((option) => (
-          <SelectItem value={option.value} key={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error } }) => (
+        <div className="w-full">
+          <Select
+            placeholder={placeholder}
+            label={label}
+            isRequired={isRequired}
+            labelPlacement="outside"
+            variant="bordered"
+            size="md"
+            classNames={{
+              ...styles_select,
+              value: [
+                'font-rubik',
+                'font-regular',
+                'text-[15px]',
+                isValueSelected ? 'text-dark-blue-950' : 'text-dark-blue-300', // Clase dinámica basada en el estado
+              ],
+            }}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()} // Asegura la compatibilidad con NextUI
+            onSelectionChange={(keys) => {
+              const value = Array.from(keys).join(''); // Convierte el Set en un valor
+              setIsValueSelected(!!value);
+              field.onChange(value); // Actualiza el valor en react-hook-form
+            }}
+            isDisabled={isDisabled}
+          >
+            {options.map((option) => (
+              <SelectItem value={option.value} key={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </Select>
+          {error && (
+            <p className="text-red-500 text-sm mt-1">{error.message}</p>
+          )}
+        </div>
+      )}
+    />
   );
 };
 

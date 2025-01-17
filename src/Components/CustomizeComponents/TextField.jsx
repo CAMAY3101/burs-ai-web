@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useFormContext, Controller } from 'react-hook-form';
 import { Input } from '@nextui-org/react'
 
 const styles_input = {
@@ -26,10 +27,18 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label,value, onValueChange, name, errorMessage, isRequired = true }) {
+function TextField({type, placeholder, label, name, errorMessage, isRequired = true, formatValue, parseValue }) {
+  const context = useFormContext();
+  const { control } = context;
+  
   return (
-    <div className="w-full">
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error }}) => (
+        <div className="w-full">
           <Input
+            {...field}
             isRequired={isRequired}
             type={type}
             placeholder={placeholder}
@@ -38,12 +47,17 @@ function TextField({type, placeholder, label,value, onValueChange, name, errorMe
             variant='bordered'
             classNames={styles_input}
             labelPlacement={'outside'}
-            value={value} 
-            onChange={(e) => onValueChange(e.target.value)}
             name={name}
+            value={formatValue ? formatValue(field.value) : field.value} // Formatear el valor si se proporciona una función
+            onChange={(e) => {
+              const rawValue = parseValue ? parseValue(e.target.value) : e.target.value; // Parsear el valor si se proporciona una función
+              field.onChange(rawValue); // Actualizar el valor del campo con el valor sin formato
+            }}
             errorMessage={errorMessage}
             />
-    </div>
+        </div>
+      )}
+    />
   );
 }
 
@@ -56,6 +70,8 @@ TextField.propTypes = {
     name: PropTypes.string,
     error: PropTypes.string,
     isRequired: PropTypes.bool,
+    formatValue: PropTypes.func, // Función para formatear el valor mostrado
+    parseValue: PropTypes.func,
 }
 
 export default TextField

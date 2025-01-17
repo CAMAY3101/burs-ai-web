@@ -1,112 +1,118 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import React from 'react';
 import { Button } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
-
 import { useAuthContext } from '../../Contexts/authContext';
-import { endpoint } from '../../Config/utils/urls';
-
+import { useSecureEmailQuery, useVerifyEmail, useResendOtpEmail, useSendOtpPhone } from "../../hooks/useQueryHooks";
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
-
-axios.defaults.withCredentials = true;
+import CustomFormProvider from '../CustomizeComponents/Form/CustomFormProvider.js';
+import { email_Verification } from '../../Config/Schemas/yupSchemas.js';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import Loading from '../CustomizeComponents/Loading.jsx'
 
 function VerificacionCorreo() {
-    const { navigateToNextStep } = useAuthContext();
-    const [otpCode, setOtpCode] = useState('');
-    const [emailSecure, setEmailSecure] = useState('');
+  const { navigateToNextStep } = useAuthContext();
 
-    useEffect(() => {
-        const fetchSecureEmail = async () => {
-            try {
-                const response = await axios.get(endpoint.usuarios.getSecureEmailUser);
-                if (response.data.status === 'success') {
-                    setEmailSecure('al correo ' + response.data.email);
-                }
-            } catch (error) {
-                setEmailSecure('a tu correo');
-            }
-        };
+  const defaultValues = {
+    otpCode: '',
+  };
 
-        fetchSecureEmail();
-    }, []);
+  const methods = useForm({
+    resolver: yupResolver(email_Verification),
+    defaultValues,
+  });
 
-    const handleSubmit = async () => {
-        //console.log( otpCode);
-        try {
-            const response = await axios.post(endpoint.verificacion.verifyEmail, {
-                code: otpCode
-            });
-            if (response.data.status === 'success') {
-                toast.success('Correo verificado con éxito');
-                setTimeout(async () => {
-                    try {
-                        const responseOTP = await axios.post(endpoint.verificacion.sendOTPCodePhoneNumber);
-                        if (responseOTP.data.status === 'success') {
-                            navigateToNextStep(5);
-                        }
-                    } catch (error) {
-                        console.error('Error enviando OTP:', error);
-                    }
-                }, 2000);
-            }
-        } catch (error) {
-            if (error.response.status === 400) {
-                toast.error('Codigo incorrecto')
-            }
-            else {
-                toast.error('Error al verificar el correo, intentalo de nuevo')
-            }
-        }
-    };
+  const {
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = methods;
 
-    const handleResend = async () => {
-        try {
-            const response = await axios.post(endpoint.verificacion.resendOTPCodeEmail);
-            if (response.data.status === 'success') {
-                toast('Código reenviado')
-            }
-        } catch (error) {
-            toast.error('Error al reenviar el codigo')
-        }
-    };
+  const otpCode = watch('otpCode');
 
-    return (
-        <div className='sm:w-11/12 md:w-3/4 flex flex-col justify-start items-center space-y-8'>
-            <div className='flex flex-col space-y-12'>
-                <div className='flex flex-col space-y-5'>
-                <TitlePage title={`Te enviamos un código ${emailSecure}`} />
-                    <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el codigo OTP que te enviamos por correo</p>
-                </div>
-                <div className='flex-col space-y-3'>
-                    <TextField
-                        type='text'
-                        label='Codigo OTP'
-                        placeholder='Ingresa el codigo'
-                        value={otpCode}
-                        onValueChange={setOtpCode}
-                    />
-                    <Button
-                        variant='light'
-                        className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
-                        onClick={handleResend}
-                    >
-                        Reenviar codigo
-                    </Button>
-                </div>
-                <Button1
-                    handleSubmit={handleSubmit}
-                    label="Verificar Correo"
-                />
-                <Toaster
-                    position="top-center"
-                    reverseOrder={false}
-                />
-            </div>
+  const onSuccess = async (response) => {
+    setTimeout(() => {
+      toast.success("Correo verificado con éxito");
+      sendOtpPhone();
+    }, 2000);
+  };
+
+  const onError = (error) => {
+    console.error("Error al verificar el correo:", error);
+  };
+
+  const { data: secureEmailData, isLoading: isLoadingEmail } = useSecureEmailQuery(
+    () => { },
+    () => toast.error("No se pudo obtener el correo seguro")
+  );
+
+  const emailSecure = secureEmailData?.data?.email
+  ? `al correo ${secureEmailData.data.email}`
+  : "a tu correo";
+
+  const { mutate: verifyEmail, isLoading: isVerifyEmail } = useVerifyEmail(onSuccess, onError);
+
+  const { mutate: resendOtpCode } = useResendOtpEmail(
+    () => toast.success("Código reenviado"),
+    () => toast.error("Error al reenviar el código")
+  );
+
+  const { mutate: sendOtpPhone } = useSendOtpPhone(
+    () => {
+      navigateToNextStep(5);
+    },
+    onError);
+
+  const onSubmit = (data) => {
+    verifyEmail({ code: data.otpCode });
+  };
+
+  const handleResend = () => {
+    resendOtpCode();
+  };
+
+  if (isSubmitting || isVerifyEmail || isLoadingEmail) {
+    return <Loading />;
+  }
+
+  return (
+    <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
+      <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex flex-col space-y-12'>
+          <div className='flex flex-col space-y-5'>
+            <TitlePage title={`Te enviamos un código ${emailSecure}`} />
+            <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>
+              Ingresa el código OTP que te enviamos por correo
+            </p>
+          </div>
+          <div className='flex-col space-y-3'>
+            <TextField
+              type='text'
+              name='otpCode'
+              label='Código OTP'
+              placeholder='Ingresa el código'
+              errorMessage={errors.otpCode?.message}
+            />
+            <Button
+              variant='light'
+              className='px-0 font-rubik font-medium text-xs text-purple-heart-700 data-[hover=true]:bg-default/0'
+              onClick={handleResend}
+            >
+              Reenviar código
+            </Button>
+          </div>
+          <Button1
+            isDisabled={isSubmitting}
+            handleSubmit={handleSubmit(onSubmit)}
+            label="Verificar Correo"
+          />
+          <Toaster position="top-center" reverseOrder={false} />
         </div>
-    )
+      </CustomFormProvider>
+    </div>
+  );
 }
 
-export default VerificacionCorreo
+export default VerificacionCorreo;

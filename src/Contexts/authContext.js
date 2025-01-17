@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }) {
     const [verificationStep, setVerificationStep] = useState(() => {
         return parseInt(window.sessionStorage.getItem(PROGRESS_INDEX)) // Convertir de string a entero
     });
-    
+
     const [tokenExist, setTokenExist] = useState(() => {
         return window.sessionStorage.getItem(AUTHENTICATED)
     });
@@ -32,7 +32,6 @@ export default function AuthContextProvider({ children }) {
                 } else {
                     window.sessionStorage.removeItem(AUTHENTICATED);
                     setTokenExist(false);
-                    window.sessionStorage.removeItem(PROGRESS_INDEX);
                 }
 
                 if (response.data.accessTokenExist === true) {
@@ -41,7 +40,6 @@ export default function AuthContextProvider({ children }) {
                 } else {
                     window.sessionStorage.removeItem(ACCESS_TOKEN);
                     setAccessTokenExist(false);
-                    window.sessionStorage.removeItem(PROGRESS_INDEX);
                 }
             })
             .catch((error) => {
@@ -71,7 +69,6 @@ export default function AuthContextProvider({ children }) {
         console.log('Login');
         console.log('Step:', step);
         checkToken();
-        console.log('Step:', step);
         if (step === 'ingresar datos') {
             navigateToNextStep(1);
         } else if (step === 'ingresar historial') {

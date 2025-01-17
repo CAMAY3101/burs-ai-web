@@ -1,5 +1,5 @@
 export const ocupacionValues = [
-    { label: "Soy dueno de un negocio", value: "Soy dueno de un negocio" },
+    { label: "Soy dueño de un negocio", value: "Soy dueño de un negocio" },
     { label: "Trabajo por mi cuenta", value: "Trabajo por mi cuenta" },
     { label: "Trabajo en una empresa", value: "Trabajo en una empresa" },
     { label: "Ama de casa", value: "Ama de casa" },
@@ -122,12 +122,12 @@ export const calificacionCrediticiaValues = [
     { label: "Regular", value: "Regular" },
     { label: "Mala", value: "Mala" },
     { label: "No tengo", value: "No tengo" },
-    { label: "No se", value: "No se" },
+    { label: "No sé", value: "No sé" },
 ];
 
 export const usoPrestamoValues = [
-    { label: "Inversion", value: "Inversion" },
-    { label: "Educacion", value: "Educacion" },
+    { label: "Inversión", value: "Inversión" },
+    { label: "Educación", value: "Educación" },
     { label: "Hogar", value: "Hogar" },
     { label: "Auto", value: "Auto" },
     { label: "Gastos", value: "Gastos" },
