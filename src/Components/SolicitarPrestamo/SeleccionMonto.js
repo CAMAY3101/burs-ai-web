@@ -21,11 +21,10 @@ const styles_slider = {
 
 function SeleccionMonto() {
     const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
-    const { navigateToNextStep } = useAuthContext();
     
     async function handleSubmit() {
         try {
-            const response = await axios.post(endpoint.verificacion.sendOTPCodeEmail);
+            await axios.post(endpoint.verificacion.sendOTPCodeEmail);
         } catch (error) {
             console.error('Error:', error);
         }
