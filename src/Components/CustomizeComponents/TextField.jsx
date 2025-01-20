@@ -35,7 +35,7 @@ function TextField({type, placeholder, label, name, errorMessage, isRequired = t
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error }}) => (
+      render={({ field }) => (
         <div className="w-full">
           <Input
             {...field}

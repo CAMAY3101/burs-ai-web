@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { ocupacionValues, industriaValues, subIndustriasValues, calificacionCrediticiaValues, usoPrestamoValues } from '../../Config/SolicitarPrestamo/historialValues';
 import { useAuthContext } from '../../Contexts/authContext';
@@ -16,20 +16,8 @@ import Loading from '../CustomizeComponents/Loading.jsx'
 
 function TuHistorial() {
   const { navigateToNextStep } = useAuthContext();
-  // ------ CHECKBOX ------
-  const [value, setValue] = useState("");
-  const [isCheckedSi, setIsCheckedSi] = useState(false);
-  const [isCheckedNo, setIsCheckedNo] = useState(false);
 
-  // -------- ALMACENAR VALORES DE INPUTS --------
-  const [salarioMensual, setSalarioMensual] = useState('');
-  const [ocupacion, setOcupacion] = useState(new Set([]));
-  const [industria, setIndustria] = useState(new Set([]));
   const [subindustria, setSubindustria] = useState(new Set([]));
-  const [pagoAtravesBanco, setPagoAtravesBanco] = useState(false);
-  const [salarioFamiliar, setSalarioFamiliar] = useState('');
-  const [calificacionCrediticia, setCalificacionCrediticia] = useState(new Set([]));
-  const [usoPrestamo, setUsoPrestamo] = useState(new Set([]));
 
 
   const defaultValues = {

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState, useEffect } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 

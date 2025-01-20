@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import pendingIcon from "../../Assets/icons/pending-icon.png";
 import { useAuthContext } from "../../Contexts/authContext";
-import { endpoint } from "../../Config/utils/urls";
-import {
-  useValidationStepFAD,
-  useGenerateToken,
-} from "../../hooks/useQueryHooks.js";
+import { useValidationStepFAD } from "../../hooks/useQueryHooks.js";
 
 import TitlePage from "../CustomizeComponents/TitlePage";
 
 function VerificacionID() {
-  const { navigateToNextStep, accessTokenExist, checkToken } = useAuthContext();
+  const { navigateToNextStep } = useAuthContext();
   const [message, setMessage] = useState(
     "Te enviamos una invitación a tu correo electrónico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam."
   );

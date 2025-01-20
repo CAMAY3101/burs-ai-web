@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // Importa PropTypes
 import { useFormContext, Controller } from 'react-hook-form';
 import { Select, SelectItem } from '@nextui-org/react';
 
@@ -60,14 +61,14 @@ const SelectField = ({
                 'font-rubik',
                 'font-regular',
                 'text-[15px]',
-                isValueSelected ? 'text-dark-blue-950' : 'text-dark-blue-300', // Clase dinámica basada en el estado
+                isValueSelected ? 'text-dark-blue-950' : 'text-dark-blue-300',
               ],
             }}
-            selectedKeys={field.value ? new Set([field.value]) : new Set()} // Asegura la compatibilidad con NextUI
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
-              const value = Array.from(keys).join(''); // Convierte el Set en un valor
+              const value = Array.from(keys).join('');
               setIsValueSelected(!!value);
-              field.onChange(value); // Actualiza el valor en react-hook-form
+              field.onChange(value);
             }}
             isDisabled={isDisabled}
           >
@@ -84,6 +85,21 @@ const SelectField = ({
       )}
     />
   );
+};
+
+
+SelectField.propTypes = {
+  isRequired: PropTypes.bool,
+  label: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+  placeholder: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 export default SelectField;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -25,7 +24,6 @@ function SignUp() {
 
     const { checkToken, navigateToNextStep, verificationStep } = useAuthContext();
     const [isVisible, setIsVisible] = React.useState(false);
-    const [password, setPassword] = useState('');
     const [recaptchaValue, setRecaptchaValue] = useState(null);
     const [passwordChecks, setPasswordChecks] = useState({});
 
@@ -46,7 +44,6 @@ function SignUp() {
     } = methods;
 
     const values = watch()
-    console.log('values: ', values)
 
     // Validar contraseña dinámicamente
     useEffect(() => {
