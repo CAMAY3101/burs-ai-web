@@ -1,5 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from '@nextui-org/react';
+
+Button1.propTypes = {
+  isDisabled: PropTypes.bool,
+  handleSubmit: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+};
 
 const Button1 = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
   return (
@@ -8,7 +15,7 @@ const Button1 = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
       color="secondary"
       className="w-full"
       isDisabled={isDisabled}
-      onClick={handleSubmit}
+      onPress={handleSubmit}
     >
       {label}
     </Button>
