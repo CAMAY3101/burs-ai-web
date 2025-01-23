@@ -1,4 +1,4 @@
-const api_local = import.meta.env.VITE_API_URL;
+const api_local = import.meta.env.VITE_API_URL || "http://localhost:3000/api";;
 
 export const endpoint = {
     checkToken: `${api_local}/check-cookie`,
