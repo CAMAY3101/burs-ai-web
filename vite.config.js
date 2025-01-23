@@ -34,8 +34,8 @@ export default defineConfig({
             },
         },
     },
-    // server: {
-    //     port: 7005,
-    //     open: true,
-    // },
+    server: {
+        port: 8080,
+        open: true,
+    },
 })
