@@ -11,9 +11,6 @@ export default defineConfig({
                 if (!id.match(/src\/.*\.js$/)) {
                     return null;
                 }
-
-                // Use the exposed transform from vite, instead of directly
-                // transforming with esbuild
                 return transformWithEsbuild(code, id, {
                     loader: 'jsx',
                     jsx: 'automatic', // 👈 this is important
@@ -35,7 +32,7 @@ export default defineConfig({
         },
     },
     server: {
-        port: 8080,
-        open: true,
+        // port: 8080,
+        open: false
     },
 })

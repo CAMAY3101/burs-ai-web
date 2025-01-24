@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@vitejs/plugin-react-swc": "^3.7.1",
+    "@vitejs/plugin-react-swc": "^3.7.2",
     "axios": "^1.6.7",
     "dotenv": "^16.4.3",
     "framer-motion": "^11.5.6",
@@ -26,7 +26,7 @@
     "sass": "^1.69.5",
     "slick-carousel": "^1.8.1",
     "tailwindcss-font-inter": "^3.0.1",
-    "vite": "^5.4.11",
+    "vite": "^6.0.11",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
