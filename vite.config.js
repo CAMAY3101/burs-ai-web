@@ -33,6 +33,7 @@ export default defineConfig({
     },
     server: {
         port: 8080,
-        host: true
+        host: true,
+        allowedHosts: ['burs-web-su6v4.ondigitalocean.app'] 
     },
 })
