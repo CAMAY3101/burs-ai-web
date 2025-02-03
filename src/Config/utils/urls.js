@@ -30,7 +30,10 @@ export const endpoint = {
     direccion: {
         createDireccion: `${api_local}/direccion/createDireccion`,
     },
-
+    circuloCredito:{
+        getTerminosCondiciones: `${api_local}/circulocredito/terminos-condiciones`,
+        createTerminosCondiciones: `${api_local}/circulocredito/crear-termino`
+    },
     FAD: {
         generateToken: `${api_local}/FAD/generateToken`,
         createValidation: `${api_local}/FAD/createValidation`,

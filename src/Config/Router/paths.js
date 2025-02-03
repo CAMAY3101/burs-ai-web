@@ -9,7 +9,9 @@ export const PRESTAMO = '/prestamo';
 export const PRESTAMO_SOLICITUD = '/prestamo/solicitud';
 export const PRESTAMO_VERIFICACION = '/prestamo/verificacion';
 
-
+export const CIRCULO_CREDITO = '/circulo-credito';
+export const CIRCULO_CREDITO_VERIFICAR_DATOS = '/circulo-credito/verificar-datos';
+export const CIRCULO_CREDITO_TERMINOS_CONDICIONES = '/circulo-credito/terminos-condiciones';
 
 export const VERIFICAR_CORREO = '/verificar/verificar-correo';
 export const VERIFICAR_TELEFONO = '/verificar/verificar-telefono';
