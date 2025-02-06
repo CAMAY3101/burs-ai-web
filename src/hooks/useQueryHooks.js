@@ -17,6 +17,7 @@ import {
   createUser,
   validationStepFAD,
   fetchTerminosCondiciones,
+  fetchSolicitersDataAndAddress,
 } from "../api/apiHelper";
 
 export const useLoginQuery = (onSuccess, onError) => {
@@ -186,7 +187,19 @@ export const useGetTerminosCondiciones = (onSuccess, onError) => {
   const query = useQuery({
     queryKey: ["terminos_condiciones"],
     queryFn: fetchTerminosCondiciones,
-    enabled: false,
+    // enabled: false,
+    onSuccess,
+    onError,
+  });
+  return query;
+};
+
+
+export const useGetSolicitersDataAndAddress = (onSuccess, onError) => {
+  const query = useQuery({
+    queryKey: ["soliciters_data_address"],
+    queryFn: fetchSolicitersDataAndAddress,
+    // enabled: false,
     onSuccess,
     onError,
   });

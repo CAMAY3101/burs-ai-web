@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/react";
 import Button1 from "../CustomizeComponents/Button1";
 import toast, { Toaster } from "react-hot-toast";
 import { PINInputBox } from "./PINInputBox";
-import { useGetTerminosCondiciones } from "../../hooks/useQueryHooks";
+import {
+  useGetTerminosCondiciones,
+  useGetSolicitersDataAndAddress,
+} from "../../hooks/useQueryHooks";
 
 export const StepperCirculoCredito = () => {
   const [step, setStep] = useState(1); // Paso actual
   const [userInfo, setUserInfo] = useState({
     nombreCompleto: "Juan Pérez",
+    nombre: "Ivan",
+    apellidos: "No",
     curp: "ABCD123456EFGH78",
     telefono: "5551234567",
     correo: "juan@ejemplo.com",
@@ -27,6 +32,27 @@ export const StepperCirculoCredito = () => {
     refetch: refetch_terminos_condiciones,
     isFetching,
   } = useGetTerminosCondiciones();
+
+  const {
+    data: datos_solicitante,
+    // refetch: refetch_datos_solicitante,
+    // isFetching: isFetching_datos_solicitante,
+  } = useGetSolicitersDataAndAddress();
+
+  useEffect(() => {
+    if (
+      datos_solicitante &&
+      datos_solicitante.data &&
+      datos_solicitante.data.data
+    ) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        ...datos_solicitante.data.data,
+      }));
+    } else {
+      console.error("datos_solicitante.data.data is undefined");
+    }
+  }, [datos_solicitante]);
 
   const handleContinue = async () => {
     if (
@@ -65,7 +91,6 @@ export const StepperCirculoCredito = () => {
         //   handleContinue();
       } else {
         toast("Por favor, acepta los términos e ingresa el PIN");
-        throw new Error("No esta el pin o los terminos");
       }
     }
     setStep(step + 1); // Pasar al siguiente paso
@@ -77,16 +102,6 @@ export const StepperCirculoCredito = () => {
     }
   };
 
-  //   const handleSubmit = () => {
-  //     // toast("Procesando tu solicitud.", "success");
-  //     if (aceptoTerminos && pin) {
-  //       toast("Solicitud enviada correctamente");
-  //     //   handleContinue();
-  //     } else {
-  //       toast("Por favor, acepta los términos e ingresa el PIN");
-  //     }
-  //   };
-
   return (
     <div className="flex flex-col items-center">
       <Toaster />
@@ -94,7 +109,7 @@ export const StepperCirculoCredito = () => {
         {/* Stepper con iconos de Material Icons */}
         <div className="w-full max-w-md mb-8">
           <div className="flex justify-center space-x-4">
-            {[1, 2, 3, 4, 5].map((s) => (
+            {[1, 2, 3, 4].map((s) => (
               <div
                 key={s}
                 className={`flex items-center space-x-2 ${
@@ -141,7 +156,7 @@ export const StepperCirculoCredito = () => {
                     Nombre completo
                   </label>
                   <p className="mt-1 p-2 bg-gray-100 rounded-md">
-                    {userInfo.nombreCompleto}
+                    {userInfo.nombre + " " + userInfo.apellidos}
                   </p>
                 </div>
                 <div>
@@ -188,54 +203,95 @@ export const StepperCirculoCredito = () => {
                 Domicilio
               </h2>
               <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Calle y número"
-                  value={userInfo.calleNumero}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, calleNumero: e.target.value })
-                  }
-                  className="w-full p-2 border rounded-md"
-                />
-                <input
-                  type="text"
-                  placeholder="Colonia"
-                  value={userInfo.colonia}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, colonia: e.target.value })
-                  }
-                  className="w-full p-2 border rounded-md"
-                />
-                <input
-                  type="text"
-                  placeholder="Ciudad"
-                  value={userInfo.ciudad}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, ciudad: e.target.value })
-                  }
-                  className="w-full p-2 border rounded-md"
-                />
-                <input
-                  type="text"
-                  placeholder="Entidad federativa"
-                  value={userInfo.entidadFederativa}
-                  onChange={(e) =>
-                    setUserInfo({
-                      ...userInfo,
-                      entidadFederativa: e.target.value,
-                    })
-                  }
-                  className="w-full p-2 border rounded-md"
-                />
-                <input
-                  type="text"
-                  placeholder="Código postal"
-                  value={userInfo.codigoPostal}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, codigoPostal: e.target.value })
-                  }
-                  className="w-full p-2 border rounded-md"
-                />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Calle y número
+                  </label>
+                  <p className="mt-1 p-2 bg-gray-100 rounded-md">
+                    <input
+                      type="text"
+                      placeholder="Calle y número"
+                      value={userInfo.calleNumero}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          calleNumero: e.target.value,
+                        })
+                      }
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Colonia
+                  </label>
+                  <p className="mt-1 p-2 bg-gray-100 rounded-md">
+                    <input
+                      type="text"
+                      placeholder="Colonia"
+                      value={userInfo.colonia}
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, colonia: e.target.value })
+                      }
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Ciudad
+                  </label>
+                  <p className="mt-1 p-2 bg-gray-100 rounded-md">
+                    <input
+                      type="text"
+                      placeholder="Ciudad"
+                      value={userInfo.ciudad}
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, ciudad: e.target.value })
+                      }
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Entidad federativa
+                  </label>
+                  <p className="mt-1 p-2 bg-gray-100 rounded-md">
+                    <input
+                      type="text"
+                      placeholder="Entidad federativa"
+                      value={userInfo.entidadFederativa}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          entidadFederativa: e.target.value,
+                        })
+                      }
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Código postal
+                  </label>
+                  <p className="mt-1 p-2 bg-gray-100 rounded-md">
+                    <input
+                      type="text"
+                      placeholder="Código postal"
+                      value={userInfo.codigoPostal}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          codigoPostal: e.target.value,
+                        })
+                      }
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </p>
+                </div>
                 <Button1
                   handleSubmit={handleContinue}
                   label={isLoading ? "Enviando..." : "Continuar"}
@@ -279,9 +335,9 @@ export const StepperCirculoCredito = () => {
                               type="checkbox"
                               id="aceptoTerminos"
                               checked={aceptoTerminos}
-                              onChange={(e) => {
-                                setAceptoTerminos(e.target.checked);
-                              }}
+                              onChange={(e) =>
+                                setAceptoTerminos(e.target.checked)
+                              }
                               className="mr-2"
                             />
                             <label
@@ -316,19 +372,25 @@ export const StepperCirculoCredito = () => {
           {step === 4 && (
             <>
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                Solicitud enviada
+                Evaluando solicitud{" "}
+                <i className="material-icons animate-spin">access_time</i>
               </h2>
               <p className="text-gray-700">
-                Tu solicitud de revisión de aprobación de crédito fue enviada
-                con éxito. Vuelve aquí más tarde para verificar los resultados.
+                Tu solicitud esta haciendo evaluada actualmente, espera un
+                momento.
               </p>
               <div className="mt-6">
-                <Button1 handleSubmit={handleContinue} label="Continuar" />
+                <Button1
+                  handleSubmit={handleContinue}
+                  label={
+                    <i className="material-icons animate-spin">access_time</i>
+                  }
+                />
               </div>
             </>
           )}
 
-          {step === 5 && (
+          {/* {step === 5 && (
             <>
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Resultados de aprobación
@@ -339,12 +401,12 @@ export const StepperCirculoCredito = () => {
               </p>
               <div className="align-middle text-center">
                 <p className="text-gray-700 mt-4 align-middle">
-                  Descargar resultados.
+                  Descargar resultados en tu correo electrónico.
                 </p>
                 <i className="material-icons">download</i>
               </div>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>

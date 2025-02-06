@@ -64,6 +64,11 @@ export function fetchTerminosCondiciones(){
     return axios.get(endpoint.circuloCredito.getTerminosCondiciones, {withCredentials: true});
 }
 
+//Obtener los terminos y condiciones circulo
+export function fetchSolicitersDataAndAddress(){
+    return axios.get(endpoint.circuloCredito.getSolicitersDataAndAddress, {withCredentials: true});
+}
+
 //Funciones para verificar FAD
 export function validationStepFAD(){
     return axios.get(endpoint.FAD.getValidationStep, { withCredentials: true });

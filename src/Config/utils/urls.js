@@ -32,6 +32,7 @@ export const endpoint = {
     },
     circuloCredito:{
         getTerminosCondiciones: `${api_local}/circulocredito/terminos-condiciones`,
+        getSolicitersDataAndAddress: `${api_local}/circulocredito/getSolicitersDataAndAddress`,
         createTerminosCondiciones: `${api_local}/circulocredito/crear-termino`
     },
     FAD: {
