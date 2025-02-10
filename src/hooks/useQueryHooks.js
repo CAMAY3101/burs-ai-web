@@ -15,7 +15,8 @@ import {
   generateToken,
   createValidation,
   createUser,
-  validationStepFAD
+  validationStepFAD,
+  sendFiles
 } from '../api/apiHelper';
 
 
@@ -180,5 +181,15 @@ export const useValidationStepFAD = (onSuccess, onError, isEnabled = true) => {
     onSuccess,
     onError,
   });
+};
+
+export const useSendFiles = (onSuccess, onError) => {
+  const mutation = useMutation({
+      mutationKey: ['sendFiles'],
+      mutationFn: sendFiles,
+      onSuccess,
+      onError,
+  });
+  return mutation;
 };
 

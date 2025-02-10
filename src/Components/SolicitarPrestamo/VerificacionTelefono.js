@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@nextui-org/react"
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthContext } from '../../Contexts/authContext';
-import { useSecurePhoneQuery, useVerifyPhone, useResendOtpPhone, useGenerateToken, useCreateValidation } from '../../hooks/useQueryHooks.js';
+import { useSecurePhoneQuery, useVerifyPhone, useResendOtpPhone, useGenerateToken, useCreateValidation, useSendFiles } from '../../hooks/useQueryHooks.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
 import Button1 from '../CustomizeComponents/Button1.jsx';
@@ -61,9 +61,11 @@ function VerificacionTelefono() {
 
     // Hook para generar un token FAD
     const { mutate: generateToken } = useGenerateToken(
-        () => {
+        async () => {
             checkToken();
-            createValidation(); // Crear validación
+            await createValidation();
+            await sendFiles();
+            navigateToNextStep(6);
         },
         (error) => console.error("Error al generar token:", error)
     );
@@ -76,6 +78,13 @@ function VerificacionTelefono() {
         },
         (error) => console.error("Error al crear validación:", error)
     );
+//Hook para enviar contrato PRUEBAAA Borrar esto de aqui 
+//     const { mutate: sendFiles } = useSendFiles(
+//      () => {
+//            toast.success("Se envio el contrato");
+ //       },
+ //       (error) => console.error("Error al crear validación:", error)
+ //   );
 
     const onSubmit = (data) => {
         verifyPhone({ code: data.otpCode });
