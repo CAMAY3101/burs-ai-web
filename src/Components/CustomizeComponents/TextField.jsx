@@ -72,6 +72,7 @@ TextField.propTypes = {
     isRequired: PropTypes.bool,
     formatValue: PropTypes.func, // Función para formatear el valor mostrado
     parseValue: PropTypes.func,
+    errorMessage: PropTypes.string
 }
 
 export default TextField

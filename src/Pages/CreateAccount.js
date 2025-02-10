@@ -145,7 +145,7 @@ function SignUp() {
                     </li>
                 </ul>
                 <ReCAPTCHA
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY}
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITEKEY || "recaptcha-sitekey"}
                     onChange={(value) => setRecaptchaValue(value)}
                 />
                 <div className="flex justify-center">

@@ -1,22 +1,19 @@
 import { defineConfig, transformWithEsbuild } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";  // 👈 Usa el compilador estándar de React
 import tailwindcss from "tailwindcss";
 
 export default defineConfig({
     plugins: [
-        react(),
+        react(), // 👈 Usa @vitejs/plugin-react en lugar de SWC
         {
             name: 'load+transform-js-files-as-jsx',
             async transform(code, id) {
                 if (!id.match(/src\/.*\.js$/)) {
                     return null;
                 }
-
-                // Use the exposed transform from vite, instead of directly
-                // transforming with esbuild
                 return transformWithEsbuild(code, id, {
                     loader: 'jsx',
-                    jsx: 'automatic', // 👈 this is important
+                    jsx: 'automatic',
                 });
             },
         },
@@ -26,7 +23,6 @@ export default defineConfig({
             plugins: [tailwindcss()],
         },
     },
-    // Workaround before renaming .js to .jsx
     optimizeDeps: {
         esbuildOptions: {
             loader: {
@@ -34,8 +30,9 @@ export default defineConfig({
             },
         },
     },
-    // server: {
-    //     port: 7005,
-    //     open: true,
-    // },
-})
+    server: {
+        port: 8080,
+        host: '0.0.0.0',
+        allowedHosts: ['burs-web-su6v4.ondigitalocean.app', 'app.burs.com.mx'],
+    },
+});

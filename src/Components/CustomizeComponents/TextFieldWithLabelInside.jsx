@@ -36,7 +36,6 @@ function TextFieldWithLabelInside({
   invisibleEyeIcon,
   name,
   helperText,
-  enableCurrencyFormatting = false, // Si se necesita soporte para formatos
   ...other
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -96,7 +95,6 @@ TextFieldWithLabelInside.propTypes = {
   visibleEyeIcon: PropTypes.string,
   invisibleEyeIcon: PropTypes.string,
   helperText: PropTypes.node,
-  enableCurrencyFormatting: PropTypes.bool,
 };
 
 export default TextFieldWithLabelInside;
