@@ -18,7 +18,7 @@ import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFiel
 
 function LogIn2() {
   const { login, verificationStep } = useAuthContext();
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
 
   const defaultValues = {
@@ -33,11 +33,8 @@ function LogIn2() {
 
   const {
     handleSubmit,
-    watch,
     formState: { isSubmitting, errors },
   } = methods;
-
-  const values = watch();
 
   const onSuccess = async (response) => {
     if (response.data.status === 'success') {

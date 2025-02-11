@@ -35,6 +35,7 @@ function IngresaTusDatos() {
         watch,
         formState: { errors, isSubmitting },
     } = methods;
+    console.log("Errores del formulario:", errors)
 
     const values = watch();
     console.log('values: ', values)
@@ -85,7 +86,7 @@ function IngresaTusDatos() {
                             name='nombre'
                             label='Nombre(s)'
                             placeholder='Ejemplo: Juan'
-                            errorMessage={errors.nombre?.message}
+                            errorMessage={errors.nombre?.message || ' '}
                         />
                         <TextField
                             type='text'

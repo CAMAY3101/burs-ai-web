@@ -27,9 +27,8 @@ const styles_input = {
 };
 
 
-function TextField({type, placeholder, label, name, errorMessage, isRequired = true, formatValue, parseValue }) {
-  const context = useFormContext();
-  const { control } = context;
+function TextField({type, placeholder, label, name, isRequired = true, formatValue, parseValue }) {
+  const { control, formState: { errors } } = useFormContext();
   
   return (
     <Controller
@@ -53,7 +52,8 @@ function TextField({type, placeholder, label, name, errorMessage, isRequired = t
               const rawValue = parseValue ? parseValue(e.target.value) : e.target.value; // Parsear el valor si se proporciona una función
               field.onChange(rawValue); // Actualizar el valor del campo con el valor sin formato
             }}
-            errorMessage={errorMessage}
+            isInvalid={!!errors[name]} // Indicar que hay un error
+            errorMessage={errors[name]?.message}
             />
         </div>
       )}
