@@ -37,5 +37,7 @@ export const endpoint = {
         getValidationStep: `${api_local}/FAD/getValidationStep`,
         getValidationData: `${api_local}/FAD/getValidationData`,
         getUserInFAD: `${api_local}/FAD/getUserInFAD`,
+        sendFiles: `${api_local}/FAD/sendFiles`,
+
     },
 };

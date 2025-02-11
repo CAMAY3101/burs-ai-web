@@ -26,13 +26,10 @@ function VerificacionCorreo() {
 
   const {
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = methods;
 
-  const otpCode = watch('otpCode');
-
-  const onSuccess = async (response) => {
+  const onSuccess = async ( ) => {
     setTimeout(() => {
       toast.success("Correo verificado con éxito");
       sendOtpPhone();

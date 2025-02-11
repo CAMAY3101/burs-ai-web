@@ -12,7 +12,7 @@ function VerificacionID() {
     "Te enviamos una invitación a tu correo electrónico para validar tu INE e identidad. Revisa tu bandeja de entrada o spam."
   );
 
-  const { data: validationStepFAD, isLoading: isLoadingFADData } =
+  const { isLoading: isLoadingFADData } =
     useValidationStepFAD(
       (data) => {
         // console.log(data.data.status);
@@ -27,6 +27,14 @@ function VerificacionID() {
       },
       () => console.error("Ocurrió un error al verificar los datos de FAD.")
     );
+
+    if (isLoadingFADData) {
+      return (
+        <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8 items-center text-center'>
+          <p className="font-rubik text-md text-dark-blue-950">Cargando validación...</p>
+        </div>
+      );
+    }
 
   return (
     <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8 items-center text-center'>

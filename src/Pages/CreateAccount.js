@@ -23,7 +23,7 @@ import { useCreateUser } from '../hooks/useQueryHooks';
 function SignUp() {
 
     const { checkToken, navigateToNextStep, verificationStep } = useAuthContext();
-    const [isVisible, setIsVisible] = React.useState(false);
+    const [isVisible] = React.useState(false);
     const [recaptchaValue, setRecaptchaValue] = useState(null);
     const [passwordChecks, setPasswordChecks] = useState({});
 
@@ -57,7 +57,7 @@ function SignUp() {
         });
     }, [watch('contrasena')]);
 
-    const onSuccess = async (response) => {
+    const onSuccess = async ( ) => {
         toast.success('Creación de usuario exitosa');
         await checkToken();
         navigateToNextStep(1);

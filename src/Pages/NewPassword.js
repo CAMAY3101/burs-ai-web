@@ -17,7 +17,7 @@ import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFiel
 
 function NewPassword() {
   const { login, verificationStep } = useAuthContext();
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
 

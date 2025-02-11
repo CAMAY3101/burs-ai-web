@@ -68,3 +68,9 @@ export function validationStepFAD(){
 export function createUser(data) {
     return axios.post(endpoint.usuarios.createUser, data, { withCredentials: true });
 }
+
+
+// Envio de contrato
+export function sendFiles() {
+    return axios.post(endpoint.FAD.sendFiles, {}, { withCredentials: true });
+}

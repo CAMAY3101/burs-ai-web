@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TitlePage = ({ title }) => {
   return (
@@ -6,6 +7,10 @@ const TitlePage = ({ title }) => {
       {title}
     </h1>
   );
+};
+
+TitlePage.propTypes = {
+  title: PropTypes.string.isRequired, // `title` debe ser un string y es obligatorio
 };
 
 export default TitlePage;

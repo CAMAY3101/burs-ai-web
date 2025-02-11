@@ -15,7 +15,7 @@ import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFiel
 
 function LogIn() {
   const { login, verificationStep} = useAuthContext(); // eliminar checktoken si ya no se ocupa
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible] = React.useState(false);
   const [messageError, setMessageError] = React.useState('');
   const [errors, setErrors] = React.useState({});
 
