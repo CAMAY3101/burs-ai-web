@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Button, Input, Accordion, AccordionItem } from '@nextui-org/react';
+import { Button, Input, Accordion, AccordionItem } from "@heroui/react";
 
 import axios from 'axios';
 
@@ -101,7 +101,7 @@ function ResultadosModelos() {
                             <p>Pago Diario Total = {results.ParametroDiasDePago.pagoDiarioTotal}</p>
                             <p>Pago Diario = Pago Diario Total / número de días</p>
 
-    
+
                             <h4>Paso 2: Determinar el número de días</h4>
                             <p>Número de días = Pago diario / 300</p>
                             <p>Número de días = {results.ParametroDiasDePago.pagoDiarioTotal} / 300</p>

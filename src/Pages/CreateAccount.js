@@ -3,7 +3,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Button } from "@nextui-org/react"
+import { Button } from "@heroui/react";
 import toast, { Toaster } from 'react-hot-toast';
 import { create_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"

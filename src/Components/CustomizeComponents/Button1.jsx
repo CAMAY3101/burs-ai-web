@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@nextui-org/react';
+import { Button } from "@heroui/react";
 
 const Button1 = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
   return (

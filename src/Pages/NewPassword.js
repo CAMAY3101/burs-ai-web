@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { login_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png";
 import visibleEyeIcon from "../Assets/icons/visible-eye.png";

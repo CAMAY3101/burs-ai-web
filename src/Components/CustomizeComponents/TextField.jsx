@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormContext, Controller } from 'react-hook-form';
-import { Input } from '@nextui-org/react'
+import { Input } from "@heroui/react";
 
 const styles_input = {
     label: [
@@ -30,7 +30,7 @@ const styles_input = {
 function TextField({type, placeholder, label, name, errorMessage, isRequired = true, formatValue, parseValue }) {
   const context = useFormContext();
   const { control } = context;
-  
+
   return (
     <Controller
       name={name}

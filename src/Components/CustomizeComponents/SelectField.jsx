@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'; // Importa PropTypes
 import { useFormContext, Controller } from 'react-hook-form';
-import { Select, SelectItem } from '@nextui-org/react';
+import { Select, SelectItem } from "@heroui/react";
 
 const styles_select = {
   label: [
