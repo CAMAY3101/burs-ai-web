@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarBrand, NavbarItem, Link } from '@nextui-org/react'
+import { Navbar, NavbarBrand, NavbarItem, Link } from "@heroui/react";
 import logo from '../../Assets/icons/burs-color-icon.png'
 
 import { useAuthContext } from '../../Contexts/authContext'
