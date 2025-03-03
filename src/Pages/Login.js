@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom';
-import { Button } from "@nextui-org/react"
+import { Button } from "@heroui/react";
 import { login_form } from '../Config/Schemas/yupSchemas';
 import bursColorIcon from "../Assets/icons/burs-color-icon.png"
 import visibleEyeIcon from "../Assets/icons/visible-eye.png"
@@ -50,7 +50,7 @@ function LogIn() {
     };
     try {
       await login_form.validate(valuesToValidate, { abortEarly: false });
-      setErrors({}); 
+      setErrors({});
 
       loginQuery.mutate(valuesToValidate);
     } catch (error) {
@@ -107,7 +107,7 @@ function LogIn() {
         </div>
         <div className='flex flex-col items-start w-10/12'>
           <p className='font-rubik font-light text-sm text-dark-blue-950'>
-            ¿No tienes una cuenta?  
+            ¿No tienes una cuenta?
             <a  className='text-dark-blue-700 font-normal' href={SIGNUP}> Registrate</a>
           </p>
         </div>

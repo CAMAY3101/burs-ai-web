@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@nextui-org/react'
+import { Button } from "@heroui/react";
 
 import underConstruction from '../../Assets/icons/under_construction.png'
 import axios from 'axios'

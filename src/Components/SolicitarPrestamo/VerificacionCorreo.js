@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthContext } from '../../Contexts/authContext';
 import { useSecureEmailQuery, useVerifyEmail, useResendOtpEmail, useSendOtpPhone } from "../../hooks/useQueryHooks";

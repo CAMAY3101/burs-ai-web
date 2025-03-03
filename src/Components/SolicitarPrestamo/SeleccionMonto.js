@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Slider } from "@nextui-org/react";
+import { Button, Slider } from "@heroui/react"; ;
+import { useAuthContext } from '../../Contexts/authContext';
 import axios from 'axios';
 import { endpoint } from '../../Config/utils/urls';
 
@@ -19,8 +20,8 @@ const styles_slider = {
 }
 
 function SeleccionMonto() {
-    const [ setValue] = React.useState(500000); // Valor inicial para el Slider
-    
+    const [value, setValue] = React.useState(500000); // Valor inicial para el Slider
+
     async function handleSubmit() {
         try {
             await axios.post(endpoint.verificacion.sendOTPCodeEmail);
@@ -28,7 +29,7 @@ function SeleccionMonto() {
             console.error('Error:', error);
         }
     }
-    
+
     return (
         <div className='sm:w-11/12 lg:w-5/12 space-y-5 '>
             <div id='simulador' className='w-full flex flex-col items-center py-14'>
