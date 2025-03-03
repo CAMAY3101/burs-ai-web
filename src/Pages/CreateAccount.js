@@ -30,6 +30,7 @@ function SignUp() {
     const defaultValues = {
         correo: '',
         contrasena: '',
+        terms: false
     };
 
     const methods = useForm({
@@ -109,6 +110,20 @@ function SignUp() {
                             invisibleEyeIcon={invisibleEyeIcon}
                             isVisible={isVisible}
                         />
+                                                <div className="flex items-center">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                {...methods.register("terms")}
+                                className="w-4 h-4 text-purple-600 border-gray-300 rounded"
+                            />
+                            <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
+                                Acepto los <a href="/terminos" target="_blank" rel="noopener noreferrer" className="underline">Términos y Condiciones</a>
+                            </label>
+                        </div>
+                        {errors.terms && (
+                            <p className="text-red-500 text-xs italic">{errors.terms.message}</p>
+                        )}
                     </div>
                 </CustomFormProvider>
 

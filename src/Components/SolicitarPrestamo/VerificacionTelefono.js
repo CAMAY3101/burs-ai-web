@@ -44,7 +44,6 @@ function VerificacionTelefono() {
         ? `al teléfono ${securePhoneData.data.phone}`
         : "a tu teléfono";
 
-    // Hook para verificar el teléfono
     const { mutate: verifyPhone } = useVerifyPhone(
         () => {
             toast.success("Teléfono verificado");
@@ -53,38 +52,27 @@ function VerificacionTelefono() {
         onError
     );
 
-    // Hook para reenviar el código OTP por teléfono
     const { mutate: resendOtpPhone } = useResendOtpPhone(
         () => toast.success("Código reenviado"),
         () => toast.error("Error al reenviar el código")
     );
 
-    // Hook para generar un token FAD
     const { mutate: generateToken } = useGenerateToken(
         async () => {
             checkToken();
             await createValidation();
-            //await sendFiles(); //PRUEBA BORRAR DESPUES 
             navigateToNextStep(6);
         },
         (error) => console.error("Error al generar token:", error)
     );
 
-    // Hook para crear validación FAD
     const { mutate: createValidation } = useCreateValidation(
         () => {
             toast.success("Validación completada");
-            navigateToNextStep(6); // Avanza al siguiente paso solo si la validación es exitosa
+            navigateToNextStep(6);
         },
         (error) => console.error("Error al crear validación:", error)
     );
-//Hook para enviar contrato PRUEBAAA Borrar esto de aqui 
-//   const { mutate: sendFiles } = useSendFiles(
-//      () => {
-//            toast.success("Se envio el contrato");
-//        },
-//        (error) => console.error("Error al crear validación:", error)
-//   );
 
     const onSubmit = (data) => {
         verifyPhone({ code: data.otpCode });
