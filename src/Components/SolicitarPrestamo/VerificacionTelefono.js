@@ -61,7 +61,7 @@ function VerificacionTelefono() {
         async () => {
             checkToken();
             await createValidation();
-            navigateToNextStep(6);
+            navigateToNextStep(5);
         },
         (error) => console.error("Error al generar token:", error)
     );
@@ -69,7 +69,7 @@ function VerificacionTelefono() {
     const { mutate: createValidation } = useCreateValidation(
         () => {
             toast.success("Validación completada");
-            navigateToNextStep(6);
+            navigateToNextStep(5);
         },
         (error) => console.error("Error al crear validación:", error)
     );
@@ -92,8 +92,32 @@ function VerificacionTelefono() {
                 <div className='flex flex-col space-y-12'>
                     <div className='flex flex-col space-y-5'>
                         <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
-                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el código OTP que te enviamos por mensaje</p>
+
+                        <Button
+                            variant='light'
+                            className='self-start px-0 font-rubik font-medium text-xs text-purple-heart-400 data-[hover=true]:bg-default/0'
+                        >
+                            Editar Número
+                        </Button>
+
+                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>
+                            Ingresa el código OTP que te enviamos por mensaje
+                        </p>
+                        <div className='flex flex-col space-y-0 items-start'>
+  <p className='m-0 font-rubik text-[10px] text-dark-blue-300 text-left'>
+    Por este conducto autorizo expresamente a BURS FINANCIERA MEXICANA SAPI DE CV, para que, a través de sus funcionarios facultados, realice las investigaciones correspondientes sobre mi comportamiento e historial crediticio, ante las Sociedades de información Crediticia.
+  </p>
+  <Button
+    variant='light'
+    className='block self-start m-0 px-0 font-rubik font-medium text-xs text-purple-heart-500 text-left data-[hover=true]:bg-default/0'
+  >
+    Ver más
+  </Button>
+</div>
+
+
                     </div>
+
                     <div className='flex-col space-y-3'>
                         <TextField
                             type='text'
@@ -112,7 +136,7 @@ function VerificacionTelefono() {
                     </div>
                     <Button1
                         handleSubmit={handleSubmit(onSubmit)}
-                        label="Verificar Teléfono"
+                        label="Autorizar"
                     />
                     <Toaster
                         position="top-center"
