@@ -16,3 +16,6 @@ export const VERIFICAR_TELEFONO = '/verificar/verificar-telefono';
 
 export const SOLICITAR_PRESTAMO = '/solicitar-prestamo';
 export const TU_HISTORIAL = '/solicitar-prestamo/tu-historial';
+
+// Nueva ruta para la pantalla de administración
+export const ADMIN_USUARIOS = '/admin/usuarios';

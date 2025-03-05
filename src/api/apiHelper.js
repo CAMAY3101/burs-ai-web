@@ -68,3 +68,28 @@ export function validationStepFAD(){
 export function createUser(data) {
     return axios.post(endpoint.usuarios.createUser, data, { withCredentials: true });
 }
+
+//Sección de administración de usuarios
+export function adminGetAllUsers() {
+    return axios.get(endpoint.usuarios.adminGetAllUsers, { withCredentials: true });
+}
+
+export function adminGetUser(uuid) {
+    return axios.get(`${endpoint.usuarios.adminGetUser}/${uuid}`, { withCredentials: true });
+}
+
+export function adminCreateUser(data) {
+    return axios.post(endpoint.usuarios.adminCreateUser, data, { withCredentials: true });
+}
+
+export function adminUpdateUser(uuid, data) {
+    return axios.put(`${endpoint.usuarios.adminUpdateUser}/${uuid}`, data, { withCredentials: true });
+}
+
+export function adminDeleteUser(uuid) {
+    return axios.delete(`${endpoint.usuarios.adminDeleteUser}/${uuid}`, { withCredentials: true });
+}
+
+export function adminUpdateEtapaRegistro(uuid, etapa_registro) {
+    return axios.put(`${endpoint.usuarios.adminUpdateEtapaRegistro}/${uuid}`, { etapa_registro }, { withCredentials: true });
+}

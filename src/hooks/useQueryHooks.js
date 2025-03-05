@@ -15,7 +15,14 @@ import {
   generateToken,
   createValidation,
   createUser,
-  validationStepFAD
+  validationStepFAD,
+
+  adminGetUser,
+  adminGetAllUsers,
+  adminCreateUser,
+  adminUpdateUser,
+  adminDeleteUser,
+  adminUpdateEtapaRegistro,
 } from '../api/apiHelper';
 
 
@@ -182,3 +189,58 @@ export const useValidationStepFAD = (onSuccess, onError, isEnabled = true) => {
   });
 };
 
+//Para administración de usuarios
+
+export const useAdminGetAllUsers = (onSuccess, onError) => {
+  return useQuery({
+      queryKey: ['adminGetAllUsers'],
+      queryFn: adminGetAllUsers,
+      onSuccess,
+      onError,
+  });
+};
+
+export const useAdminGetUser = (uuid, onSuccess, onError) => {
+  return useQuery({
+      queryKey: ['adminGetUser', uuid],
+      queryFn: () => adminGetUser(uuid),
+      onSuccess,
+      onError,
+  });
+};
+
+export const useAdminCreateUser = (onSuccess, onError) => {
+  return useMutation({
+      mutationKey: ['adminCreateUser'],
+      mutationFn: adminCreateUser,
+      onSuccess,
+      onError,
+  });
+};
+
+export const useAdminUpdateUser = (onSuccess, onError) => {
+  return useMutation({
+      mutationKey: ['adminUpdateUser'],
+      mutationFn: adminUpdateUser,
+      onSuccess,
+      onError,
+  });
+};
+
+export const useAdminDeleteUser = (onSuccess, onError) => {
+  return useMutation({
+      mutationKey: ['adminDeleteUser'],
+      mutationFn: adminDeleteUser,
+      onSuccess,
+      onError,
+  });
+};
+
+export const useAdminUpdateEtapaRegistro = (onSuccess, onError) => {
+  return useMutation({
+      mutationKey: ['adminUpdateEtapaRegistro'],
+      mutationFn: ({ uuid, etapa_registro }) => adminUpdateEtapaRegistro(uuid, etapa_registro),
+      onSuccess,
+      onError,
+  });
+};

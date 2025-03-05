@@ -11,6 +11,13 @@ export const endpoint = {
         getVerificacionStepStatus: `${api_local}/usuarios/getVerificacionStepStatus`,
         getSecureEmailUser: `${api_local}/usuarios/getSecureEmailUser`,
         getSecurePhoneUser: `${api_local}/usuarios/getSecurePhoneUser`,
+        // Nuevos endpoints para ABCM
+        adminGetAllUsers: `${api_local}/usuarios/admin/getAllUsers`, // Consulta general
+        adminGetUser: `${api_local}/usuarios/admin/getUser`, // Consulta individual
+        adminCreateUser: `${api_local}/usuarios/admin/createUser`, // Alta
+        adminUpdateUser: `${api_local}/usuarios/admin/updateUser`, // Modificación
+        adminDeleteUser: `${api_local}/usuarios/admin/deleteUser`, // Baja
+        adminUpdateEtapaRegistro: `${api_local}/usuarios/admin/updateEtapaRegistro`, // Actualización de etapa de registro
     },
     verificacion: {
         sendOTPCodeEmail: `${api_local}/verificacion/sendOTPCodeEmail`,
