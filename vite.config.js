@@ -33,6 +33,6 @@ export default defineConfig({
     server: {
         port: 8080,
         host: '0.0.0.0',
-        allowedHosts: ['burs-web-su6v4.ondigitalocean.app', 'app.burs.com.mx'],
+        allowedHosts: ['burs-web-su6v4.ondigitalocean.app', 'app.burs.com.mx', 'stg-burs-web-37n9y.ondigitalocean.app', 'stg.app.burs.com.mx.'],
     },
 });
