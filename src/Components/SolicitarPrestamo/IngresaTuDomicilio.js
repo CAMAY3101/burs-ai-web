@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../Contexts/authContext';
 import { address_form } from '../../Config/Schemas/yupSchemas.js';
-import { useCreateAddress, useSendOTPCode } from '../../hooks/useQueryHooks.js';
+import { useCreateAddress, useSendOtpPhone } from '../../hooks/useQueryHooks.js';
 import TextField from '../CustomizeComponents/TextField.jsx';
 import SelectField from '../CustomizeComponents/SelectField.jsx'
 import TitlePage from '../CustomizeComponents/TitlePage.jsx';
@@ -47,18 +47,17 @@ function IngresaTuDomicilio() {
 
   const { mutate: createAddress, isLoading: isCreatingAddress } = useCreateAddress(
     () => {
-      sendOTP();
+      sendOtpPhone();
     },
     onError
   );
 
-  const { mutate: sendOTP, isLoading: isSendingOTP } = useSendOTPCode(
-    () => {
-      console.log("Código OTP enviado con éxito");
-      navigateToNextStep(4);
-    },
-    onError
-  );
+  const { mutate: sendOtpPhone } = useSendOtpPhone(
+      () => {
+        console.log("Código OTPPhone enviado con éxito");
+        navigateToNextStep(4);
+      },
+      onError);
 
   // Buscar información del CP
   const fetchCPData = (cp) => {
@@ -98,7 +97,7 @@ function IngresaTuDomicilio() {
   };
 
   // Muestra el componente Loading si hay alguna operación en progreso
-  if (isCreatingAddress || isSendingOTP) {
+  if (isCreatingAddress || isSubmitting) {
     return <Loading />;
   }
 
@@ -195,7 +194,7 @@ function IngresaTuDomicilio() {
 
       </CustomFormProvider>
       <Button1
-        isDisabled={isSubmitting || isCreatingAddress || isSendingOTP}
+        isDisabled={isSubmitting || isCreatingAddress}
         handleSubmit={handleSubmit(onSubmit)}
       />
     </div>

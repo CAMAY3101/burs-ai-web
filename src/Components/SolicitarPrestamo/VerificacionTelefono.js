@@ -15,6 +15,7 @@ import Loading from '../CustomizeComponents/Loading.jsx'
 
 function VerificacionTelefono() {
     const { navigateToNextStep, checkToken } = useAuthContext();
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const defaultValues = {
         otpCode: '',
@@ -44,7 +45,6 @@ function VerificacionTelefono() {
         ? `al teléfono ${securePhoneData.data.phone}`
         : "a tu teléfono";
 
-    // Hook para verificar el teléfono
     const { mutate: verifyPhone } = useVerifyPhone(
         () => {
             toast.success("Teléfono verificado");
@@ -53,26 +53,24 @@ function VerificacionTelefono() {
         onError
     );
 
-    // Hook para reenviar el código OTP por teléfono
     const { mutate: resendOtpPhone } = useResendOtpPhone(
         () => toast.success("Código reenviado"),
         () => toast.error("Error al reenviar el código")
     );
 
-    // Hook para generar un token FAD
     const { mutate: generateToken } = useGenerateToken(
-        () => {
+        async () => {
             checkToken();
-            createValidation(); // Crear validación
+            await createValidation();
+            navigateToNextStep(5);
         },
         (error) => console.error("Error al generar token:", error)
     );
 
-    // Hook para crear validación FAD
     const { mutate: createValidation } = useCreateValidation(
         () => {
             toast.success("Validación completada");
-            navigateToNextStep(6); // Avanza al siguiente paso solo si la validación es exitosa
+            navigateToNextStep(5);
         },
         (error) => console.error("Error al crear validación:", error)
     );
@@ -89,13 +87,50 @@ function VerificacionTelefono() {
         return <Loading />;
     }
 
+    const handleToggleExpand = () => {
+        setIsExpanded(!isExpanded);
+    };
+
+    const textoCompleto = `Por este conducto autorizo expresamente a BURS FINANCIERA MEXICANA SAPI DE CV, para que, a través de sus funcionarios facultados, realice las investigaciones correspondientes sobre mi comportamiento e historial crediticio, ante las Sociedades de información Crediticia.
+
+    Declaro que conozco la naturaleza y alcance de la información que la Sociedad de Información Crediticia otorgará a que BURS FINANCIERA MEXICANA SAPI DE CV., cuando lo solicite, así como el uso que ésta última le dará. También autorizo a que BURS FINANCIERA MEXICANA SAPI DE CV. para realizar la consulta de mi historial crediticio a través de la presente solicitud. Por último, declaro que estoy consciente y acepto que este documento quede bajo custodia de que BURS FINANCIERA MEXICANA SAPI DE CV para efectos de control y cumplimiento del artículo 28 de la Ley para Regular las Sociedades de Información Crediticia.`;
+
+    const textoCorto = "Por este conducto autorizo expresamente a BURS FINANCIERA MEXICANA SAPI DE CV, para que, a través de sus funcionarios facultados, realice las investigaciones correspondientes sobre mi comportamiento e historial crediticio, ante las Sociedades de información Crediticia.";
+
+
     return (
         <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
             <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <div className='flex flex-col space-y-12'>
                     <div className='flex flex-col space-y-5'>
                         <TitlePage title={`Te enviamos un código ${phoneSecure}`} />
-                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>Ingresa el código OTP que te enviamos por mensaje</p>
+                        <Button
+                            variant='light'
+                            className='self-start px-0 font-rubik font-medium text-xs text-purple-heart-400 data-[hover=true]:bg-default/0'
+                        >
+                            Editar Número
+                        </Button>
+                        <p className='w-3/4 font-rubik font-medium text-sm text-dark-blue-800'>
+                            Ingresa el código OTP que te enviamos por mensaje
+                        </p>
+                        <div className='flex flex-col space-y-0 items-start'>
+                            {isExpanded ? textoCompleto.split("\n").map((line, index) => (
+                                    <>
+                                        <p key={index} className='m-0 font-rubik text-[10px] text-dark-blue-300 text-left mb-2'>
+                                            {line}
+                                        </p>
+                                    </>
+                                ))
+                                : <p className='m-0 font-rubik text-[10px] text-dark-blue-300 text-left'>{textoCorto}</p>
+                            }
+                            <Button
+                                variant='light'
+                                className='block self-start m-0 px-0 font-rubik font-medium text-xs text-purple-heart-500 text-left data-[hover=true]:bg-default/0'
+                                onPress={handleToggleExpand}
+                            >
+                                {isExpanded ? "Ver menos" : "Ver más"}
+                            </Button>
+                        </div>
                     </div>
                     <div className='flex-col space-y-3'>
                         <TextField
@@ -115,7 +150,7 @@ function VerificacionTelefono() {
                     </div>
                     <Button1
                         handleSubmit={handleSubmit(onSubmit)}
-                        label="Verificar Teléfono"
+                        label="Autorizar"
                     />
                     <Toaster
                         position="top-center"

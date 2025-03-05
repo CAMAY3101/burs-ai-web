@@ -23,13 +23,14 @@ import { useCreateUser } from '../hooks/useQueryHooks';
 function SignUp() {
 
     const { checkToken, navigateToNextStep, verificationStep } = useAuthContext();
-    const [isVisible, setIsVisible] = React.useState(false);
+    const [isVisible] = React.useState(false);
     const [recaptchaValue, setRecaptchaValue] = useState(null);
     const [passwordChecks, setPasswordChecks] = useState({});
 
     const defaultValues = {
         correo: '',
         contrasena: '',
+        terms: false
     };
 
     const methods = useForm({
@@ -57,7 +58,7 @@ function SignUp() {
         });
     }, [watch('contrasena')]);
 
-    const onSuccess = async (response) => {
+    const onSuccess = async ( ) => {
         toast.success('Creación de usuario exitosa');
         await checkToken();
         navigateToNextStep(1);
@@ -109,6 +110,20 @@ function SignUp() {
                             invisibleEyeIcon={invisibleEyeIcon}
                             isVisible={isVisible}
                         />
+                                                <div className="flex items-center">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                {...methods.register("terms")}
+                                className="w-4 h-4 text-purple-600 border-gray-300 rounded"
+                            />
+                            <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
+                                Acepto los <a href="/terminos" target="_blank" rel="noopener noreferrer" className="underline">Términos y Condiciones</a>
+                            </label>
+                        </div>
+                        {errors.terms && (
+                            <p className="text-red-500 text-xs italic">{errors.terms.message}</p>
+                        )}
                     </div>
                 </CustomFormProvider>
 

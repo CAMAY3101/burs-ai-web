@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
@@ -46,10 +46,15 @@ function TuHistorial() {
   console.log('values: ', values)
   console.log('isSubmitting:', isSubmitting);
 
+  const subindustriaOptions = useMemo(() => {
+    return values.industria && subIndustriasValues[values.industria]
+      ? subIndustriasValues[values.industria]
+      : [];
+  }, [values.industria]);
 
   const onSuccess = async () => {
     setTimeout(() => {
-      navigateToNextStep(3); // Navegar al siguiente paso si es exitoso
+      navigateToNextStep(3); 
     }, 2000);
   };
 
@@ -89,7 +94,7 @@ function TuHistorial() {
 
   const parseCurrency = (value) => {
     if (!value) return '';
-    return value.replace(/[^\d.-]/g, ''); // Elimina caracteres no numéricos
+    return value.replace(/[^\d.-]/g, ''); 
   };
 
   return (
@@ -129,9 +134,8 @@ function TuHistorial() {
             label="Subindustria"
             options={values.industria && subIndustriasValues[values.industria] ? subIndustriasValues[values.industria] : []}
             placeholder="Selecciona una opción"
-            name='subindustria'
-            selectedKeys={subindustria}
-            onSelectionChange={setSubindustria}
+            name='subindustria'selectedKeys={Array.from(subindustria)}
+            onSelectionChange={(selected) => setSubindustria(new Set(selected))}
             errorMessage={errors.subindustria?.message}
           />
 
