@@ -5,7 +5,7 @@ import { Button } from "@heroui/react";
 const Button1 = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
   return (
     <Button
-      size="large"
+      size="md"
       color="secondary"
       className="w-full"
       isDisabled={isDisabled}
