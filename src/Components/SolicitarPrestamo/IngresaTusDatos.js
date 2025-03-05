@@ -82,7 +82,7 @@ function IngresaTusDatos() {
     return (
         <>
             <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
-                <TitlePage title="Ingresa tus datos" />
+                <p className='font-rubik font-regular text-xs text-dark-blue-900'>Campos con asterisco <span className='font-bold'>(*) son campos obligatorios</span></p>
                 <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                     <div className='w-full flex-col space-y-12'>
                         <TextField

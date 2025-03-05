@@ -20,9 +20,10 @@ function Solicitar() {
       <NavbarLoan />
       <div className="flex flex-col items-center">
         <div className="md:w-1/2 lg:w-10/12 flex flex-col items-center space-y-14 mr-8 ml-8">
+          <h1 className="text-dark-blue-900 font-rubik font-bold text-2xl">Solicitud de tu Credito Burs</h1>
           <ol
             id="progress bar"
-            className="flex items-center justify-center lg:justify-around space-x-4 sm:space-x-6 md:space-x-10 w-full max-w-[700px]"
+            className="flex items-center justify-center lg:justify-around space-x-10 md:space-x-5 max-w-[700px]"
           >
             {steps.map((step, index) => {
               const isActive = step.id === verificationStep;
