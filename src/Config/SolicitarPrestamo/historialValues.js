@@ -66,9 +66,9 @@ export const subIndustriasValues = {
         {label: "Construcción", value: "Construcción"},
         {label: "Limpieza", value: "Limpieza"},
         {label: "Seguridad privada", value: "Seguridad privada"},
-        {label: "Gasolinera y gas", value: "Gasolinera y gas"},
-        {label: "Electricidad y gas", value: "Electricidad y gas"},
-        {label: "Electricidad y agua", value: "Electricidad y agua"},
+        {label: "Gasolinera", value: "Gasolinera"},
+        {label: "Electricidad", value: "Electricidad"},
+        {label: "Agua", value: "Agua"},
         {label: "Otros", value: "Otros"},
     ],
     "Servicios profesionales": [

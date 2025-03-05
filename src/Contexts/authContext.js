@@ -75,14 +75,12 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(2);
         } else if (step === 'ingresar domicilio') {
             navigateToNextStep(3);
-        } else if (step === 'verificar correo') {
-            navigateToNextStep(4);
         } else if (step === 'verificar telefono') {
-            navigateToNextStep(5);
+            navigateToNextStep(4);
         } else if (step === 'verificar identidad') {
-            navigateToNextStep(6);
+            navigateToNextStep(5);
         } else if (step === 'simulacion modelos') {
-            navigateToNextStep(7);
+            navigateToNextStep(6);
         }
     }, [checkToken, navigateToNextStep]);
 
