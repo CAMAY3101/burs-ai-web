@@ -118,7 +118,7 @@ function SignUp() {
                                 className="w-4 h-4 text-purple-600 border-gray-300 rounded"
                             />
                             <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
-                                Acepto los <a href="/terminos" target="_blank" rel="noopener noreferrer" className="underline">Términos y Condiciones</a>
+                                Acepto los <a href="https://burs.com.mx/terminos-y-condiciones" target="_blank" rel="noopener noreferrer" className="underline">Términos y Condiciones</a>
                             </label>
                         </div>
                         {errors.terms && (
