@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { Button } from "@heroui/react";
 
-const Button1 = ({ isDisabled, handleSubmit, label ="Continuar" }) => {
+const Button1 = ({ isDisabled, handleSubmit, label = "Continuar" }) => {
   return (
     <Button
       size="md"

@@ -1,30 +1,29 @@
-import React from 'react'
+import React from "react";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Button } from "@heroui/react";
-import { login_form } from '../Config/Schemas/yupSchemas';
-import bursColorIcon from "../Assets/icons/burs-color-icon.png"
-import visibleEyeIcon from "../Assets/icons/visible-eye.png"
-import invisibleEyeIcon from "../Assets/icons/invisible-eye.png"
+import { login_form } from "../Config/Schemas/yupSchemas";
+import bursColorIcon from "../Assets/icons/burs-color-icon.png";
+import visibleEyeIcon from "../Assets/icons/visible-eye.png";
+import invisibleEyeIcon from "../Assets/icons/invisible-eye.png";
 
-import { useAuthContext } from '../Contexts/authContext';
-import { SIGNUP } from '../Config/Router/paths';
-import { useLoginQuery } from '../hooks/useQueryHooks';
-import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside'
-
+import { useAuthContext } from "../Contexts/authContext";
+import { SIGNUP } from "../Config/Router/paths";
+import { useLoginQuery } from "../hooks/useQueryHooks";
+import TextFieldWithLabelInside from "../Components/CustomizeComponents/TextFieldWithLabelInside";
 
 function LogIn() {
-  const { login, verificationStep} = useAuthContext(); // eliminar checktoken si ya no se ocupa
+  const { login, verificationStep } = useAuthContext(); // eliminar checktoken si ya no se ocupa
   const [isVisible] = React.useState(false);
-  const [messageError, setMessageError] = React.useState('');
+  const [messageError, setMessageError] = React.useState("");
   const [errors, setErrors] = React.useState({});
 
   // Email validation
-  const [emailValue, setEmailValue] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [emailValue, setEmailValue] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const onSuccess = async (response) => {
-    if (response.data.status === 'success') {
+    if (response.data.status === "success") {
       setMessageError(`verification step: ${verificationStep}`);
       setTimeout(() => {
         login(response.data.progress);
@@ -34,13 +33,13 @@ function LogIn() {
 
   const onError = (error) => {
     if (error.response === undefined) {
-      setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+      setMessageError("Error de conexión. Inténtalo de nuevo más tarde.");
     } else {
-      setMessageError('Correo o contraseña incorrectos.');
+      setMessageError("Correo o contraseña incorrectos.");
     }
   };
 
-  const loginQuery = useLoginQuery(onSuccess, onError)
+  const loginQuery = useLoginQuery(onSuccess, onError);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,8 +53,8 @@ function LogIn() {
 
       loginQuery.mutate(valuesToValidate);
     } catch (error) {
-      console.log(error)
-      if (error.name === 'ValidationError') {
+      console.log(error);
+      if (error.name === "ValidationError") {
         const validationErrors = {};
         error.inner.forEach((err) => {
           validationErrors[err.path] = err.message;
@@ -67,26 +66,28 @@ function LogIn() {
     }
   };
   return (
-    <div className='flex flex-col items-center'>
-      <div className='flex flex-col items-center space-y-2 my-9'>
-        <Link to = '/'>
-          <img className='w-20' alt='icon-color-burs' src={bursColorIcon} />
+    <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center space-y-2 my-9">
+        <Link to="/">
+          <img className="w-20" alt="icon-color-burs" src={bursColorIcon} />
         </Link>
-        <h1 className='font-rubik font-bold text-xl text-purple-heart-950'>Iniciar Sesion</h1>
+        <h1 className="font-rubik font-bold text-xl text-purple-heart-950">
+          Iniciar Sesion
+        </h1>
       </div>
-      <div className='w-10/12 space-y-8 my-4'>
+      <div className="w-10/12 space-y-8 my-4">
         <TextFieldWithLabelInside
-          type='email'
-          label='Correo Electrónico'
-          placeholder='ejemplo@outlook.com'
+          type="email"
+          label="Correo Electrónico"
+          placeholder="ejemplo@outlook.com"
           value={emailValue}
           errorMessage={errors.correo}
           onValueChange={setEmailValue}
         />
         <TextFieldWithLabelInside
-          type='password'
-          label='Contraseña'
-          placeholder='Ingresa contraseña'
+          type="password"
+          label="Contraseña"
+          placeholder="Ingresa contraseña"
           value={password}
           errorMessage={errors.contrasena}
           onValueChange={setPassword}
@@ -96,25 +97,32 @@ function LogIn() {
           isVisible={isVisible}
         />
         <div className="flex justify-center">
-        <Button
-          size='md'
-          className='w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl'
-          isDisabled={emailValue === '' || password === '' || Object.keys(errors).length > 0}
-          onClick={handleSubmit}
-        >
-          Ingresar
-        </Button>
+          <Button
+            size="md"
+            className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
+            isDisabled={
+              emailValue === "" ||
+              password === "" ||
+              Object.keys(errors).length > 0
+            }
+            onClick={handleSubmit}
+          >
+            Ingresar
+          </Button>
         </div>
-        <div className='flex flex-col items-start w-10/12'>
-          <p className='font-rubik font-light text-sm text-dark-blue-950'>
+        <div className="flex flex-col items-start w-10/12">
+          <p className="font-rubik font-light text-sm text-dark-blue-950">
             ¿No tienes una cuenta?
-            <a  className='text-dark-blue-700 font-normal' href={SIGNUP}> Registrate</a>
+            <a className="text-dark-blue-700 font-normal" href={SIGNUP}>
+              {" "}
+              Registrate
+            </a>
           </p>
         </div>
-        <div className='text-[10px]'>{messageError}</div>
+        <div className="text-[10px]">{messageError}</div>
       </div>
     </div>
-  )
+  );
 }
 
-export default LogIn
+export default LogIn;
