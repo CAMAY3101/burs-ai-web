@@ -12,7 +12,6 @@
     "axios": "^1.6.7",
     "dotenv": "^16.4.3",
     "framer-motion": "^12.4.7",
-    "icons": "^1.0.0",
     "intl-tel-input": "^19.2.19",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
