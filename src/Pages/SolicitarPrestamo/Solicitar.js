@@ -8,8 +8,8 @@ import { useAuthContext } from "../../Contexts/authContext";
 
 const steps = [
   { id: 1, label: "Datos", sublabel: "Personales" },
-  { id: 2, label: "Domicilio", sublabel: "Actual" },
-  { id: 3, label: "Historial", sublabel: "Crediticio" },
+  { id: 2, label: "Historial", sublabel: "Crediticio" },
+  { id: 3, label: "Domicilio", sublabel: "Actual" },
 ];
 
 function Solicitar() {

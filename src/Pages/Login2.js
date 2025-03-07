@@ -1,29 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { Link } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 import { Button } from "@heroui/react";
-import { login_form } from '../Config/Schemas/yupSchemas';
+import { login_form } from "../Config/Schemas/yupSchemas";
 import bursColorIcon from "../Assets/icons/burs-color-icon.png";
 import visibleEyeIcon from "../Assets/icons/visible-eye.png";
 import invisibleEyeIcon from "../Assets/icons/invisible-eye.png";
 
-import { useAuthContext } from '../Contexts/authContext';
-import { SIGNUP, RECOVERPASSWORD } from '../Config/Router/paths';
-import { useLoginQuery } from '../hooks/useQueryHooks';
+import { useAuthContext } from "../Contexts/authContext";
+import { SIGNUP, RECOVERPASSWORD } from "../Config/Router/paths";
+import { useLoginQuery } from "../hooks/useQueryHooks";
 
-import CustomFormProvider from '../Components/CustomizeComponents/Form/CustomFormProvider';
-import TextFieldWithLabelInside from '../Components/CustomizeComponents/TextFieldWithLabelInside';
+import CustomFormProvider from "../Components/CustomizeComponents/Form/CustomFormProvider";
+import TextFieldWithLabelInside from "../Components/CustomizeComponents/TextFieldWithLabelInside";
 
 function LogIn2() {
   const { login, verificationStep } = useAuthContext();
   const [isVisible] = React.useState(false);
-  const [messageError, setMessageError] = React.useState('');
+  const [messageError, setMessageError] = React.useState("");
 
   const defaultValues = {
-    correo: '',
-    contrasena: '',
+    correo: "",
+    contrasena: "",
   };
 
   const methods = useForm({
@@ -37,7 +37,7 @@ function LogIn2() {
   } = methods;
 
   const onSuccess = async (response) => {
-    if (response.data.status === 'success') {
+    if (response.data.status === "success") {
       setMessageError(`verification step: ${verificationStep}`);
       setTimeout(() => {
         login(response.data.progress);
@@ -47,16 +47,16 @@ function LogIn2() {
 
   const onError = (error) => {
     if (!error.response) {
-      setMessageError('Error de conexión. Inténtalo de nuevo más tarde.');
+      setMessageError("Error de conexión. Inténtalo de nuevo más tarde.");
     } else {
-      setMessageError('Correo o contraseña incorrectos.');
+      setMessageError("Correo o contraseña incorrectos.");
     }
   };
 
   const loginQuery = useLoginQuery(onSuccess, onError);
 
   const onSubmit = (data) => {
-    console.log('data: ', data)
+    console.log("data: ", data);
     loginQuery.mutate(data);
   };
 
@@ -66,7 +66,9 @@ function LogIn2() {
         <Link to="/">
           <img className="w-20" alt="icon-color-burs" src={bursColorIcon} />
         </Link>
-        <h1 className="font-rubik font-bold text-xl text-purple-heart-950">Iniciar Sesión</h1>
+        <h1 className="font-rubik font-bold text-xl text-purple-heart-950">
+          Iniciar Sesión
+        </h1>
       </div>
       <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex flex-col space-y-10 mx-auto px-6 py-4">
         <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +95,7 @@ function LogIn2() {
         </CustomFormProvider>
         <div className="flex justify-center">
           <Button
-            type='submit'
+            type="submit"
             size="md"
             className="w-10/12 bg-purple-heart-500 text-purple-50 rounded-3xl"
             isDisabled={isSubmitting}
@@ -105,10 +107,18 @@ function LogIn2() {
         <div className="flex flex-col items-start w-10/12">
           <p className="font-rubik font-light text-sm text-dark-blue-950">
             ¿No tienes una cuenta?
-            <a className="text-dark-blue-700 font-normal" href={SIGNUP}> Regístrate</a>
+            <a className="text-dark-blue-700 font-normal" href={SIGNUP}>
+              {" "}
+              Regístrate
+            </a>
           </p>
           <p>
-            <a className="text-dark-blue-700 font-normal text-[14px]" href={RECOVERPASSWORD}>¿Olvidaste tu Contraseña?</a>
+            <a
+              className="text-dark-blue-700 font-normal text-[14px]"
+              href={RECOVERPASSWORD}
+            >
+              ¿Olvidaste tu Contraseña?
+            </a>
           </p>
         </div>
         <div className="text-[10px]">{messageError}</div>

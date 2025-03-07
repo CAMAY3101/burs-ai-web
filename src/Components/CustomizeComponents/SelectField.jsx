@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types'; // Importa PropTypes
-import { useFormContext, Controller } from 'react-hook-form';
+import React, { useState } from "react";
+import PropTypes from "prop-types"; // Importa PropTypes
+import { useFormContext, Controller } from "react-hook-form";
 import { Select, SelectItem } from "@heroui/react";
 
 const styles_select = {
   label: [
-    '!text-dark-blue-950',
-    'group-data-[filled-within=true]:text-dark-blue-950',
-    'font-rubik',
-    'font-medium',
-    'text-base',
+    "!text-dark-blue-950",
+    "group-data-[filled-within=true]:text-dark-blue-950",
+    "font-rubik",
+    "font-medium",
+    "text-base",
   ],
-  requiredAsterisk: ['text-red-500', 'ml-1'],
+  requiredAsterisk: ["text-red-500", "ml-1"],
   trigger: [
-    'rounded-xl',
-    'border-dark-blue-400',
-    'data-[hover=true]:border-dark-blue-700',
-    'data-[open=true]:border-dark-blue-900',
-    'data-[focus=true]:border-dark-blue-900',
-    '!cursor-text',
-    'max-h-[40px]',
-    'py-1',
-  ]
+    "rounded-xl",
+    "border-dark-blue-400",
+    "data-[hover=true]:border-dark-blue-700",
+    "data-[open=true]:border-dark-blue-900",
+    "data-[focus=true]:border-dark-blue-900",
+    "!cursor-text",
+    "max-h-[40px]",
+    "py-1",
+  ],
 };
 
 const SelectField = ({
@@ -37,7 +37,7 @@ const SelectField = ({
 
   if (!control) {
     console.error(
-      'useFormContext no está disponible. Asegúrate de que el componente esté dentro de un FormProvider.'
+      "useFormContext no está disponible. Asegúrate de que el componente esté dentro de un FormProvider.",
     );
     return null;
   }
@@ -58,15 +58,15 @@ const SelectField = ({
             classNames={{
               ...styles_select,
               value: [
-                'font-rubik',
-                'font-regular',
-                'text-[15px]',
-                isValueSelected ? 'text-dark-blue-950' : 'text-dark-blue-300',
+                "font-rubik",
+                "font-regular",
+                "text-[15px]",
+                isValueSelected ? "text-dark-blue-950" : "text-dark-blue-300",
               ],
             }}
             selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
-              const value = Array.from(keys).join('');
+              const value = Array.from(keys).join("");
               setIsValueSelected(!!value);
               field.onChange(value);
             }}
@@ -87,7 +87,6 @@ const SelectField = ({
   );
 };
 
-
 SelectField.propTypes = {
   isRequired: PropTypes.bool,
   label: PropTypes.string,
@@ -96,7 +95,7 @@ SelectField.propTypes = {
     PropTypes.shape({
       value: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
-    })
+    }),
   ),
   placeholder: PropTypes.string,
   isDisabled: PropTypes.bool,
