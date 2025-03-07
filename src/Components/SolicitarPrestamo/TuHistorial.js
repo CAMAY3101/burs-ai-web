@@ -99,7 +99,7 @@ function TuHistorial() {
 
   return (
     <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8'>
-      <TitlePage title="Tu historial" />
+      <p className='font-rubik font-regular text-xs text-dark-blue-900'>Campos con asterisco <span className='font-bold'>(*) son campos obligatorios</span></p>
       <CustomFormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <div className='flex-col space-y-12'>
           <div className='w-2/3'>
