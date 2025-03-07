@@ -1,8 +1,6 @@
 import React from 'react'
 import NavbarLoan from '../../Components/SolicitarPrestamo/NavbarLoan'
 
-
-import VerificacionCorreo from '../../Components/SolicitarPrestamo/VerificacionCorreo';
 import VerificacionTelefono from '../../Components/SolicitarPrestamo/VerificacionTelefono';
 import VerificacionID from '../../Components/SolicitarPrestamo/VerificacionID';
 import ResultadosModelos from '../../Components/SolicitarPrestamo/ResultadosModelos';

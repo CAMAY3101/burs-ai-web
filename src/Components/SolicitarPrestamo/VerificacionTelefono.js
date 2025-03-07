@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from "@heroui/react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthContext } from '../../Contexts/authContext';

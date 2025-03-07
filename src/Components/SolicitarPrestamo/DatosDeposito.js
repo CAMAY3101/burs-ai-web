@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { RadioGroup, Radio, Input, Tooltip, Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Select, SelectItem } from "@heroui/react";
+import { RadioGroup, Radio, Input, Tooltip, Card, CardHeader, Image, Select, SelectItem } from "@heroui/react";
 import { IoMdInformationCircleOutline } from "react-icons/io";
+import { useAuthContext } from "../../Contexts/authContext";
 import { Button } from "@heroui/react";
-import TextField from '../CustomizeComponents/TextField.jsx';
 
 function DatosDeposito() {
+  const { navigateToNextStep } = useAuthContext();
   const [selectedOption, setSelectedOption] = useState('');
 
   const bancos = [
@@ -15,7 +16,7 @@ function DatosDeposito() {
   ];
 
   const onSubmit = () => {
-    setSelectedOption(event.target.value);
+    navigateToNextStep(8);
   };
   return (
     <div className='w-full max-w-lg flex-col space-y-8 '>

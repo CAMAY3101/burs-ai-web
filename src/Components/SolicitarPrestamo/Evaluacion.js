@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import pendingIcon from "../../Assets/icons/pending-icon.png";
-import { useAuthContext } from "../../Contexts/authContext";
 import {Button, Progress} from "@heroui/react";
-import { useValidationStepFAD } from "../../hooks/useQueryHooks.js";
 
+import { useAuthContext } from "../../Contexts/authContext";
 import TitlePage from "../CustomizeComponents/TitlePage";
 
 function Evaluacion() {
@@ -32,7 +29,6 @@ function Evaluacion() {
 
   return (
     <div className='w-full max-w-lg flex flex-col space-y-10 mx-auto px-8 items-center text-center'>
-      <Toaster></Toaster>
       <TitlePage title="Evaluación en proceso" />
 
       <Progress isStriped isIndeterminate aria-label="Loading..." className="max-w-md" color="secondary" size="md"/>

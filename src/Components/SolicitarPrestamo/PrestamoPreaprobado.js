@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 import { useAuthContext } from "../../Contexts/authContext";
-import TitlePage from "../CustomizeComponents/TitlePage";
-import Button1 from '../CustomizeComponents/Button1.jsx'
 import { Button, Slider } from "@heroui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
