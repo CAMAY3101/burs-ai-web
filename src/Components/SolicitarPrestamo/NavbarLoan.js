@@ -7,8 +7,7 @@ import { useAuthContext } from '../../Contexts/authContext'
 function NavbarLoan() {
     const { logout } = useAuthContext()
 
-    const handleLogout = (e) => {
-        e.preventDefault()
+    const handleLogout = () => {
         logout()
     }
 
@@ -21,7 +20,7 @@ function NavbarLoan() {
             </NavbarBrand>
             <div className="flex lg:justify-end justify-end w-full">
                 <NavbarItem className="text-right" >
-                    <Link className="font-rubik font-medium text-dark-blue-400 text-sm" onClick={handleLogout}>
+                    <Link className="font-rubik font-medium text-dark-blue-400 text-sm" onPress={handleLogout}>
                         Cerrar Sesión
                     </Link>
                 </NavbarItem>

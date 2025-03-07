@@ -77,10 +77,12 @@ export default function AuthContextProvider({ children }) {
             navigateToNextStep(3);
         } else if (step === 'verificar telefono') {
             navigateToNextStep(4);
-        } else if (step === 'verificar identidad') {
-            navigateToNextStep(5);
-        } else if (step === 'simulacion modelos') {
+        } else if (step === 'seleccion monto') {
             navigateToNextStep(6);
+        } else if (step === 'verificar identidad') {
+            navigateToNextStep(7);
+        } else if (step === 'simulacion modelos') {
+            navigateToNextStep(8);
         }
     }, [checkToken, navigateToNextStep]);
 
